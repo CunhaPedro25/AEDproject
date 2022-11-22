@@ -1,4 +1,3 @@
+#include <stdio.h>
 
-void mainMenu(){
-  printf("/*Menu Bonito*/");
-}
+void menu();
