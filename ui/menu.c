@@ -1,5 +1,4 @@
 #include "main.h"
-#include "../structures/equipamentos.h"
 
 int menu(char *title, char *options[256]);
 
@@ -70,8 +69,8 @@ void mainMenu(){
     char *options[4] =
         {
             "Equipamentos",
-            "cope",
-            "cope",
+            "Aplicações",
+            "Placas de rede",
             NULL
         };
     value = menu("Gestão de Equipamentos", options);
