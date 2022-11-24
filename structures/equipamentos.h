@@ -11,13 +11,11 @@ typedef struct Placas {
   char *mask;
   char *broadcast;
 } Placa;
-extern Placa placas[256];
 
 typedef struct Discos {
   char *name;
   int capacidade; // Capacidade do disco
 } Disco;
-extern Disco discos[256];
 
 typedef struct Aplicacoes {
   char versao;
@@ -27,7 +25,6 @@ typedef struct Aplicacoes {
     int ano;
   } validade;
 } Aplicacao;
-extern Aplicacao aplicacoes[256];
 
 typedef struct Equipamentos {
 
@@ -48,11 +45,11 @@ typedef struct Equipamentos {
   char *ram;
   char *sistema;
 
-  Disco *discos;
-  Placa *placas;
-  Aplicacao *aplicacoes;
+  Disco discos[256];
+  Placa placas[256];
+  Aplicacao aplicacoes[256];
 
 } Equipamento;
 
-extern Equipamento equipamento[256];
+Equipamento equipamento[256];
 #endif // !equipamentos_h
