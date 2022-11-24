@@ -6,6 +6,29 @@
 
 #define equipamentos_h
 
+typedef struct Placas {
+  char *ip;
+  char *mask;
+  char *broadcast;
+} Placa;
+extern Placa placas[256];
+
+typedef struct Discos {
+  char *name;
+  int capacidade; // Capacidade do disco
+} Disco;
+extern Disco discos[256];
+
+typedef struct Aplicacoes {
+  char versao;
+  struct Validade {
+    int dia;
+    int mes;
+    int ano;
+  } validade;
+} Aplicacao;
+extern Aplicacao aplicacoes[256];
+
 typedef struct Equipamentos {
 
   struct Aquisicao {
@@ -22,28 +45,13 @@ typedef struct Equipamentos {
     float clock; // Velociade do relogio
   } cpu;
 
-  struct Discos {
-    char *name;
-    int capacidade; // Capacidade do disco
-  } disco;
-
   char *ram;
   char *sistema;
 
-  struct Aplicacoes {
-    char versao;
-    struct Validade {
-      int dia;
-      int mes;
-      int ano;
-    } validade;
-  } aplicaoes;
+  Disco *discos;
+  Placa *placas;
+  Aplicacao *aplicacoes;
 
-  struct Placas {
-    char *ip;
-    char *mask;
-    char *broadcast;
-  } placas;
 } Equipamento;
 
 extern Equipamento equipamento[256];
