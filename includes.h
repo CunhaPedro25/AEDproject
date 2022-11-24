@@ -4,4 +4,5 @@
 
 /* Ficheiros Externos */
 #include "structures/equipamentos.h"
-#include "ui/main.h"
+#include "ui/ui.h"
+#include "ui/menu.h"
