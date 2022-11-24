@@ -1,46 +1,46 @@
 /*
-*  @brief Estrutura de dados para equipamentos
-*
-*/
+ *  @brief Estrutura de dados para equipamentos
+ *
+ */
 
-typedef struct Equipamentos{
+typedef struct Equipamentos {
 
-  struct Aquisicao{
-    int dia;          // equipamento[0].data.dia
+  struct Aquisicao {
+    int dia; // equipamento[0].data.dia
     int mes;
     int ano;
   } data;
 
   char *departamento;
-  int garantia;           // Em meses
+  int garantia; // Em meses
 
-  struct CPUs{
+  struct CPUs {
     char *name;
-    float clock;          // Velociade do relogio
+    float clock; // Velociade do relogio
   } cpu;
 
-  struct Discos{
+  struct Discos {
     char *name;
-    int capacidade;       // Capacidade do disco
+    int capacidade; // Capacidade do disco
   } disco;
 
   char *ram;
   char *sistema;
 
-  struct Aplicacoes{
+  struct Aplicacoes {
     char versao;
-    struct Validade{
+    struct Validade {
       int dia;
       int mes;
       int ano;
     } validade;
   } aplicaoes;
 
-  struct Placas{
+  struct Placas {
     char *ip;
     char *mask;
     char *broadcast;
   } placas;
-}Equipamento;
+} Equipamento;
 
-Equipamento equipamento[256];
+extern Equipamento equipamento[256];
