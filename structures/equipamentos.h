@@ -2,6 +2,9 @@
  *  @brief Estrutura de dados para equipamentos
  *
  */
+#ifndef equipamentos_h
+
+#define equipamentos_h
 
 typedef struct Equipamentos {
 
@@ -44,3 +47,4 @@ typedef struct Equipamentos {
 } Equipamento;
 
 extern Equipamento equipamento[256];
+#endif // !equipamentos_h
