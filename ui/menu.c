@@ -1,15 +1,14 @@
 #include "menu.h"
 
-/*
- *  @name menu
- *  Função para gerar menu com as opções que recebe
+/**
  *
- *  @constructor
- *  @param {char *} title - Titulo do menu
- *  @param {char **} options - Array de strings com as opções que o menu vai mostrar
- *  @param {char *} size - Tamanho do array de opções
+ *  @brief Creates Menu with custom options and title
  *
- *  @return opção selecionada
+ *  @param title {char *} - Menu title
+ *  @param options {char **} - Array of stings with options that are used
+ *  @param size {int} - Number of elements in the array
+ *
+ *  @returns {int} - Option selected
  */
 
 int menu(char *title, char **options, size_t size){
@@ -29,7 +28,8 @@ int menu(char *title, char **options, size_t size){
     char temporary;
     scanf("%c", &temporary);
     restoreCursor();
-    clearToEnd();
+    clearToLineEnd();
+
     option = temporary - '0';             // Passar 'char' to 'int' mantendo o valor ex: '1' = 1
   } while (option < 0 || option > size);
 
