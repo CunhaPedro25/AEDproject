@@ -1,7 +1,8 @@
 #include "includes.h"
 
-void main(){
-  menu();
+int main() {
+   menu();
 
   system("pause");
+  return 0;
 }
