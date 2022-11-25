@@ -1,5 +1,5 @@
-#ifndef MANUAL_MD_UI_H
-#define MANUAL_MD_UI_H
+#ifndef UI_H
+#define UI_H
 
 #include <stdio.h>
 #include <stdlib.h>
