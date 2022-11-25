@@ -41,7 +41,7 @@ void titulo(char *title) {
  *--------------------------*/
 
 /* Sends cursor back to position 0,0 - top left */
-void resetCursor() { printf(prefix "H"); }
+void resetPositionCursor() { printf(prefix "H"); }
 
 /* Sends cursor to the start of a line */
 void lineStartCursor() { printf(prefix "0G"); }
@@ -118,4 +118,4 @@ void clearToLineStart() { printf(prefix "1K"); }
 void clearToLineEnd() { printf(prefix "0K"); }
 
 /* Erase entire Line */
-void cleanLine() { printf(prefix "2k"); }
+void cleanLine() { printf(prefix "2K"); }

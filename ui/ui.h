@@ -13,6 +13,8 @@ void titulo(char *title);
 
 
 /*----- Cursor Control ------*/
+void resetPositionCursor();
+void lineStartCursor();
 void moveCursor(int line, int column);
 void upCursor(int lines);
 void downCursor(int lines);
