@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define prefix "\x1b["
+#define prefix "\e["
 
 /*----- Print Functions --------*/
 void linha(int size);
@@ -13,7 +13,7 @@ void titulo(char *title);
 
 
 /*----- Cursor Control ------*/
-void resetPositionCursor();
+void goHomeCursor();
 void lineStartCursor();
 void moveCursor(int line, int column);
 void upCursor(int lines);

@@ -41,7 +41,7 @@ void titulo(char *title) {
  *--------------------------*/
 
 /* Sends cursor back to position 0,0 - top left */
-void resetPositionCursor() { printf(prefix "H"); }
+void goHomeCursor() { printf(prefix "H"); }
 
 /* Sends cursor to the start of a line */
 void lineStartCursor() { printf(prefix "0G"); }
@@ -94,14 +94,16 @@ void restoreCursor() { printf(prefix "u"); }
  *------------------------*/
 
 /* Clear entire Screen */
+
 void clear() {
-#ifdef _WIN32
-  system("cls");
-#elif linux
-  // printf(prefix "2J");
-  system("clear");
-#elif __APPLE__
-  system("/usr/bin/osascript -e");
+  goHomeCursor();
+
+  #ifdef _WIN32
+    system("cls");
+  #elif linux
+    system("clear");
+  #elif __APPLE__
+    system("/usr/bin/osascript -e");
 #endif
 }
 

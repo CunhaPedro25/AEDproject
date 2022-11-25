@@ -13,20 +13,22 @@
 int menu(char *title, char **options, size_t size){
   int option;
 
+  clear();
+  titulo(title);
+
+  for (int i = 0; i < size; ++i) {
+    printf("%d - %s\n", i+1, options[i]);
+  }
+  printf("0 - Sair");
+
+  printf("\n\nOpção: ");
   do {
-    clear();
-    titulo(title);
-
-    for (int i = 0; i < size; ++i) {
-      printf("%d - %s\n", i+1, options[i]);
-    }
-    printf("0 - Sair");
-
-    printf("\n\nOpção: ");
+    saveCursor();
     char temporary;
-    fflush(stdin);
     scanf("%c", &temporary);
-    printf("\n");
+    restoreCursor();
+    clearToLineEnd();
+
 
     option = temporary - '0';             // Passar 'char' to 'int' mantendo o valor ex: '1' = 1
   } while (option < 0 || option > size);
@@ -104,7 +106,7 @@ void mainMenu(){
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Gest?o de Equipamentos", options, size);
+    value = menu("Gestão de Equipamentos", options, size);
 
     switch (value) {
       case 1:
@@ -119,4 +121,6 @@ void mainMenu(){
         value = 0;
     }
   }while(value != 0);
+
+  clear(); // Clean screen when the program ends
 }
