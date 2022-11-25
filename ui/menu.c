@@ -10,25 +10,23 @@
  *
  *  @returns {int} - Option selected
  */
-
 int menu(char *title, char **options, size_t size){
   int option;
 
-  clear();
-  titulo(title);
-
-  for (int i = 0; i < size; ++i) {
-    printf("%d - %s\n", i+1, options[i]);
-  }
-  printf("0 - Sair");
-
-  printf("\n\nOpção: ");
   do {
-    saveCursor();
+    clear();
+    titulo(title);
+
+    for (int i = 0; i < size; ++i) {
+      printf("%d - %s\n", i+1, options[i]);
+    }
+    printf("0 - Sair");
+
+    printf("\n\nOpção: ");
     char temporary;
+    fflush(stdin);
     scanf("%c", &temporary);
-    restoreCursor();
-    clearToLineEnd();
+    printf("\n");
 
     option = temporary - '0';             // Passar 'char' to 'int' mantendo o valor ex: '1' = 1
   } while (option < 0 || option > size);
