@@ -7,7 +7,7 @@
  *
  *  Source: https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
  *
-*/
+ */
 
 /*-----------------*
  * Print Functions *
@@ -18,7 +18,7 @@
  *
  * @param size {int} - number of "-" to print (size of line)
  */
-void linha(int size){
+void linha(int size) {
   for (int i = 0; i < size; ++i) {
     printf("-");
   }
@@ -29,27 +29,22 @@ void linha(int size){
  *
  * @param title {char *} - custom title
  */
-void titulo(char *title){
+void titulo(char *title) {
   int larguraTitulo = (int)(strlen(title) + strlen("/*--  --*/"));
   linha(larguraTitulo);
   printf("/*-- %s --*/\n", title);
   linha(larguraTitulo);
 }
 
-
 /*--------------------------*
  * Cursor Control Functions *
  *--------------------------*/
 
 /* Sends cursor back to position 0,0 - top left */
-void resetCursor(){
-  printf(prefix "H");
-}
+void resetCursor() { printf(prefix "H"); }
 
 /* Sends cursor to the start of a line */
-void lineStartCursor(){
-  printf(prefix "0G");
-}
+void lineStartCursor() { printf(prefix "0G"); }
 
 /**
  * @brief Move cursor to a specific line and column
@@ -58,94 +53,69 @@ void lineStartCursor(){
  * @param line {int} - specific line (starting on 0)
  * @param column {int} - specific column (starting on 0)
  */
-void moveCursor(int line, int column){
-  printf(prefix "%d;%dH", line, column);
-}
+void moveCursor(int line, int column) { printf(prefix "%d;%dH", line, column); }
 
 /**
  * @brief Sends cursor *UP* a number of lines
  *
  * @param lines {int} - number of lines to go up
-*/
-void upCursor(int lines){
-  printf(prefix "%dA", lines);
-}
+ */
+void upCursor(int lines) { printf(prefix "%dA", lines); }
 
 /**
  * @brief Sends cursor *DOWN* a number of lines
  *
  * @param lines {int} - number of lines to go down
-*/
-void downCursor(int lines){
-  printf(prefix "%dB", lines);
-}
+ */
+void downCursor(int lines) { printf(prefix "%dB", lines); }
 
 /**
  * @brief Sends cursor *RIGHT* a number of columns
  *
  * @param columns {int} - number of columns to go right
-*/
-void rightCursor(int columns){
-  printf(prefix "%dC", columns);
-}
+ */
+void rightCursor(int columns) { printf(prefix "%dC", columns); }
 
 /**
  * @brief Sends cursor *LEFT* a number of columns
  *
  * @param columns {int} - number of columns to go left
-*/
-void leftCursor(int columns){
-  printf(prefix "%dD", columns);
-}
-
+ */
+void leftCursor(int columns) { printf(prefix "%dD", columns); }
 
 /* Saves the current cursor postion */
-void saveCursor(){
-  printf(prefix "s");
-}
+void saveCursor() { printf(prefix "s"); }
 
 /* Go ot the last cursor saved position */
-void restoreCursor(){
-  printf(prefix "u");
-}
-
+void restoreCursor() { printf(prefix "u"); }
 
 /*------------------------*
  * Clean Screen Functions *
  *------------------------*/
 
 /* Clear entire Screen */
-void clear(){
-  #ifdef _WIN32
-    system("cls");
-  #elif linux
-    printf(prefix "2J");
-  #elif __APPLE__
-    system("/usr/bin/osascript -e");
-  #endif
+void clear() {
+#ifdef _WIN32
+  system("cls");
+#elif linux
+  // printf(prefix "2J");
+  system("clear");
+#elif __APPLE__
+  system("/usr/bin/osascript -e");
+#endif
 }
 
 /* Clear from cursor to START of Screen */
-void clearToScreenStart(){
-    printf(prefix "1J");
-}
+void clearToScreenStart() { printf(prefix "1J"); }
 
 /* Clear from cursor to END of Screen */
-void clearToScreenEnd(){
-  printf(prefix "0J");
-}
+void clearToScreenEnd() { printf(prefix "0J"); }
 
 /* Clear from cursor to START of Line */
-void clearToLineStart(){
-  printf(prefix "1K");
-}
+void clearToLineStart() { printf(prefix "1K"); }
 
 /* Clear from cursor to END of Line */
-void clearToLineEnd(){
-  printf(prefix "0k");
-}
+void clearToLineEnd() { printf(prefix "0K"); }
 
 /* Erase entire Line */
-void cleanLine(){
-  printf(prefix "2k");
-}
+void cleanLine() { printf(prefix "2k"); }
