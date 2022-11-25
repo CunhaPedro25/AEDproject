@@ -13,13 +13,21 @@ void titulo(char *title);
 
 
 /*----- Cursor Control ------*/
+void moveCursor(int line, int column);
+void upCursor(int lines);
+void downCursor(int lines);
+void rightCursor(int columns);
+void leftCursor(int columns);
 void saveCursor();
 void restoreCursor();
 
 /*----- Clear Functions -----*/
 void clear();
-void clearToEnd();
-
+void clearToScreenStart();
+void clearToScreenEnd();
+void clearToLineStart();
+void clearToLineEnd();
+void cleanLine();
 
 
 #endif //MANUAL_MD_UI_H
