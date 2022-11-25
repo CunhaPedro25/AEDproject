@@ -6,25 +6,25 @@
 
 #define equipamentos_h
 
-typedef struct Placas {
+typedef struct {
   char *ip;
   char *mask;
   char *broadcast;
-} Placa;
+} Placas;
 
-typedef struct Discos {
+typedef struct{
   char *name;
   int capacidade; // Capacidade do disco
-} Disco;
+} Discos;
 
-typedef struct Aplicacoes {
+typedef struct{
   char versao;
   struct Validade {
     int dia;
     int mes;
     int ano;
   } validade;
-} Aplicacao;
+} Aplicacoes;
 
 typedef struct Equipamentos {
 
@@ -45,9 +45,9 @@ typedef struct Equipamentos {
   char *ram;
   char *sistema;
 
-  Disco discos[256];
-  Placa placas[256];
-  Aplicacao aplicacoes[256];
+  Discos discos[256];
+  Placas placas[256];
+  Aplicacoes aplicacoes[256];
 
 } Equipamento;
 
