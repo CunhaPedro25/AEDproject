@@ -6,3 +6,4 @@
 #include "structures/equipamentos.h"
 #include "ui/ui.h"
 #include "ui/menu.h"
+#include "functions/functions.h"

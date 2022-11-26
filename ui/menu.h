@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "ui.h"
+#include "../functions/functions.h"
 
 void mainMenu();
 
