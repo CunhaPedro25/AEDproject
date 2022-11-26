@@ -24,13 +24,23 @@ int menu(char *title, char **options, size_t size){
   printf("\n\nOpção: ");
   do {
     saveCursor();
-    char temporary;
-    scanf("%c", &temporary);
+    char temporary[2];
+    scanf("%s", temporary);
+
+    /* This part is being tested */
+      // If temporary is a character (0-9):
+      // option = temporary - '0';             // Passar 'char' to 'int' mantendo o valor ex: '1' = 1
+
+      // If temporary is a string:
+      char *trash;
+      option = strtol(temporary, &trash, 10);
+    /*-----------------------------*/
+
+    if(option < 0 || option > size) {
+      printf(prefix "5;31m [%d - Opção Invalida] " prefix "0m", option);    // Show error message
+    }
     restoreCursor();
     clearToLineEnd();
-
-
-    option = temporary - '0';             // Passar 'char' to 'int' mantendo o valor ex: '1' = 1
   } while (option < 0 || option > size);
 
   return option;
