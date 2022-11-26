@@ -36,14 +36,52 @@ int menu(char *title, char **options, size_t size){
   return option;
 }
 
-void aplicacoes(){
+/**
+ *  @brief Menu for network boards with respective options and functions
+ *
+ *  @options List, Edit, Delete
+ */
+void placasMenu(){
+  int value;
+
+  do {
+    char *options[3] =
+        {
+            "Lista",
+            "Editar",
+            "Eliminar"
+        };
+    size_t size = sizeof(options)/sizeof(options[0]);
+
+    value = menu("Placas", options, size);
+
+    switch (value) {
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+        clear();
+        break;
+
+      default:
+        value = 0;
+    }
+  } while (value != 0);
+}
+
+/**
+ *  @brief Menu for aplications with respective options and functions
+ *
+ *  @options Insert, List, Edit, Delete
+ */
+void aplicacoesMenu(){
   int value;
 
   do {
     char *options[4] =
         {
             "Inserir",
-            "Listar",
+            "Lista",
             "Editar",
             "Eliminar"
         };
@@ -65,16 +103,19 @@ void aplicacoes(){
   } while (value != 0);
 }
 
-void equipamentos(){
+/**
+ *  @brief Menu for equipment with respective options and functions
+ *
+ *  @options Insert, List
+ */
+void equipamentosMenu(){
   int value;
 
   do {
-    char *options[4] =
+    char *options[2] =
         {
             "Inserir",
-            "Listar",
-            "Editar",
-            "Eliminar"
+            "Lista"
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
@@ -85,7 +126,7 @@ void equipamentos(){
       case 2:
       case 3:
       case 4:
-        aplicacoes();
+        clear();
         break;
 
       default:
@@ -110,11 +151,13 @@ void mainMenu(){
 
     switch (value) {
       case 1:
-        equipamentos();
+        equipamentosMenu();
         break;
       case 2:
+        aplicacoesMenu();
+        break;
       case 3:
-        aplicacoes();
+        placasMenu();
         break;
 
       default:
