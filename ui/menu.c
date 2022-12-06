@@ -55,14 +55,8 @@ int menu(char *title, char **options, size_t size){
       continue;
     }
 
-    /* This part is being tested */
-      // If temporary is a character (0-9):
-      // option = temporary - '0';             // Passar 'char' to 'int' mantendo o valor ex: '1' = 1
-
-      // If temporary is a string:
-      char *trash;
-      option = strtol(temporary, &trash, 10);
-    /*-----------------------------*/
+    char *trash;
+    option = strtol(temporary, &trash, 10);
 
     if(option < 0 || option > size) {
       invalidOption();
