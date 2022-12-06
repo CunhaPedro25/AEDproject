@@ -31,5 +31,10 @@ void clearToLineStart();
 void clearToLineEnd();
 void cleanLine();
 
+/*------ Color Functions ------*/
+void textColor(int color);
+void backgroundColor(int color);
+void resetStyles();
+
 
 #endif //UI_H

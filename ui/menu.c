@@ -37,7 +37,9 @@ int menu(char *title, char **options, size_t size){
     /*-----------------------------*/
 
     if(option < 0 || option > size) {
-      printf(prefix "5;31m [%d - Opção Invalida] " prefix "0m", option);    // Show error message
+      textColor(RED);
+      printf("[%d - Opção Invalida]", option);    // Show error message
+      resetStyles();
     }
     restoreCursor();
     clearToLineEnd();

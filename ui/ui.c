@@ -121,3 +121,16 @@ void clearToLineEnd() { printf(prefix "0K"); }
 
 /* Erase entire Line */
 void cleanLine() { printf(prefix "2K"); }
+
+
+
+/*------------------*
+ * Colors Functions *
+ *------------------*/
+void textColor(int color){
+  printf(prefix "%dm", 30+color);
+}
+void backgroundColor(int color){
+  printf(prefix "%dm", 40+color);
+}
+void resetStyles(){ printf(prefix "0m");}
