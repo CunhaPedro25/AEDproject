@@ -10,7 +10,6 @@
 #include "colors.h"
 #include "../functions/functions.h"
 
-int isnumber(char *text);
 void mainMenu();
 
 #endif //MENUS_H
