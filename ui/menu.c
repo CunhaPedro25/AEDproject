@@ -1,17 +1,5 @@
 #include "menu.h"
 
-int isnumber(char *text){
-  for(int i = 0; i < strlen(text); i++){
-    if(i == 0 && text[i] == '\n'){
-      return 0;
-    }
-    if(!isdigit(text[i]) && text[i] != '\n'){
-      return 0;
-    }
-  }
-  return 1;
-}
-
 void invalidOption(){
   textColor(RED);
   printf("[Opção Invalida]");    // Show error message
@@ -32,7 +20,7 @@ void invalidOption(){
  *  @returns {int} - Option selected
  */
 int menu(char *title, char **options, size_t size){
-  int option;
+  int option = -1;
 
   clear();
   titulo(title);
