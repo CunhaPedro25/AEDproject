@@ -1,8 +1,9 @@
 #include "includes.h"
 
-int main() {
-   menu();
+int main(){
+  setlocale(LC_ALL, "Portuguese");
 
-  system("pause");
+  mainMenu();
+
   return 0;
 }

@@ -54,7 +54,7 @@ informático. Para tal necessita de um “software” que corresponda aos seguin
 
 Minimo:
 - [ ] Estrutura de dados dos equipamentos
-- [ ] Criar menus
+- [x] Criar menus
 - [ ] Funções para inserir equipamentos, aplicações, e placas de rede
 - [ ] Listar equipamentos e aplicações
 
