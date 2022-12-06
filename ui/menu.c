@@ -1,8 +1,29 @@
 #include "menu.h"
 
+int isnumber(char *text){
+  for(int i = 0; i < strlen(text); i++){
+    if(i == 0 && text[i] == '\n'){
+      return 0;
+    }
+    if(!isdigit(text[i]) && text[i] != '\n'){
+      return 0;
+    }
+  }
+  return 1;
+}
+
+void invalidOption(){
+  textColor(RED);
+  printf("[Opção Invalida]");    // Show error message
+  resetStyles();
+  restoreCursor();
+  clearToLineEnd();
+}
+
 /**
  *
  *  @brief Creates Menu with custom options and title
+ *
  *
  *  @param title {char *} - Menu title
  *  @param options {char **} - Array of stings with options that are used
@@ -24,8 +45,15 @@ int menu(char *title, char **options, size_t size){
   printf("\n\nOpção: ");
   do {
     saveCursor();
-    char temporary[2];
-    scanf("%s", temporary);
+    char temporary[10];
+
+    fgets(temporary, 10, stdin);
+    fflush(stdin);
+
+    if(!isnumber(temporary)){
+      invalidOption();
+      continue;
+    }
 
     /* This part is being tested */
       // If temporary is a character (0-9):
@@ -37,12 +65,8 @@ int menu(char *title, char **options, size_t size){
     /*-----------------------------*/
 
     if(option < 0 || option > size) {
-      textColor(RED);
-      printf("[%d - Opção Invalida]", option);    // Show error message
-      resetStyles();
+      invalidOption();
     }
-    restoreCursor();
-    clearToLineEnd();
   } while (option < 0 || option > size);
 
   return option;
