@@ -20,7 +20,7 @@ void invalidOption(){
  *  @returns {int} - Option selected
  */
 int menu(char *title, char **options, size_t size){
-  int option;
+  int option = -1;
 
   clear();
   titulo(title);
@@ -40,7 +40,6 @@ int menu(char *title, char **options, size_t size){
 
     if(!isnumber(temporary)){
       invalidOption();
-      option = -1;
       continue;
     }
 
