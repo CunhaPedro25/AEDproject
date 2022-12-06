@@ -53,7 +53,7 @@ informático. Para tal necessita de um “software” que corresponda aos seguin
 ## Objetivos:
 
 Minimo:
-- [ ] Estrutura de dados dos equipamentos
+- [x] Estrutura de dados dos equipamentos
 - [x] Criar menus
 - [ ] Funções para inserir equipamentos, aplicações, e placas de rede
 - [ ] Listar equipamentos e aplicações
