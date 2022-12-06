@@ -52,6 +52,7 @@ int menu(char *title, char **options, size_t size){
 
     if(!isnumber(temporary)){
       invalidOption();
+      option = -1;
       continue;
     }
 
