@@ -4,13 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "utilities/colors.h"
 
 #define prefix "\e["
-
-/*----- Print Functions --------*/
-void linha(int size);
-void titulo(char *title);
-
 
 /*----- Cursor Control ------*/
 void goHomeCursor();
@@ -22,6 +18,7 @@ void rightCursor(int columns);
 void leftCursor(int columns);
 void saveCursor();
 void restoreCursor();
+void cursorVisibility(int state);
 
 /*----- Clear Functions -----*/
 void clear();
@@ -36,5 +33,9 @@ void textColor(int color);
 void backgroundColor(int color);
 void resetStyles();
 
+/*----- Print Functions --------*/
+void line(int size, int breakLine);
+void renderTitle(char *title);
+void showInvalidOption();
 
 #endif //UI_H
