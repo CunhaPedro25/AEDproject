@@ -18,6 +18,6 @@ filesPy.remove("./main.c")
 for file in filesPy:
     filesDirs = seperator.join(filesPy)
 
-command = f"gcc main.c {filesDirs} -o app"
+command = f"gcc main.c {filesDirs} -o app && ./app"
 print(command)
 os.system(command)
