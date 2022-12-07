@@ -1,7 +1,3 @@
-//
-// Created by GL552 on 06/12/2022.
-//
-
 #ifndef COLORS_H
 #define COLORS_H
 
