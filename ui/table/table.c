@@ -79,9 +79,7 @@ int controls(int *size, int lineSize){
   printf("\n\n> ");
   saveCursor();
   do{
-    cursorVisibility(1);
     fgets(option, 10, stdin);
-    cursorVisibility(0);
     fflush(stdin);
   }while(validLetter(option, size) == -1);
 

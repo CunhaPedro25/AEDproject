@@ -15,7 +15,6 @@ int menu(char *title, char **options, size_t size){
   int option = -1;
 
   clear();
-  cursorVisibility(0);
   renderTitle(title);
 
   for (int i = 0; i < size; ++i) {
@@ -28,9 +27,7 @@ int menu(char *title, char **options, size_t size){
     saveCursor();
     char temporary[10];
 
-    cursorVisibility(1);
     fgets(temporary, 10, stdin);
-    cursorVisibility(0);
     fflush(stdin);
 
     if((temporary[0] == 's' || temporary[0] == 'S') && temporary[1] == '\n'){

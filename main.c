@@ -2,8 +2,7 @@
 
 int main(){
   setlocale(LC_ALL, "Portuguese");
-
-  cursorVisibility(0);
+  cursorVisibility(1);
   mainMenu();
 
   return 0;
