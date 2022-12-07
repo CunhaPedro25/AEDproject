@@ -1,13 +1,5 @@
 #include "menu.h"
 
-void invalidOption(){
-  textColor(RED);
-  printf("[Opção Invalida]");    // Show error message
-  resetStyles();
-  restoreCursor();
-  clearToLineEnd();
-}
-
 /**
  *
  *  @brief Creates Menu with custom options and title
@@ -23,12 +15,12 @@ int menu(char *title, char **options, size_t size){
   int option = -1;
 
   clear();
-  titulo(title);
+  renderTitle(title);
 
   for (int i = 0; i < size; ++i) {
-    printf("%d - %s\n", i+1, options[i]);
+    printf("    [%d] %s\n", i+1, options[i]);
   }
-  printf("0 - Sair");
+  printf("    [s] Sair");
 
   printf("\n\nOpção: ");
   do {
@@ -38,8 +30,12 @@ int menu(char *title, char **options, size_t size){
     fgets(temporary, 10, stdin);
     fflush(stdin);
 
+    if((temporary[0] == 's' || temporary[0] == 'S') && temporary[1] == '\n'){
+      return 0;
+    }
+
     if(!isnumber(temporary)){
-      invalidOption();
+      showInvalidOption();
       continue;
     }
 
@@ -47,7 +43,7 @@ int menu(char *title, char **options, size_t size){
     option = strtol(temporary, &trash, 10);
 
     if(option < 0 || option > size) {
-      invalidOption();
+      showInvalidOption();
     }
   } while (option < 0 || option > size);
 
@@ -109,7 +105,10 @@ void aplicacoesMenu(){
 
     switch (value) {
       case 1:
+        clear();
       case 2:
+        aplicacoesTable();
+        break;
       case 3:
       case 4:
         clear();
@@ -141,10 +140,10 @@ void equipamentosMenu(){
 
     switch (value) {
       case 1:
-      case 2:
-      case 3:
-      case 4:
         clear();
+        break;
+      case 2:
+        equipamentosTable();
         break;
 
       default:

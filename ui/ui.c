@@ -9,33 +9,6 @@
  *
  */
 
-/*-----------------*
- * Print Functions *
- *-----------------*/
-
-/**
- * @brief Print a line of "-" with a custom size
- *
- * @param size {int} - number of "-" to print (size of line)
- */
-void linha(int size) {
-  for (int i = 0; i < size; ++i) {
-    printf("-");
-  }
-  printf("\n");
-}
-/**
- *  @brief Print a custom title in the middle of responsive lines
- *
- * @param title {char *} - custom title
- */
-void titulo(char *title) {
-  int larguraTitulo = (int)(strlen(title) + strlen("/*--  --*/"));
-  linha(larguraTitulo);
-  printf("/*-- %s --*/\n", title);
-  linha(larguraTitulo);
-}
-
 /*--------------------------*
  * Cursor Control Functions *
  *--------------------------*/
@@ -89,6 +62,15 @@ void saveCursor() { printf(prefix "s"); }
 /* Go ot the last cursor saved position */
 void restoreCursor() { printf(prefix "u"); }
 
+void cursorVisibility(int state){
+  if(state){
+    printf(prefix "?25h");
+  }else{
+    printf(prefix "?25l");
+  }
+}
+
+
 /*------------------------*
  * Clean Screen Functions *
  *------------------------*/
@@ -104,7 +86,7 @@ void clear() {
     system("clear");
   #elif __APPLE__
     system("/usr/bin/osascript -e");
-#endif
+  #endif
 }
 
 /* Clear from cursor to START of Screen */
@@ -134,3 +116,40 @@ void backgroundColor(int color){
   printf(prefix "%dm", 40+color);
 }
 void resetStyles(){ printf(prefix "0m");}
+
+/*-----------------*
+ * Print Functions *
+ *-----------------*/
+
+/**
+ * @brief Print a line of "-" with a custom size
+ *
+ * @param size {int} - number of "-" to print (size of line)
+ * @param breakLine {bool} - Confirm to add breakLine in the end
+ */
+void line(int size, int breakLine) {
+  for (int i = 0; i < size; ++i) {
+    printf("-");
+  }
+  if(breakLine)
+    printf("\n");
+}
+/**
+ *  @brief Print a custom title in the middle of responsive lines
+ *
+ * @param title {char *} - custom title
+ */
+void renderTitle(char *title) {
+  int titleSize = (int)(strlen(title) + strlen("/*--  --*/"));
+  line(titleSize, 1);
+  printf("/*-- %s --*/\n", title);
+  line(titleSize, 1);
+}
+
+void showInvalidOption(){
+  textColor(RED);
+  printf("[Opção Invalida]");    // Show error message
+  resetStyles();
+  restoreCursor();
+  clearToLineEnd();
+}

@@ -1,4 +1,6 @@
 /.idea
 /cmake-build-debug
 
-.exe
+*.exe
+*.out
+app

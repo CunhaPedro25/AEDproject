@@ -5,5 +5,6 @@
 /* Ficheiros Externos */
 #include "structures/equipamentos.h"
 #include "ui/ui.h"
-#include "ui/menu.h"
+#include "ui/menu/menu.h"
+#include "ui/table/table.h"
 #include "functions/functions.h"
