@@ -1,1 +1,0 @@
-gcc main.c ui/menu.c ui/ui.c functions/global.c functions/equipamento.c functions/aplicacoes.c functions/placas.c -o app && ./app
