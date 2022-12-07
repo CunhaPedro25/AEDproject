@@ -4,5 +4,6 @@
 #include "../main.h"
 
 void equipamentosTable();
+void aplicacoesTable();
 
 #endif //TABLE_H

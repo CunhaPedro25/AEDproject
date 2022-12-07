@@ -96,6 +96,35 @@ int controls(int *size, int lineSize){
   return -1;
 }
 
+void aplicacoesTable(){
+  int option = -1;
+  int size = maxID < 5 ? maxID : 5;
+
+  do {
+    clear();
+    renderTitle("Tabela de Aplicações");
+
+    char *keys = "| id |  Nome  |  Designação  |  Tipo  |";
+
+    int tableSize = (int)strlen(keys);
+
+
+    line(tableSize,1);
+    printf("%s\n", keys);
+    line(tableSize,1);
+    for(int i = (size-5 < 0 ? 0 : size-5); i < size; i++){
+      printf("| %2d ", i+1);
+      printf("|  LOl  ");
+      printf("|  LOl  ");
+      printf("|  LOl  |");
+      printf("\n");
+    }
+    printf("%d", size);
+
+    option = controls(&size, tableSize);
+  } while (option != 0);
+}
+
 
 void equipamentosTable(){
   int option = -1;
@@ -114,7 +143,7 @@ void equipamentosTable(){
     printf("%s\n", keys);
     line(tableSize,1);
     for(int i = (size-5 < 0 ? 0 : size-5); i < size; i++){
-      printf("|  %d  ", i+1);
+      printf("| %2d ", i+1);
       printf("|  LOl  ");
       printf("|  LOl  ");
       printf("|  LOl  |");

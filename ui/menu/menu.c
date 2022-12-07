@@ -108,7 +108,10 @@ void aplicacoesMenu(){
 
     switch (value) {
       case 1:
+        clear();
       case 2:
+        aplicacoesTable();
+        break;
       case 3:
       case 4:
         clear();
