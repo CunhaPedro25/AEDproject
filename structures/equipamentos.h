@@ -28,6 +28,8 @@ typedef struct{
 
 typedef struct Equipamentos {
 
+  int type;
+
   struct Aquisicao {
     int dia; // equipamento[0].data.dia
     int mes;
@@ -38,7 +40,7 @@ typedef struct Equipamentos {
   int garantia; // Em meses
 
   struct CPUs {
-    char *name;
+    char name[50];
     float clock; // Velociade do relogio
   } cpu;
 
@@ -51,5 +53,4 @@ typedef struct Equipamentos {
 
 } Equipamento;
 
-Equipamento equipamento[256];
 #endif // !equipamentos_h
