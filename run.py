@@ -10,7 +10,7 @@ seperator = ' '
 for path, subdirs, files in os.walk(root):
     for name in files:
         relativeFilePath = os.path.join(path, name)
-        if relativeFilePath[-2:] == '.c': 
+        if relativeFilePath[-2:] == '.c' and (path.find("cmake") == -1):
             filesPy.append(os.path.join(path, name))
 
 filesPy.remove("./main.c")
