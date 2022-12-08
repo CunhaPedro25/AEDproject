@@ -9,6 +9,8 @@
 #include "../ui/ui.h"
 
 int isnumber(char *text);
+int strcut(char *str, int begin, int len);
+const char* truncate(char *string, int limit);
 void removeNewline(char *string);
 void readString(char *string,int maxInputSize);
 void readInt(int *n, int maxInputSize);

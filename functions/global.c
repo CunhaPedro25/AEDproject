@@ -12,6 +12,25 @@ int isnumber(char *text){
   return 1;
 }
 
+int strcut(char *str, int begin, int len){
+  int lentgh = (int)strlen(str);
+
+  if (len < 0) len = lentgh - begin;
+  if (begin + len > lentgh) len = lentgh - begin;
+  memmove(str + begin, str + begin + len, lentgh - len + 1);
+
+  return len;
+}
+
+const char* truncate(char *string, int limit){
+  if(strlen(string) > limit){
+    strcut(string, limit-2, -1);
+    strcat(string, "...");
+  }
+
+  return string;
+}
+
 void readString(char *string, int maxInputSize){
   fgets(string, maxInputSize, stdin);
   removeNewline(string);
