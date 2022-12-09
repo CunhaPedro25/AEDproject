@@ -13,7 +13,7 @@ typedef struct {
 } Placas;
 
 typedef struct{
-  char *name;
+  char name[50];
   int capacidade; // Capacidade do disco
 } Discos;
 
@@ -50,7 +50,7 @@ typedef struct Equipamentos {
   int diskNum;
   int appNum;
   int networkCardNum;
-
+  int numeroDiscos;
   Discos discos[256];
   Placas placas[256];
   Aplicacoes aplicacoes[256];

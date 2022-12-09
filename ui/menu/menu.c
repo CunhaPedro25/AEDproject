@@ -11,7 +11,7 @@
  *
  *  @returns {int} - Option selected
  */
-int menu(char *title, char **options, size_t size){
+int menu(char *title, char **options, size_t size, char *type){
   int option = -1;
 
   clear();
@@ -20,7 +20,7 @@ int menu(char *title, char **options, size_t size){
   for (int i = 0; i < size; ++i) {
     printf("    [%d] %s\n", i+1, options[i]);
   }
-  printf("    [s] Sair");
+  printf("    [s] %s", strcmp(type, "main") ? "Voltar" : "Sair");
 
   printf("\n\nOpção: ");
   do {
@@ -67,7 +67,7 @@ void placasMenu(){
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Placas", options, size);
+    value = menu("Placas", options, size, "sub");
 
     switch (value) {
       case 1:
@@ -101,7 +101,7 @@ void aplicacoesMenu(){
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Aplicações", options, size);
+    value = menu("Aplicações", options, size, "sub");
 
     switch (value) {
       case 1:
@@ -136,7 +136,7 @@ void equipamentosMenu(){
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Equipamentos", options, size);
+    value = menu("Equipamentos", options, size, "sub");
 
     switch (value) {
       case 1:
@@ -164,7 +164,7 @@ void mainMenu(){
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Gestão de Equipamentos", options, size);
+    value = menu("Gestão de Equipamentos", options, size, "main");
 
     switch (value) {
       case 1:

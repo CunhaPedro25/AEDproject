@@ -9,5 +9,6 @@
 #include "ui.h"
 #include "utilities/colors.h"
 #include "../functions/functions.h"
+#include "../structures/equipamentos.h"
 
 #endif //MAIN_H
