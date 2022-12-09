@@ -6,4 +6,4 @@ set(CMAKE_C_STANDARD 23)
 add_executable(main main.c
         ui/menu/menu.c ui/table/table.c ui/ui.c
                     functions/global.c
-                    functions/equipamento.c functions/aplicacoes.c functions/placas.c)
+                    functions/insertFuncs.c )
