@@ -14,7 +14,7 @@ int validTableOption(char *option, int *size, int maxID){
       case 'a':
       case 'A':
         if (*size-5 > 0) {
-          *size -= maxID == *size ? *size%5 : 5;
+          *size -= (maxID == *size && maxID % 5 != 0) ? *size%5 : 5;
           return  True;
         }
         restoreCursor();
@@ -22,7 +22,7 @@ int validTableOption(char *option, int *size, int maxID){
         return False;
       case 'd':
       case 'D':
-        if(maxID == 0){
+        if(maxID == 0 || *size == maxID){
           restoreCursor();
           clearToScreenEnd();
           return False;
@@ -137,7 +137,7 @@ void aplicacoesTable(){
 
 
 void equipamentosTable(){
-  int option = -1;
+  int option;
   int size = maxEquipmentId < 5 ? maxEquipmentId : 5;
 
   do {
@@ -152,7 +152,7 @@ void equipamentosTable(){
     line(tableSize,1);
     if(maxEquipmentId > 0){
       char temp[100];
-      int startingSize = (size-5 < 0 ? 0 : (size == maxEquipmentId ? size-(maxEquipmentId % 5) : size-5));
+      int startingSize = (size-5 < 0 ? 0 : (size == maxEquipmentId && (maxEquipmentId % 5) != 0 ? size-(maxEquipmentId % 5) : size-5));
       for(int i = startingSize; i < size; i++){
         printf("| %2d ", i+1);
         printf("|  %s%-5s  ", equipamento[i].type == 1 ? "   " : "", equipamento[i].type == 1 ? "PC" : "SERVIDOR");
