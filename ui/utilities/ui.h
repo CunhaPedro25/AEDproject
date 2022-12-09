@@ -35,7 +35,7 @@ void resetStyles();
 
 /*----- Print Functions --------*/
 void line(int size, int breakLine);
-void renderTitle(char *title);
+void renderTitle(const char *title);
 void showInvalidOption();
 
 #endif //UI_H
