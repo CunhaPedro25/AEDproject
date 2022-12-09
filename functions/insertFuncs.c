@@ -65,7 +65,7 @@ void insertDiskSize(int id){
 void insertAppVersion(int id){
   int appId = equipamento[id].appNum;
   printf("Versao da App ->");
-  readString(equipamento[id].aplicacoes[appId].Versao, 20);
+  readString(equipamento[id].aplicacoes[appId].versao, 20);
 }
 
 void insertAppExpireDate(int id){

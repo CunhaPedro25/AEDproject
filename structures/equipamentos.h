@@ -18,7 +18,7 @@ typedef struct{
 } Discos;
 
 typedef struct{
-  char versao;
+  char versao[20];
   struct Validade {
     int dia;
     int mes;
@@ -50,7 +50,6 @@ typedef struct Equipamentos {
   int diskNum;
   int appNum;
   int networkCardNum;
-  int numeroDiscos;
   Discos discos[256];
   Placas placas[256];
   Aplicacoes aplicacoes[256];

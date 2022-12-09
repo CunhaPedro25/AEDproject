@@ -181,12 +181,12 @@ void equipamentosTable(){
 
         printf("|  %3d GB  ", equipamento[i].ram);
 
-        if(equipamento[i].numeroDiscos == 1) {
+        if(equipamento[i].diskNum == 1) {
           strcpy(temp, equipamento[i].discos[0].name);
           printf("|  %-13s  ", truncate(temp, 13));
           printf("/  %2d  ", equipamento[i].discos[0].capacidade);
         }else{
-          printf("|  %2d Discos (Selecione) ", equipamento[i].numeroDiscos);
+          printf("|  %2d Discos (Selecione) ", equipamento[i].diskNum);
         }
 
         printf("|\n");
