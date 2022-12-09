@@ -4,22 +4,7 @@ extern int maxAppId;
 extern int maxEquipmentId;
 extern Equipamento equipamento[256];
 
-int validNumber(char *option, int maxID){
-  int value;
-  char *trash;
-  value = strtol(option, &trash, 10);
-
-  if(strlen(trash) > 1) return False;
-
-  if(value < 1 || value > maxID) {
-    showInvalidOption();
-    return False;
-  }
-
-  return value;
-}
-
-int validOption(char *option, int *size, int maxID){
+int validTableOption(char *option, int *size, int maxID){
   if(isnumber(option)){
     return validNumber(option, maxID);
   }
@@ -37,14 +22,18 @@ int validOption(char *option, int *size, int maxID){
         return False;
       case 'd':
       case 'D':
+        if(maxID == 0){
+          restoreCursor();
+          clearToScreenEnd();
+          return False;
+        }
+
         if (*size+5 <= maxID) {
           *size += 5;
           return  True;
-        }else{
-          if(*size - maxID < 5) {
-            *size = maxID;
-            return  True;
-          }
+        }else if(*size - maxID < 5){
+          *size = maxID;
+          return  True;
         }
         restoreCursor();
         clearToScreenEnd();
@@ -63,7 +52,7 @@ int validOption(char *option, int *size, int maxID){
 }
 
 
-int controls(int *size, int maxID, int lineSize){
+int tableControls(int *size, int maxID, int lineSize){
   char option[10];
   char functionsText[2][20] = {
       " Selecionar <id> ",
@@ -103,7 +92,7 @@ int controls(int *size, int maxID, int lineSize){
   do{
     fgets(option, 10, stdin);
     fflush(stdin);
-  }while(!validOption(option, size, maxID));
+  }while(!validTableOption(option, size, maxID));
 
   if((option[0] == 's' || option[0] == 'S') && option[1] == '\n'){
     return 0;
@@ -142,7 +131,7 @@ void aplicacoesTable(){
     }
     printf("%d", size);
 
-    option = controls(&size, maxAppId, tableSize);
+    option = tableControls(&size, maxAppId, tableSize);
   } while (option != 0);
 }
 
@@ -196,6 +185,9 @@ void equipamentosTable(){
       printf("Sem equipamentos");
     }
 
-    option = controls(&size, maxEquipmentId, tableSize);
+    option = tableControls(&size, maxEquipmentId, tableSize);
+    if(option >= 1 && option <= maxEquipmentId){
+      equipamentPage(option-1);
+    }
   } while (option != 0);
 }
