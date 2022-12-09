@@ -121,7 +121,7 @@ void insertDisk(int id){
   equipamento[id].diskNum++;
 }
 
-void insertEquipment(){
+void insertEquipment(int id){
   insertType(maxEquipmentId);
   insertAquisitionDate(maxEquipmentId);
   insertDepartament(maxEquipmentId);
