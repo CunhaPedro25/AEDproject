@@ -1,4 +1,5 @@
 #include "functions.h"
+#include <string.h>
 
 int validNumber(char *option, int maxID){
   int value;
@@ -44,8 +45,10 @@ const char* truncate(char *string, int limit){
 }
 
 void readString(char *string, int maxInputSize){
+  do {
   fgets(string, maxInputSize, stdin);
   removeNewline(string);
+  }while (strcmp(string,"")); 
 }
 
 void readInt(int *n, int maxInputSize){
@@ -54,7 +57,7 @@ void readInt(int *n, int maxInputSize){
   do {
   fgets(tempString, maxInputSize, stdin);
   removeNewline(tempString);
-  }while (isnumber(tempString) == False);
+  }while (isInt(tempString) == False);
   *n = strtol(tempString, &trash, 10);
 }
 
@@ -64,7 +67,7 @@ void readFloat(float *n, int maxInputSize){
   do {
   fgets(tempString, maxInputSize, stdin);
   removeNewline(tempString);
-  }while (isnumber(tempString) == False);
+  }while (isFloat(tempString) == False);
   *n = strtof(tempString, &trash);
 }
 
