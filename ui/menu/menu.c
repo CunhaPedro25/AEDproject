@@ -34,7 +34,7 @@ int menu(char *title, char **options, size_t size, char *type){
       return 0;
     }
 
-    if(!isint(temporary)){
+    if(!isInt(temporary)){
       showInvalidOption();
       continue;
     }

@@ -6,7 +6,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "../ui/ui.h"
+#include "../ui/utilities/ui.h"
 #include "../structures/equipamentos.h"
 
 typedef enum {
@@ -14,7 +14,7 @@ typedef enum {
 }boolean;
 
 int validNumber(char *option, int maxID);
-int isint(char *text);
+int isInt(char *text);
 int isfloat(char *text);
 int strcut(char *str, int begin, int len);
 const char* truncate(char *string, int limit);

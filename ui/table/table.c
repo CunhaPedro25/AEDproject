@@ -5,7 +5,7 @@ extern int maxEquipmentId;
 extern Equipamento equipamento[256];
 
 int validTableOption(char *option, int *size, int maxID){
-  if(isint(option)){
+  if(isInt(option)){
     return validNumber(option, maxID);
   }
 
@@ -99,7 +99,7 @@ int tableControls(int *size, int maxID, int lineSize){
   }
 
   /* Check if it's a number and return its value if true (0 - MaxID) */
-  if(isint(option)) {
+  if(isInt(option)) {
     return validNumber(option, maxID);
   }
 
