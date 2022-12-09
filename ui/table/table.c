@@ -9,11 +9,11 @@ int validNumber(char *option, int maxID){
   char *trash;
   value = strtol(option, &trash, 10);
 
-  if(strlen(trash) > 1) return -1;
+  if(strlen(trash) > 1) return False;
 
-  if(value < 0 || value > maxID) {
+  if(value < 1 || value > maxID) {
     showInvalidOption();
-    return -1;
+    return False;
   }
 
   return value;
@@ -30,28 +30,28 @@ int validOption(char *option, int *size, int maxID){
       case 'A':
         if (*size-5 > 0) {
           *size -= maxID == *size ? *size%5 : 5;
-          return  1;
+          return  True;
         }
         restoreCursor();
         clearToScreenEnd();
-        return -1;
+        return False;
       case 'd':
       case 'D':
         if (*size+5 <= maxID) {
           *size += 5;
-          return  1;
+          return  True;
         }else{
           if(*size - maxID < 5) {
             *size = maxID;
-            return  1;
+            return  True;
           }
         }
         restoreCursor();
         clearToScreenEnd();
-        return -1;
+        return False;
       case 's':
       case 'S':
-        return 1;
+        return True;
 
       default:
         break;
@@ -59,7 +59,7 @@ int validOption(char *option, int *size, int maxID){
   }
 
   showInvalidOption();
-  return -1;
+  return False;
 }
 
 
@@ -98,12 +98,12 @@ int controls(int *size, int maxID, int lineSize){
   line(lineSize,0);
   printf("%s\n", *size+5 <= maxID || *size != maxID ? " D ->" : "-----");
 
-  printf("\n> ");
+  printf("\n❯ ");
   saveCursor();
   do{
     fgets(option, 10, stdin);
     fflush(stdin);
-  }while(validOption(option, size, maxID) == -1);
+  }while(!validOption(option, size, maxID));
 
   if((option[0] == 's' || option[0] == 'S') && option[1] == '\n'){
     return 0;
