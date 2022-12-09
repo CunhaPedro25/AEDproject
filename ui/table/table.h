@@ -2,6 +2,7 @@
 #define TABLE_H
 
 #include "../main.h"
+#include "../pages/pages.h"
 
 void equipamentosTable();
 void aplicacoesTable();
