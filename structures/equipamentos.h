@@ -7,9 +7,9 @@
 #define equipamentos_h
 
 typedef struct {
-  char *ip;
-  char *mask;
-  char *broadcast;
+  char ip[10];
+  char mask[10];
+  char broadcast[10];
 } Placas;
 
 typedef struct{
