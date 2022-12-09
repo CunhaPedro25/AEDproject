@@ -13,7 +13,7 @@ typedef struct {
 } Placas;
 
 typedef struct{
-  char *name;
+  char name[50];
   int capacidade; // Capacidade do disco
 } Discos;
 
@@ -44,9 +44,10 @@ typedef struct Equipamentos {
     float clock; // Velociade do relogio
   } cpu;
 
-  char *ram;
+  int ram;
   char *sistema;
 
+  int numeroDiscos;
   Discos discos[256];
   Placas placas[256];
   Aplicacoes aplicacoes[256];
