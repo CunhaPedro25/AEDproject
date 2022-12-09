@@ -17,10 +17,7 @@ int validNumber(char *option, int maxID){
 
 int isnumber(char *text){
   for(int i = 0; i < strlen(text); i++){
-    if(i == 0 && text[i] == '\n'){
-      return False;
-    }
-    if(!isdigit(text[i]) && text[i] != '\n'){
+    if(!isdigit(text[i])){
       return False;
     }
   }
@@ -53,14 +50,22 @@ void readString(char *string, int maxInputSize){
 
 void readInt(int *n, int maxInputSize){
   char tempString[50];
+  char *trash;
+  do {
   fgets(tempString, maxInputSize, stdin);
-  *n = atoi(tempString);
+  removeNewline(tempString);
+  }while (isnumber(tempString) == False);
+  *n = strtol(tempString, &trash, 10);
 }
 
 void readFloat(float *n, int maxInputSize){
   char tempString[50];
+  char *trash;
+  do {
   fgets(tempString, maxInputSize, stdin);
-  *n = atof(tempString);
+  removeNewline(tempString);
+  }while (isnumber(tempString) == False);
+  *n = strtof(tempString, &trash);
 }
 
 void removeNewline(char *string){
