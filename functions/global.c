@@ -91,3 +91,37 @@ void readFloat(float *n, int maxInputSize){
 void removeNewline(char *string){
   string[strcspn(string, "\n")] = 0;
 }
+
+int isleapYear(int y) {
+   if((y % 4 == 0) && (y % 100 != 0) && (y % 400 == 0))
+      return True;
+   else
+      return False;
+}
+int datevalid(int d, int m, int y) {
+  //Quick exit routes
+  if(y < 1970)
+    return False;
+  if(m < 1 || m > 12)
+    return 0;
+  if(d < 1 || d > 31)
+    return False;
+  //Check for february
+  if( m == 2 ){
+    if(isleapYear(y)) {
+      if(d <= 29)
+        return True;
+      else
+        return False;
+    }
+  }
+  //April, June, September and November are with 30 days
+  if ( m == 4 || m == 6 || m == 9 || m == 11 ){
+    if(d <= 30)
+      return True;
+    else
+      return False;
+  }
+  
+  return True;
+}
