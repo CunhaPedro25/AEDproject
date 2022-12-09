@@ -16,9 +16,23 @@ int validNumber(char *option, int maxID){
   return value;
 }
 
-int isnumber(char *text){
+int isint(char *text){
   for(int i = 0; i < strlen(text); i++){
     if(!isdigit(text[i])){
+      return False;
+    }
+  }
+  return True;
+}
+
+int isfloat(char *text){
+  int strikes = 0;
+  for(int i = 0; i < strlen(text); i++){
+    if(!isdigit(text[i])){
+      if(text[i] == '.' || text[i] == ','){
+        strikes++;
+        if(strikes > 1) return False;
+      }
       return False;
     }
   }

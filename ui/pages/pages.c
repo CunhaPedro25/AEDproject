@@ -1,7 +1,7 @@
 #include "pages.h"
 
 int validPagesOption(char *option, int *id, int maxID){
-  if(isnumber(option)){
+  if(isint(option)){
     return validNumber(option, maxID);
   }
 
@@ -76,7 +76,7 @@ int pageControls(int *id, int maxID){
   }
 
   /* Check if it's a number and return its value if true (0 - MaxID) */
-  if(isnumber(option)) {
+  if(isint(option)) {
     return validNumber(option, maxID);
   }
 
