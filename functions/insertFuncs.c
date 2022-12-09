@@ -80,6 +80,35 @@ void insertAppExpireDate(int id){
   readInt(&equipamento[id].app[appId].validade.ano, 20);
 }
 
+void insertInsurance(int id){
+  printf("Garantia do produto(meses) ->");
+  readInt(&equipamento[id].garantia, 20);
+}
+
+void insertIp(int id){
+  int networkCardId = equipamento[id].networkCardNum;
+  printf("Ip ->");
+  readString(equipamento[id].placas[networkCardId].ip, 20);
+}
+
+void insertMask(int id){
+  int networkCardId = equipamento[id].networkCardNum;
+  printf("Mascara ->");
+  readString(equipamento[id].placas[networkCardId].mask, 20);
+}
+
+void insertBroadcast(int id){
+  int networkCardId = equipamento[id].networkCardNum;
+  printf("Broadcast ->");
+  readString(equipamento[id].placas[networkCardId].broadcast, 20);
+}
+
+void insertNetworkCard(int id){
+  insertIp(id);
+  insertMask(id);
+  insertBroadcast(id);
+}
+
 void insertApp(int id){
   insertAppVersion(id);
   insertAppExpireDate(id);
@@ -103,6 +132,5 @@ void insertEquipment(){
   insertDisk(maxEquipmentId);
   insertNetworkCard(maxEquipmentId);
   insertApp(maxEquipmentId);
-
   maxEquipmentId++;
 }
