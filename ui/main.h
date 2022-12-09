@@ -6,7 +6,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "ui.h"
+#include "utilities/ui.h"
 #include "utilities/colors.h"
 #include "../functions/functions.h"
 #include "../structures/equipamentos.h"
