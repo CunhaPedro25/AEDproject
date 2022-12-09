@@ -9,7 +9,7 @@ int validTableOption(char *option, int *size, int maxID){
     return validNumber(option, maxID);
   }
 
-  if(option[1] == '\n') {
+  if(option[1] == '\0') {
     switch (option[0]) {
       case 'a':
       case 'A':
@@ -90,11 +90,10 @@ int tableControls(int *size, int maxID, int lineSize){
   printf("\n❯ ");
   saveCursor();
   do{
-    fgets(option, 10, stdin);
-    fflush(stdin);
+    readString(option, 10);
   }while(!validTableOption(option, size, maxID));
 
-  if((option[0] == 's' || option[0] == 'S') && option[1] == '\n'){
+  if((option[0] == 's' || option[0] == 'S')){
     return 0;
   }
 

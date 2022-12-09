@@ -60,9 +60,12 @@ const char* truncate(char *string, int limit){
 
 void readString(char *string, int maxInputSize){
   do {
-  fgets(string, maxInputSize, stdin);
-  removeNewline(string);
-  }while (strcmp(string,"")); 
+    fgets(string, maxInputSize, stdin);
+    removeNewline(string);
+
+    if(strcmp(string,"") == False)
+      showInvalidOption();
+  }while (strcmp(string,"") == False);
 }
 
 void readInt(int *n, int maxInputSize){

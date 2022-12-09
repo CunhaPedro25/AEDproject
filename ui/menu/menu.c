@@ -27,10 +27,9 @@ int menu(char *title, char **options, size_t size, char *type){
     saveCursor();
     char temporary[10];
 
-    fgets(temporary, 10, stdin);
-    fflush(stdin);
+    readString(temporary, 10);
 
-    if((temporary[0] == 's' || temporary[0] == 'S') && temporary[1] == '\n'){
+    if((temporary[0] == 's' || temporary[0] == 'S')){
       return 0;
     }
 
