@@ -7,6 +7,7 @@
 #include <ctype.h>
 
 #include "../ui/ui.h"
+#include "../structures/equipamentos.h"
 
 int isnumber(char *text);
 int strcut(char *str, int begin, int len);

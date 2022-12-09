@@ -19,12 +19,13 @@ typedef struct{
 
 typedef struct{
   char versao[20];
+  int appId;
   struct Validade {
     int dia;
     int mes;
     int ano;
   } validade;
-} Aplicacoes;
+} installedApp;
 
 typedef struct Equipamentos {
 
@@ -52,7 +53,7 @@ typedef struct Equipamentos {
   int networkCardNum;
   Discos discos[256];
   Placas placas[256];
-  Aplicacoes aplicacoes[256];
+  installedApp app[256];
 
 } Equipamento;
 

@@ -1,5 +1,4 @@
 #include "functions.h"
-#include "../includes.h"
 #include <stdio.h>
 
 extern int maxEquipmentId;
@@ -65,20 +64,20 @@ void insertDiskSize(int id){
 void insertAppVersion(int id){
   int appId = equipamento[id].appNum;
   printf("Versao da App ->");
-  readString(equipamento[id].aplicacoes[appId].versao, 20);
+  readString(equipamento[id].app[appId].versao, 20);
 }
 
 void insertAppExpireDate(int id){
   int appId = equipamento[id].appNum;
 
   printf("Dia ->");
-  readInt(&equipamento[id].aplicacoes[appId].validade.dia, 20);
+  readInt(&equipamento[id].app[appId].validade.dia, 20);
 
   printf("Mes ->");
-  readInt(&equipamento[id].aplicacoes[appId].validade.mes, 20);
+  readInt(&equipamento[id].app[appId].validade.mes, 20);
 
   printf("Ano ->");
-  readInt(&equipamento[id].aplicacoes[appId].validade.ano, 20);
+  readInt(&equipamento[id].app[appId].validade.ano, 20);
 }
 
 void insertApp(int id){
