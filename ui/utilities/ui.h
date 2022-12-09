@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "utilities/colors.h"
+#include "colors.h"
 
 #define prefix "\e["
 
