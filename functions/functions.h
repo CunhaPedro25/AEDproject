@@ -9,6 +9,10 @@
 #include "../ui/ui.h"
 #include "../structures/equipamentos.h"
 
+typedef enum {
+  False, True
+}boolean;
+
 int isnumber(char *text);
 int strcut(char *str, int begin, int len);
 const char* truncate(char *string, int limit);

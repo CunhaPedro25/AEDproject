@@ -3,13 +3,13 @@
 int isnumber(char *text){
   for(int i = 0; i < strlen(text); i++){
     if(i == 0 && text[i] == '\n'){
-      return 0;
+      return False;
     }
     if(!isdigit(text[i]) && text[i] != '\n'){
-      return 0;
+      return False;
     }
   }
-  return 1;
+  return True;
 }
 
 int strcut(char *str, int begin, int len){
