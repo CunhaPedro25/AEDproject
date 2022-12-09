@@ -83,7 +83,7 @@ void insertAppExpireDate(int id){
 void insertApp(int id){
   insertAppVersion(id);
   insertAppExpireDate(id);
-
+  equipamento[id].appNum++;
 }
 
 void insertDisk(int id){
@@ -97,13 +97,6 @@ void insertEquipment(){
   insertAquisitionDate(maxEquipmentId);
   insertCpu(maxEquipmentId);
   insertOS(maxEquipmentId);
-  printf("Tipo->%d\n", equipamento[maxEquipmentId].type);
-  printf("Dia->%d\n", equipamento[maxEquipmentId].data.dia);
-  printf("Mes->%d\n", equipamento[maxEquipmentId].data.mes);
-  printf("Ano->%d\n", equipamento[maxEquipmentId].data.ano);
-  printf("Nome CPU->%s\n", equipamento[maxEquipmentId].cpu.name);
-  printf("Tipo->%.2f\n", equipamento[maxEquipmentId].cpu.clock);
-  printf("OS->%s\n", equipamento[maxEquipmentId].sistema);
 
   maxEquipmentId++;
 }
