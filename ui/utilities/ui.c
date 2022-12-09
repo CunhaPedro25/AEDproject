@@ -139,7 +139,7 @@ void line(int size, int breakLine) {
  *
  * @param title {char *} - custom title
  */
-void renderTitle(char *title) {
+void renderTitle(const char *title) {
   int titleSize = (int)(strlen(title) + strlen("/*--  --*/"));
   line(titleSize, 1);
   printf("/*-- %s --*/\n", title);
