@@ -39,7 +39,7 @@ void insertOS(int id){
   readString(equipamento[id].sistema, 50);
 }
 
-void insertDepartamento(int id){
+void insertDepartament(int id){
   printf("Departamento ->");
   readString(equipamento[id].departamento, 50);
 }
@@ -95,8 +95,14 @@ void insertDisk(int id){
 void insertEquipment(){
   insertType(maxEquipmentId);
   insertAquisitionDate(maxEquipmentId);
+  insertDepartament(maxEquipmentId);
+  insertInsurance(maxEquipmentId);
   insertCpu(maxEquipmentId);
+  insertRam(maxEquipmentId);
   insertOS(maxEquipmentId);
+  insertDisk(maxEquipmentId);
+  insertNetworkCard(maxEquipmentId);
+  insertApp(maxEquipmentId);
 
   maxEquipmentId++;
 }
