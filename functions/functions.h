@@ -14,7 +14,8 @@ typedef enum {
 }boolean;
 
 int validNumber(char *option, int maxID);
-int isnumber(char *text);
+int isint(char *text);
+int isfloat(char *text);
 int strcut(char *str, int begin, int len);
 const char* truncate(char *string, int limit);
 void removeNewline(char *string);
