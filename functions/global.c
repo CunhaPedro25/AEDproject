@@ -1,5 +1,20 @@
 #include "functions.h"
 
+int validNumber(char *option, int maxID){
+  int value;
+  char *trash;
+  value = strtol(option, &trash, 10);
+
+  if(strlen(trash) > 1) return False;
+
+  if(value < 1 || value > maxID) {
+    showInvalidOption();
+    return False;
+  }
+
+  return value;
+}
+
 int isnumber(char *text){
   for(int i = 0; i < strlen(text); i++){
     if(i == 0 && text[i] == '\n'){
