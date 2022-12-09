@@ -36,7 +36,7 @@ typedef struct Equipamentos {
     int ano;
   } data;
 
-  char *departamento;
+  char departamento[50];
   int garantia; // Em meses
 
   struct CPUs {
@@ -44,8 +44,12 @@ typedef struct Equipamentos {
     float clock; // Velociade do relogio
   } cpu;
 
-  char *ram;
-  char *sistema;
+  int  ram;
+  char sistema[50];
+
+  int diskNum;
+  int appNum;
+  int networkCardNum;
 
   Discos discos[256];
   Placas placas[256];

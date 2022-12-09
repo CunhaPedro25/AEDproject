@@ -1,5 +1,6 @@
 #include "functions.h"
 #include "../includes.h"
+#include <stdio.h>
 
 extern int maxEquipmentId;
 extern Equipamento equipamento[256];
@@ -35,9 +36,61 @@ void insertCpu(int id){
 }
 
 void insertOS(int id){
-
   printf("Sistema Operativo ->");
   readString(equipamento[id].sistema, 50);
+}
+
+void insertDepartamento(int id){
+  printf("Departamento ->");
+  readString(equipamento[id].departamento, 50);
+}
+
+void insertRam(int id){
+  printf("Quantidade de RAM (GB) ->");
+  readInt(&equipamento[id].ram, 10);
+}
+
+void insertDiskName(int id){
+  int diskId = equipamento[id].diskNum;
+  printf("Nome do disco ->");
+  readString(equipamento[id].discos[diskId].name, 50);
+}
+
+void insertDiskSize(int id){
+  int diskId = equipamento[id].diskNum;
+  printf("Tamanho do Disco ->");
+  readInt(&equipamento[id].discos[diskId].capacidade, 20);
+}
+
+void insertAppVersion(int id){
+  int appId = equipamento[id].appNum;
+  printf("Versao da App ->");
+  readString(equipamento[id].aplicacoes[appId].Versao, 20);
+}
+
+void insertAppExpireDate(int id){
+  int appId = equipamento[id].appNum;
+
+  printf("Dia ->");
+  readInt(&equipamento[id].aplicacoes[appId].validade.dia, 20);
+
+  printf("Mes ->");
+  readInt(&equipamento[id].aplicacoes[appId].validade.mes, 20);
+
+  printf("Ano ->");
+  readInt(&equipamento[id].aplicacoes[appId].validade.ano, 20);
+}
+
+void insertApp(int id){
+  insertAppVersion(id);
+  insertAppExpireDate(id);
+
+}
+
+void insertDisk(int id){
+  insertDiskName(id);
+  insertDiskSize(id);
+  equipamento[id].diskNum++;
 }
 
 void insertEquipment(){
