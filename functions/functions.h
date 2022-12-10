@@ -40,4 +40,6 @@ void insertNetworkCard(int id);
 void insertApp(int id);
 void insertDisk(int id);
 void insertEquipment(int id);
+int  isValidIp(char *ip);
+int isValidDate(char *date);
 #endif //FUNCTIONS_H

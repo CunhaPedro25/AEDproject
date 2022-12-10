@@ -1,4 +1,5 @@
 #include "functions.h"
+#include <stdio.h>
 #include <string.h>
 
 int validNumber(char *option, int maxID){
@@ -98,30 +99,47 @@ int isleapYear(int y) {
    else
       return False;
 }
-int datevalid(int d, int m, int y) {
-  //Quick exit routes
-  if(y < 1970)
-    return False;
-  if(m < 1 || m > 12)
-    return 0;
-  if(d < 1 || d > 31)
-    return False;
-  //Check for february
-  if( m == 2 ){
-    if(isleapYear(y)) {
-      if(d <= 29)
+int isValidDate(char *date) {
+  int d, m, y;
+  if ((sscanf(date, "%d/%d/%d",&d,&m,&y)) == 3) {
+    //quick exit routes
+    if(y < 1970)
+      return False;
+    if(m < 1 || m > 12)
+      return 0;
+    if(d < 1 || d > 31)
+      return False;
+    //check for february
+    if( m == 2 ){
+      if(isleapYear(y)) {
+        if(d <= 29)
+          return True;
+        else
+          return False;
+      }
+    }
+    //april, june, september and november are with 30 days
+    if ( m == 4 || m == 6 || m == 9 || m == 11 ){
+      if(d <= 30)
         return True;
       else
         return False;
     }
+    return True;
   }
-  //April, June, September and November are with 30 days
-  if ( m == 4 || m == 6 || m == 9 || m == 11 ){
-    if(d <= 30)
-      return True;
-    else
-      return False;
+  return False;
+}
+
+int isValidIp(char *ip){
+  int num1, num2, num3, num4; 
+  if ((sscanf(ip, "%d.%d.%d.%d",&num1,&num2,&num3,&num4)) == 4) {
+    return (num1 <= 255 && num1 > 0)&&(num2 <= 255 && num2 >=0)&&(num3 <= 255 && num3 >=0)&&(num4 <= 255 && num4 >=0); 
   }
-  
-  return True;
+  return False;
+}
+
+int isValidBroadcast(char *ip, char *broadcast){
+  int num1, num2, num3, num4; 
+  int num1, num2, num3, num4; 
+
 }
