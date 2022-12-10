@@ -165,10 +165,10 @@ void insertIp(int id){
     }
   } while(isValidIp(tempString) == False);
   // assign the ip values to the struct of id
-  for (int i = 0; i < 4; i++) {
-    ip[i] = equipamento[id].placas[networkCardId].ip[i];
-  }
   sscanf(tempString,"%d.%d.%d.%d", &ip[0],&ip[1],&ip[2],&ip[3]);
+  for (int i = 0; i < 4; i++) {
+    equipamento[id].placas[networkCardId].ip[i]= ip[i];
+  }
 }
 
 void insertMask(int id){
@@ -185,10 +185,10 @@ void insertMask(int id){
     }
   } while(isValidIp(tempString) == False);
   // assign the mask values to the struct of id
-  for (int i = 0; i < 4; i++) {
-    mask[i] = equipamento[id].placas[networkCardId].mask[i];
-  }
   sscanf(tempString,"%d.%d.%d.%d", &mask[0],&mask[1],&mask[2],&mask[3]);
+  for (int i = 0; i < 4; i++) {
+    equipamento[id].placas[networkCardId].mask[i]= mask[i];
+  }
 }
 
 void insertNetworkCard(int id){
