@@ -17,10 +17,13 @@ void insertType(int id){
 
   //while the user's option is not valid (1 or 2)ask continously
   do {
-  printf("Insira o tipo de dispositivo 1 para computador 2 para servidor\n");
-  printf("Tipo de dispositivo ->");
-  readInt(&equipamento[id].type, 20);
-  } while(equipamento[id].ram !=1 || equipamento[id].ram != 2);
+    printf("Insira o tipo de dispositivo 1 para computador 2 para servidor\n");
+    printf("Tipo de dispositivo ->");
+    readInt(&equipamento[id].type, 20);
+    if (equipamento[id].type !=1 || equipamento[id].type != 2) {
+      showInvalidOption();
+    }
+  } while(equipamento[id].type !=1 && equipamento[id].type != 2);
 }
 
 void insertAquisitionDate(int id){
@@ -29,12 +32,15 @@ void insertAquisitionDate(int id){
 
   //while the user's option doest not satisfy isValidDate ask continously
   do {
-  printf("Insira a validade (dd/mm/yyyy) ->");
-  readString(tempString, 20);
-  insertDate(tempString, date);
-  equipamento[id].data.dia = date[0];
-  equipamento[id].data.mes = date[1];
-  equipamento[id].data.ano = date[2];
+    printf("Insira a validade (dd/mm/yyyy) ->");
+    readString(tempString, 20);
+    insertDate(tempString, date);
+    equipamento[id].data.dia = date[0];
+    equipamento[id].data.mes = date[1];
+    equipamento[id].data.ano = date[2];
+    if (isValidDate(tempString) == False) {
+      showInvalidOption();
+    }
   } while(isValidDate(tempString) == False);
 }
 
@@ -45,8 +51,11 @@ void insertCpu(int id){
 
   //while the user's option is not valid (between 0 and 10,exlusive)ask continously
   do {
-  printf("Clocks da CPU ->");
-  readFloat(&equipamento[id].cpu.clock, 20);
+    printf("Clocks da CPU ->");
+    readFloat(&equipamento[id].cpu.clock, 20);
+    if (equipamento[id].cpu.clock <= 0 && equipamento[id].cpu.clock >= 10) {
+      showInvalidOption();
+    }
   }while (equipamento[id].cpu.clock <= 0 || equipamento[id].cpu.clock >= 10);
 }
 
@@ -63,8 +72,8 @@ void insertDepartament(int id){
 void insertRam(int id){
   //while the user's option is not valid (between 0 and 1000 exlusive)ask continously
   do {
-  printf("Quantidade de RAM (GB) ->");
-  readInt(&equipamento[id].ram, 10);
+    printf("Quantidade de RAM (GB) ->");
+    readInt(&equipamento[id].ram, 10);
   }while (equipamento[id].ram <= 0 || equipamento[id].ram >= 1000);
 }
 
@@ -78,8 +87,8 @@ void insertDiskSize(int id){
   int diskId = equipamento[id].diskNum;
   //while the user's option is not valid (between 0 GB and 22 TB)ask continously
   do {
-  printf("Tamanho do Disco ->");
-  readInt(&equipamento[id].discos[diskId].capacidade, 20);
+    printf("Tamanho do Disco ->");
+    readInt(&equipamento[id].discos[diskId].capacidade, 20);
   }while (equipamento[id].discos[diskId].capacidade <= 0 || equipamento[id].discos[diskId].capacidade >= 22000);
 }
 
@@ -96,20 +105,20 @@ void insertAppExpireDate(int id){
 
   //while the user's option doest not satisfy isValidDate ask continously
   do {
-  printf("Insira a validade (dd/mm/yyyy) ->");
-  readString(tempString, 20);
-  insertDate(tempString, date);
-  equipamento[id].app[appId].validade.dia = date[0];
-  equipamento[id].app[appId].validade.mes = date[1];
-  equipamento[id].app[appId].validade.ano = date[2];
+    printf("Insira a validade (dd/mm/yyyy) ->");
+    readString(tempString, 20);
+    insertDate(tempString, date);
+    equipamento[id].app[appId].validade.dia = date[0];
+    equipamento[id].app[appId].validade.mes = date[1];
+    equipamento[id].app[appId].validade.ano = date[2];
   } while(isValidDate(tempString) == False);
 }
 
 void insertInsurance(int id){
   //insurance start must be a positive number
   do {
-  printf("Garantia do produto(meses) ->");
-  readInt(&equipamento[id].garantia, 20);
+    printf("Garantia do produto(meses) ->");
+    readInt(&equipamento[id].garantia, 20);
   }while (equipamento[id].garantia < 0);
 }
 
@@ -119,8 +128,8 @@ void insertIp(int id){
   int ip[4];
   //while the user's input doest not satisfy isValidIp ask continously
   do {
-  printf("Ip ->");
-  readString(tempString, 20);
+    printf("Ip ->");
+    readString(tempString, 20);
   } while(isValidIp(tempString) == False);
   // assign the ip values to the struct of id
   for (int i = 0; i < 4; i++) {
@@ -135,8 +144,8 @@ void insertMask(int id){
   int mask[4];
   //while the user's input doest not satisfy isValidIp ask continously
   do {
-  printf("Mascara ->");
-  readString(tempString, 20);
+    printf("Mascara ->");
+    readString(tempString, 20);
   } while(isValidIp(tempString) == False);
   // assign the mask values to the struct of id
   for (int i = 0; i < 4; i++) {

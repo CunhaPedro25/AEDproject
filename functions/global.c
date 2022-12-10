@@ -79,8 +79,11 @@ void readInt(int *n, int maxInputSize){
   char tempString[50];
   char *trash;
   do {
-  fgets(tempString, maxInputSize, stdin);
-  removeNewline(tempString);
+    fgets(tempString, maxInputSize, stdin);
+    removeNewline(tempString);
+    if (isInt(tempString) == False) {
+      showInvalidOption();
+    }
   }while (isInt(tempString) == False);
   *n = strtol(tempString, &trash, 10);
 }
@@ -90,8 +93,11 @@ void readFloat(float *n, int maxInputSize){
   char tempString[50];
   char *trash;
   do {
-  fgets(tempString, maxInputSize, stdin);
-  removeNewline(tempString);
+    fgets(tempString, maxInputSize, stdin);
+    removeNewline(tempString);
+    if (isFloat(tempString) == False) {
+      showInvalidOption();
+    }
   }while (isFloat(tempString) == False);
   *n = strtof(tempString, &trash);
 }
