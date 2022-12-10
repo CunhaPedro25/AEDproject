@@ -19,7 +19,7 @@ void insertType(int id){
   //while the user's option is not valid (1 or 2)ask continously
   printf("Insira o tipo de dispositivo\n");
   printf("1 - Computador; 2 - Servidor\n");
-  printf("Tipo de dispositivo -> ");
+  renderColor("Tipo de dispositivo -> ", GREEN);
   do {
     clearToLineEnd();
     readInt(&equipamento[id].type, 20);
@@ -35,31 +35,35 @@ void insertAquisitionDate(int id){
 
   //while the user's option doest not satisfy isValidDate ask continously
   clearToLineEnd();
-  printf("Insira a validade (dd/mm/yyyy ou h para a date de hoje) -> ");
+  renderColor("Data de Aquisição (dd/mm/yyyy ou Data de Hoje [h]) -> ", GREEN);
   do {
     readString(tempString, 20);
-    if (strcmp(tempString, "Hoje") || strcmp(tempString, "hoje") || strcmp(tempString, "H") || strcmp(tempString, "h")) {
+    if (strcmp(tempString, "Hoje") == False
+        || strcmp(tempString, "hoje") == False
+        || strcmp(tempString, "H") == False
+        || strcmp(tempString, "h") == False) {
       strcpy(tempString, currentDate());
     }
     insertDate(tempString, date);
-    equipamento[id].data.dia = date[0];
-    equipamento[id].data.mes = date[1];
-    equipamento[id].data.ano = date[2];
     if (isValidDate(tempString) == False) {
       showInvalidOption();
     }
   } while(isValidDate(tempString) == False);
+
+  equipamento[id].data.dia = date[0];
+  equipamento[id].data.mes = date[1];
+  equipamento[id].data.ano = date[2];
 }
 
 void insertCpu(int id){
 
   clearToLineEnd();
-  printf("Nome da CPU -> ");
+  renderColor("Nome da CPU -> ", GREEN);
   readString(equipamento[id].cpu.name, 50);
 
   //while the user's option is not valid (between 0 and 10,exlusive)ask continously
   clearToLineEnd();
-  printf("Clocks da CPU -> ");
+  renderColor("Clocks da CPU -> ", GREEN);
   do {
     readFloat(&equipamento[id].cpu.clock, 20);
     if (equipamento[id].cpu.clock <= 0 || equipamento[id].cpu.clock >= 10) {
@@ -68,81 +72,16 @@ void insertCpu(int id){
   }while (equipamento[id].cpu.clock <= 0 || equipamento[id].cpu.clock >= 10);
 }
 
-void insertOS(int id){
-  clearToLineEnd();
-  printf("Sistema Operativo -> ");
-  readString(equipamento[id].sistema, 50);
-}
-
 void insertDepartament(int id){
   clearToLineEnd();
-  printf("Departamento -> ");
+  renderColor("Departamento -> ", GREEN);
   readString(equipamento[id].departamento, 50);
-}
-
-void insertRam(int id){
-  //while the user's option is not valid (between 0 and 1000 exlusive)ask continously
-  clearToLineEnd();
-  printf("Quantidade de RAM (GB) -> ");
-  do {
-    readInt(&equipamento[id].ram, 10);
-    if (equipamento[id].ram <= 0 || equipamento[id].ram >= 1000) {
-      showInvalidOption();
-    }
-  }while (equipamento[id].ram <= 0 || equipamento[id].ram >= 1000);
-}
-
-void insertDiskName(int id){
-  int diskId = equipamento[id].diskNum;
-  clearToLineEnd();
-  printf("Nome do disco -> ");
-  readString(equipamento[id].discos[diskId].name, 50);
-}
-
-void insertDiskSize(int id){
-  int diskId = equipamento[id].diskNum;
-  //while the user's option is not valid (between 0 GB and 22 TB)ask continously
-  clearToLineEnd();
-  printf("Tamanho do Disco -> ");
-  do {
-    readInt(&equipamento[id].discos[diskId].capacidade, 20);
-    if (equipamento[id].discos[diskId].capacidade <= 0 || equipamento[id].discos[diskId].capacidade >= 22000) {
-      showInvalidOption();
-    }
-  }while (equipamento[id].discos[diskId].capacidade <= 0 || equipamento[id].discos[diskId].capacidade >= 22000);
-}
-
-void insertAppVersion(int id){
-  int appId = equipamento[id].appNum;
-  clearToLineEnd();
-  printf("Versao da App -> ");
-  readString(equipamento[id].app[appId].versao, 20);
-}
-
-void insertAppExpireDate(int id){
-  int appId = equipamento[id].appNum;
-  int date[3];
-  char tempString[20];
-
-  //while the user's option doest not satisfy isValidDate ask continously
-  do {
-    clearToLineEnd();
-    printf("Insira a validade (dd/mm/yyyy) -> ");
-    readString(tempString, 20);
-    insertDate(tempString, date);
-    equipamento[id].app[appId].validade.dia = date[0];
-    equipamento[id].app[appId].validade.mes = date[1];
-    equipamento[id].app[appId].validade.ano = date[2];
-    if (isValidDate(tempString) == False) {
-      showInvalidOption();
-    }
-  } while(isValidDate(tempString) == False);
 }
 
 void insertInsurance(int id){
   //insurance start must be a positive number
   clearToLineEnd();
-  printf("Garantia do produto(meses) -> ");
+  renderColor("Garantia em Meses -> ", GREEN);
   do {
     readInt(&equipamento[id].garantia, 20);
     if (equipamento[id].garantia < 0) {
@@ -151,6 +90,54 @@ void insertInsurance(int id){
   }while (equipamento[id].garantia < 0);
 }
 
+void insertRam(int id){
+  //while the user's option is not valid (between 0 and 1000 exlusive)ask continously
+  clearToLineEnd();
+  renderColor("Quantidade de RAM (GB) -> ", GREEN);
+  do {
+    readInt(&equipamento[id].ram, 10);
+    if (equipamento[id].ram <= 0 || equipamento[id].ram >= 1000) {
+      showInvalidOption();
+    }
+  }while (equipamento[id].ram <= 0 || equipamento[id].ram >= 1000);
+}
+
+void insertOS(int id){
+  clearToLineEnd();
+  renderColor("Sistema Operativo -> ", GREEN);
+  readString(equipamento[id].sistema, 50);
+}
+
+
+/* Disk Insert */
+void insertDiskName(int id){
+  int diskId = equipamento[id].diskNum;
+  clearToLineEnd();
+  renderColor("Nome do disco -> ", GREEN);
+  readString(equipamento[id].discos[diskId].name, 50);
+}
+
+void insertDiskSize(int id){
+  int diskId = equipamento[id].diskNum;
+  //while the user's option is not valid (between 0 GB and 22 TB)ask continously
+  clearToLineEnd();
+  renderColor("Tamanho do Disco -> ", GREEN);
+  do {
+    readInt(&equipamento[id].discos[diskId].capacidade, 20);
+    if (equipamento[id].discos[diskId].capacidade <= 0 || equipamento[id].discos[diskId].capacidade >= 22000) {
+      showInvalidOption();
+    }
+  }while (equipamento[id].discos[diskId].capacidade <= 0 || equipamento[id].discos[diskId].capacidade >= 22000);
+}
+
+void insertDisk(int id){
+  insertDiskName(id);
+  insertDiskSize(id);
+  equipamento[id].diskNum++;
+}
+
+
+/* Network Board Insert */
 int uniqueIp(int ip[4]){
   int strikes = 0;
   for (int equipment = 0;  equipment < maxEquipmentId; equipment++) {
@@ -174,7 +161,7 @@ void insertIp(int id){
   int ip[4];
   //while the user's input doest not satisfy isValidIp ask continously
   clearToLineEnd();
-  printf("Ip -> ");
+  renderColor("IP -> ", GREEN);
   do {
     readString(tempString, 20);
     if (isValidIp(tempString) == False) {
@@ -187,7 +174,6 @@ void insertIp(int id){
     }
   } while(isValidIp(tempString) == False || uniqueIp(ip) == False);
   // assign the ip values to the struct of id
-    sscanf(tempString,"%d.%d.%d.%d", &ip[0],&ip[1],&ip[2],&ip[3]);
     for (int i = 0; i < 4; i++) {
       equipamento[id].placas[networkCardId].ip[i]= ip[i];
     }
@@ -199,7 +185,7 @@ void insertMask(int id){
   int mask[4];
   //while the user's input doest not satisfy isValidIp ask continously
   clearToLineEnd();
-  printf("Mascara -> ");
+  renderColor("Mascara -> ", GREEN);
   do {
     readString(tempString, 20);
     if (isValidIp(tempString) == False) {
@@ -234,6 +220,35 @@ void insertNetworkCard(int id){
   equipamento[id].networkCardNum++;
 }
 
+
+/* APP insert */
+void insertAppVersion(int id){
+  int appId = equipamento[id].appNum;
+  clearToLineEnd();
+  renderColor("Versao da App -> ", GREEN);
+  readString(equipamento[id].app[appId].versao, 20);
+}
+
+void insertAppExpireDate(int id){
+  int appId = equipamento[id].appNum;
+  int date[3];
+  char tempString[20];
+
+  //while the user's option doest not satisfy isValidDate ask continously
+  clearToLineEnd();
+  renderColor("Insira a validade (dd/mm/yyyy) -> ", GREEN);
+  do {
+    readString(tempString, 20);
+    insertDate(tempString, date);
+    equipamento[id].app[appId].validade.dia = date[0];
+    equipamento[id].app[appId].validade.mes = date[1];
+    equipamento[id].app[appId].validade.ano = date[2];
+    if (isValidDate(tempString) == False) {
+      showInvalidOption();
+    }
+  } while(isValidDate(tempString) == False);
+}
+
 void insertInstalledApp(int id){
   int appNum = equipamento[id].appNum;
   equipamento[id].app[appNum].appId = insertApp();
@@ -242,18 +257,12 @@ void insertInstalledApp(int id){
   equipamento[id].appNum++;
 }
 
-void insertDisk(int id){
-  insertDiskName(id);
-  insertDiskSize(id);
-  equipamento[id].diskNum++;
-}
-
 int insertApp(){
   clearToLineEnd();
-  printf("Nome da aplicaçao -> ");
+  renderColor("Nome da aplicaçao -> ", GREEN);
   readString(app[maxAppId].name, 50);
   clearToLineEnd();
-  printf("Breve descriçao -> ");
+  renderColor("Breve descriçao -> ", GREEN);
   readString(app[maxAppId].descricao, 100);
   maxAppId++;
   return maxAppId-1;
@@ -263,6 +272,7 @@ void insertEquipment(){
   int tempInt = -1;
 
   clear();
+  renderTitle("Inserir Equipamento");
 
   insertType(maxEquipmentId);
   insertAquisitionDate(maxEquipmentId);
