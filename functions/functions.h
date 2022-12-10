@@ -39,7 +39,7 @@ void insertBroadcast(int id);
 void insertNetworkCard(int id);
 void insertApp(int id);
 void insertDisk(int id);
-void insertEquipment(int id);
+void insertEquipment();
 int  isValidIp(char *ip);
 int isValidDate(char *date);
 #endif //FUNCTIONS_H

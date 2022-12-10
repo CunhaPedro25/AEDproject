@@ -3,6 +3,10 @@
 
 extern int maxEquipmentId;
 extern Equipamento equipamento[256];
+
+void insertDate(char *dateStr, int *date){
+  sscanf(dateStr, "%d/%d/%d", &date[0],&date[1],&date[2]); 
+}
  
 void insertType(int id){
   char temp[20];
@@ -14,15 +18,15 @@ void insertType(int id){
 }
 
 void insertAquisitionDate(int id){
+  int date[3];
+  char tempString[20];
 
-  printf("Dia ->");
-  readInt(&equipamento[id].data.dia, 20);
-
-  printf("Mes ->");
-  readInt(&equipamento[id].data.mes, 20);
-
-  printf("Ano ->");
-  readInt(&equipamento[id].data.ano, 20);
+  printf("Insira a validade (dd/mm/yyyy) ->");
+  readString(tempString, 20);
+  insertDate(tempString, date);
+  equipamento[id].data.dia = date[0];
+  equipamento[id].data.mes = date[1];
+  equipamento[id].data.ano = date[2];
 }
 
 void insertCpu(int id){
@@ -33,7 +37,7 @@ void insertCpu(int id){
   do {
   printf("Clocks da CPU ->");
   readFloat(&equipamento[id].cpu.clock, 20);
-  }while (equipamento[id].cpu.clock <= 0 || equipamento[id].ram >= 10);
+  }while (equipamento[id].cpu.clock <= 0 || equipamento[id].cpu.clock >= 10);
 }
 
 void insertOS(int id){
@@ -75,18 +79,15 @@ void insertAppVersion(int id){
 
 void insertAppExpireDate(int id){
   int appId = equipamento[id].appNum;
+  int date[3];
   char tempString[20];
 
   printf("Insira a validade (dd/mm/yyyy) ->");
   readString(tempString, 20);
-  // printf("Dia ->");
-  // readInt(&equipamento[id].app[appId].validade.dia, 20);
-
-  // printf("Mes ->");
-  // readInt(&equipamento[id].app[appId].validade.mes, 20);
-
-  // printf("Ano ->");
-  // readInt(&equipamento[id].app[appId].validade.ano, 20);
+  insertDate(tempString, date);
+  equipamento[id].app[appId].validade.dia = date[0];
+  equipamento[id].app[appId].validade.mes = date[1];
+  equipamento[id].app[appId].validade.ano = date[2];
 }
 
 void insertInsurance(int id){
@@ -142,7 +143,7 @@ void insertDisk(int id){
   equipamento[id].diskNum++;
 }
 
-void insertEquipment(int id){
+void insertEquipment(){
   insertType(maxEquipmentId);
   insertAquisitionDate(maxEquipmentId);
   insertDepartament(maxEquipmentId);

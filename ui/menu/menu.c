@@ -139,7 +139,7 @@ void equipamentosMenu(){
 
     switch (value) {
       case 1:
-        clear();
+        insertEquipment();
         break;
       case 2:
         equipamentosTable();

@@ -33,8 +33,9 @@ int isFloat(char *text){
       if(text[i] == '.' || text[i] == ','){
         strikes++;
         if(strikes > 1) return False;
+      }else{
+        return False;
       }
-      return False;
     }
   }
   return True;
@@ -138,8 +139,3 @@ int isValidIp(char *ip){
   return False;
 }
 
-int isValidBroadcast(char *ip, char *broadcast){
-  int num1, num2, num3, num4; 
-  int num1, num2, num3, num4; 
-
-}
