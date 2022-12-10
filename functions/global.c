@@ -1,13 +1,19 @@
 #include "functions.h"
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
+
 
 const char* currentDate(){
   time_t t = time(NULL);
-  char *date;
-  struct tm *time = localtime(&t);
-  strftime(date,80,"%x - %I:%M%p", time);
+  struct tm *tm = localtime(&t);
+  static char date[80];
+  strftime(date,80,"%02d/%02m/%Y", tm);
+  return date;
+}
+
+const char* currentHours(){
+  time_t t = time(NULL);
+  struct tm *tm = localtime(&t);
+  static char date[80];
+  strftime(date,80,"%H:%M", tm);
   return date;
 }
 

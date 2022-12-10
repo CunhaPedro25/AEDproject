@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <assert.h>
+#include <time.h>
 
 #include "../ui/utilities/ui.h"
 #include "../structures/equipamentos.h"
@@ -12,6 +14,10 @@
 typedef enum {
   False, True
 }boolean;
+
+/* Time Functions */
+const char* currentDate();
+const char* currentHours();
 
 /* Global and Verification Functions */
 int validNumber(char *option, int maxID);
