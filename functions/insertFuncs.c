@@ -49,8 +49,8 @@ void insertAquisitionDate(int id){
         || strcmp(tempString, "h") == False) {
       strcpy(tempString, currentDate());
     }
-    insertDate(tempString, date);
-    if (isValidDate(tempString) == False) {
+
+    if (insertDate(tempString, date) == False) {
       showInvalidOption();
     }
   } while(isValidDate(tempString) == False);
@@ -244,7 +244,6 @@ void insertAppExpireDate(int id){
   renderColor("Insira a validade (dd/mm/yyyy) -> ", GREEN);
   do {
     readString(tempString, 20);
-
     if (insertDate(tempString, date) == False) {
       showInvalidOption();
     }
