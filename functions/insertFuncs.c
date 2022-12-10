@@ -151,6 +151,23 @@ void insertInsurance(int id){
   }while (equipamento[id].garantia < 0);
 }
 
+int uniqueIp(int ip[4]){
+  int strikes = 0;
+  for (int equipment = 0;  equipment < maxEquipmentId; equipment++) {
+    for (int card = 0; card < equipamento[equipment].networkCardNum; card++) {
+      for (int i = 0; i < 4; i++) {
+        if (ip[i] == equipamento[equipment].placas[card].ip[i]) {
+          strikes++;
+          if (strikes == 4) {
+            return  False;
+          }
+        }
+      }
+    }
+  }
+  return True;
+}
+
 void insertIp(int id){
   int networkCardId = equipamento[id].networkCardNum;
   char tempString[20];
@@ -162,13 +179,17 @@ void insertIp(int id){
     readString(tempString, 20);
     if (isValidIp(tempString) == False) {
       showInvalidOption();
+    }else {
+      sscanf(tempString,"%d.%d.%d.%d", &ip[0],&ip[1],&ip[2],&ip[3]);
+      if (uniqueIp(ip) == False) {
+        showInvalidOption();
+      }
     }
-  } while(isValidIp(tempString) == False);
+  } while(isValidIp(tempString) == False || uniqueIp(ip) == False);
   // assign the ip values to the struct of id
-  sscanf(tempString,"%d.%d.%d.%d", &ip[0],&ip[1],&ip[2],&ip[3]);
-  for (int i = 0; i < 4; i++) {
-    equipamento[id].placas[networkCardId].ip[i]= ip[i];
-  }
+    for (int i = 0; i < 4; i++) {
+      equipamento[id].placas[networkCardId].ip[i]= ip[i];
+    }
 }
 
 void insertMask(int id){
@@ -188,6 +209,20 @@ void insertMask(int id){
   sscanf(tempString,"%d.%d.%d.%d", &mask[0],&mask[1],&mask[2],&mask[3]);
   for (int i = 0; i < 4; i++) {
     equipamento[id].placas[networkCardId].mask[i]= mask[i];
+  }
+}
+
+void calculateBroadcast(int id){
+  int networkCardId = equipamento[id].networkCardNum;
+  int ip[4], mask[4], broadcast[4];
+  for (int i = 0; i < 4; i++) {
+    ip[i] = equipamento[id].placas[networkCardId].ip[i];
+    mask[i] = equipamento[id].placas[networkCardId].mask[i]= mask[i];
+    if (mask[i] == 0) {
+      broadcast[i] = 255;
+    }else {
+      broadcast[i] = ip[i];
+    }
   }
 }
 
