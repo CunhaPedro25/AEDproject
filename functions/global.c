@@ -1,6 +1,15 @@
 #include "functions.h"
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+
+const char* currentDate(){
+  time_t t = time(NULL);
+  char *date;
+  struct tm *time = localtime(&t);
+  strftime(date,80,"%x - %I:%M%p", time);
+  return date;
+}
 
 int validNumber(char *option, int maxID){
   int value;

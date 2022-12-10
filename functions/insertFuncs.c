@@ -6,7 +6,7 @@ extern Equipamento equipamento[256];
 extern Apps app[256];
 extern int maxAppId;
 
-//Devides an already valide date into 3 ints
+//Devides an already valid date into 3 ints
 void insertDate(char *dateStr, int *date){
   sscanf(dateStr, "%d/%d/%d", &date[0],&date[1],&date[2]); 
 }
