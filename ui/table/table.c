@@ -65,7 +65,8 @@ int tableControls(int *size, int maxID, int lineSize){
   lineSize = lineSize < fucntionLineSize ? fucntionLineSize : lineSize;
   int spacesBetween = 0;
 
-  downCursor(8);
+  downCursor(5-*size);
+
   line(lineSize, True);
 
   /* Render fucntions for table */
