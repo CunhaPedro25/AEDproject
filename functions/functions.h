@@ -38,6 +38,8 @@ int strcut(char *str, int begin, int len);
 const char* truncate(char *string, int limit);
 void removeNewline(char *string);
 
+/* Delete Functions */
+void deleteEquipment(int id);
 
 /* Insert and Edit Functions */
 void insertType(int id);
