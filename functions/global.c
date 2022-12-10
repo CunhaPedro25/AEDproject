@@ -17,6 +17,7 @@ int validNumber(char *option, int maxID){
   return value;
 }
 
+//Checks for int type in string by finding char that are not digits
 boolean isInt(char *text){
   for(int i = 0; i < strlen(text); i++){
     if(!isdigit(text[i])){
@@ -26,6 +27,7 @@ boolean isInt(char *text){
   return True;
 }
 
+//Checks for float type in string by finding at most 1 '.' or ',' and char that are not digits
 boolean isFloat(char *text){
   int strikes = 0;
   for(int i = 0; i < strlen(text); i++){
@@ -51,6 +53,7 @@ int strcut(char *str, int begin, int len){
   return len;
 }
 
+//Makes strings shorter by cutting them at a specific limit and appending them with "..."
 const char* truncate(char *string, int limit){
   if(strlen(string) > limit){
     strcut(string, limit-2, -1);
@@ -60,6 +63,7 @@ const char* truncate(char *string, int limit){
   return string;
 }
 
+//Custom read func for strings that requires a valid input to be met
 void readString(char *string, int maxInputSize){
   do {
     fgets(string, maxInputSize, stdin);
@@ -70,6 +74,7 @@ void readString(char *string, int maxInputSize){
   }while (strcmp(string,"") == False);
 }
 
+//Custom read func for ints that requires a valid input to be met
 void readInt(int *n, int maxInputSize){
   char tempString[50];
   char *trash;
@@ -80,6 +85,7 @@ void readInt(int *n, int maxInputSize){
   *n = strtol(tempString, &trash, 10);
 }
 
+//Custom read func for ints that requires a valid input to be met
 void readFloat(float *n, int maxInputSize){
   char tempString[50];
   char *trash;
@@ -94,12 +100,15 @@ void removeNewline(char *string){
   string[strcspn(string, "\n")] = 0;
 }
 
+//Finds if a year is leap or not 
 boolean isleapYear(int y) {
    if((y % 4 == 0) && (y % 100 != 0) && (y % 400 == 0))
       return True;
    else
       return False;
 }
+
+//Validates a date from a string in the formart (dd/mm/yyyy)
 boolean isValidDate(char *date) {
   int d, m, y;
   if ((sscanf(date, "%d/%d/%d",&d,&m,&y)) == 3) {
@@ -132,6 +141,7 @@ boolean isValidDate(char *date) {
   return False;
 }
 
+//Checks for valid ip from a string formated as such (Ex:10.4.155.192)
 boolean isValidIp(char *ip){
   int num1, num2, num3, num4; 
   if ((sscanf(ip, "%d.%d.%d.%d",&num1,&num2,&num3,&num4)) == 4) {
