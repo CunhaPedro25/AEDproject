@@ -197,28 +197,32 @@ void equipamentPage(int id){
     clear();
     renderTitle("Pagina de Equipamento");
 
-    printf("Equipamento %d\n", id+1);
+    if(maxEquipmentId > 0){
+      printf("Equipamento %d\n", id + 1);
 
-    printf("Tipo -> %-8s", equipamento[id].type == 1 ? "PC" : "Servidor");
+      printf("Tipo -> %-8s", equipamento[id].type == 1 ? "PC" : "Servidor");
 
-    rightCursor(19);
-    strcpy(tempString, equipamento[id].sistema);
-    printf("|  Sistema Operativo -> %s\n", truncate(tempString, 10));
+      rightCursor(19);
+      strcpy(tempString, equipamento[id].sistema);
+      printf("|  Sistema Operativo -> %s\n", truncate(tempString, 10));
 
-    strcpy(tempString, equipamento[id].cpu.name);
-    printf("CPU -> %-14s %.2f GB",  truncate(tempString, 12), equipamento[id].cpu.clock);
+      strcpy(tempString, equipamento[id].cpu.name);
+      printf("CPU -> %-14s %.2f GB", truncate(tempString, 12), equipamento[id].cpu.clock);
 
-    rightCursor(6);
-    printf("|  RAM -> %d GB\n", equipamento[id].ram);
+      rightCursor(6);
+      printf("|  RAM -> %d GB\n", equipamento[id].ram);
 
-    /* Render Disks */
-    renderInstalledDisks(id);
+      /* Render Disks */
+      renderInstalledDisks(id);
 
-    /* Render List of Installed Apps */
-    renderInstalledApps(id);
+      /* Render List of Installed Apps */
+      renderInstalledApps(id);
 
-    /* Network table */
-    renderNetworkBoards(id);
+      /* Network table */
+      renderNetworkBoards(id);
+    }else{
+      printf("Sem Equipamentos");
+    }
 
 
     option = pageControls(&id, maxEquipmentId);

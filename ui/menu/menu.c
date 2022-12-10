@@ -128,10 +128,11 @@ void equipamentosMenu(){
   int value;
 
   do {
-    char *options[2] =
+    char *options[3] =
         {
             "Inserir",
-            "Lista"
+            "Lista",
+            "Paginas"
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
@@ -143,6 +144,9 @@ void equipamentosMenu(){
         break;
       case 2:
         equipamentosTable();
+        break;
+      case 3:
+        equipamentPage(0);
         break;
 
       default:
