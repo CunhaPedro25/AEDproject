@@ -13,15 +13,19 @@ typedef enum {
   False, True
 }boolean;
 
+/* Global and Verification Functions */
 int validNumber(char *option, int maxID);
-int isInt(char *text);
-int isfloat(char *text);
+boolean isInt(char *text);
+boolean isFloat(char *text);
 int strcut(char *str, int begin, int len);
 const char* truncate(char *string, int limit);
 void removeNewline(char *string);
 void readString(char *string,int maxInputSize);
 void readInt(int *n, int maxInputSize);
 void readFloat(float *n, int maxInputSize);
+boolean isValidDate(char *date);
+
+/* Insert and Edit Functions */
 void insertType(int id);
 void insertAquisitionDate(int id);
 void insertCpu(int id);
@@ -40,7 +44,6 @@ void insertNetworkCard(int id);
 int insertApp();
 void insertInstalledApp(int id);
 void insertDisk(int id);
+boolean isValidIp(char *ip);
 void insertEquipment();
-int  isValidIp(char *ip);
-int isValidDate(char *date);
 #endif //FUNCTIONS_H

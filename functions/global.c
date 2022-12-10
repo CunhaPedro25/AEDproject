@@ -17,7 +17,7 @@ int validNumber(char *option, int maxID){
   return value;
 }
 
-int isInt(char *text){
+boolean isInt(char *text){
   for(int i = 0; i < strlen(text); i++){
     if(!isdigit(text[i])){
       return False;
@@ -26,7 +26,7 @@ int isInt(char *text){
   return True;
 }
 
-int isFloat(char *text){
+boolean isFloat(char *text){
   int strikes = 0;
   for(int i = 0; i < strlen(text); i++){
     if(!isdigit(text[i])){
@@ -94,13 +94,13 @@ void removeNewline(char *string){
   string[strcspn(string, "\n")] = 0;
 }
 
-int isleapYear(int y) {
+boolean isleapYear(int y) {
    if((y % 4 == 0) && (y % 100 != 0) && (y % 400 == 0))
       return True;
    else
       return False;
 }
-int isValidDate(char *date) {
+boolean isValidDate(char *date) {
   int d, m, y;
   if ((sscanf(date, "%d/%d/%d",&d,&m,&y)) == 3) {
     //quick exit routes
@@ -131,7 +131,7 @@ int isValidDate(char *date) {
   return False;
 }
 
-int isValidIp(char *ip){
+boolean isValidIp(char *ip){
   int num1, num2, num3, num4; 
   if ((sscanf(ip, "%d.%d.%d.%d",&num1,&num2,&num3,&num4)) == 4) {
     return (num1 <= 255 && num1 > 0)&&(num2 <= 255 && num2 >=0)&&(num3 <= 255 && num3 >=0)&&(num4 <= 255 && num4 >=0); 
