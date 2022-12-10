@@ -187,6 +187,7 @@ void insertIp(int id){
     }
   } while(isValidIp(tempString) == False || uniqueIp(ip) == False);
   // assign the ip values to the struct of id
+    sscanf(tempString,"%d.%d.%d.%d", &ip[0],&ip[1],&ip[2],&ip[3]);
     for (int i = 0; i < 4; i++) {
       equipamento[id].placas[networkCardId].ip[i]= ip[i];
     }
@@ -214,14 +215,14 @@ void insertMask(int id){
 
 void calculateBroadcast(int id){
   int networkCardId = equipamento[id].networkCardNum;
-  int ip[4], mask[4], broadcast[4];
+  int ip[4], mask[4];
   for (int i = 0; i < 4; i++) {
     ip[i] = equipamento[id].placas[networkCardId].ip[i];
-    mask[i] = equipamento[id].placas[networkCardId].mask[i]= mask[i];
+    mask[i] = equipamento[id].placas[networkCardId].mask[i];
     if (mask[i] == 0) {
-      broadcast[i] = 255;
+      equipamento[id].placas[networkCardId].broadcast[i] = 255;
     }else {
-      broadcast[i] = ip[i];
+      equipamento[id].placas[networkCardId].broadcast[i] = ip[i];
     }
   }
 }
@@ -229,6 +230,7 @@ void calculateBroadcast(int id){
 void insertNetworkCard(int id){
   insertIp(id);
   insertMask(id);
+  calculateBroadcast(id);
   equipamento[id].networkCardNum++;
 }
 
