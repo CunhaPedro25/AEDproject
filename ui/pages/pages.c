@@ -201,6 +201,6 @@ void equipamentPage(int id){
     option = pageControls(&id, maxEquipmentId);
 
     if(option >= 1 && option <= maxEquipmentId)
-      id = option;
+      id = option-1;
   } while (option != 0);
 }
