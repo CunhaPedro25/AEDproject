@@ -117,6 +117,12 @@ void backgroundColor(int color){
 }
 void resetStyles(){ printf(prefix "0m");}
 
+void renderColor(char *string, int color){
+  textColor(color);
+  printf("%s", string);
+  resetStyles();
+}
+
 /*-----------------*
  * Print Functions *
  *-----------------*/
@@ -141,11 +147,11 @@ void line(int size, int breakLine) {
  */
 void renderTitle(const char *title) {
   int titleSize = (int)(strlen(title) + strlen("/*--  --*/"));
-  printf("%d", titleSize);
+
   printf(" %s %s\n", currentDate(), currentHours());
-  line(titleSize, 1);
+  line(titleSize, True);
   printf(TITLE_LEFT"%s"TITLE_RIGHT"\n", title);
-  line(titleSize, 1);
+  line(titleSize, True);
 }
 
 void showInvalidOption(){

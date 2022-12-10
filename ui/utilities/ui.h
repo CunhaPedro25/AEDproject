@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "colors.h"
 #include "chars.h"
 #include "../../functions/functions.h"
@@ -34,6 +35,7 @@ void cleanLine();
 void textColor(int color);
 void backgroundColor(int color);
 void resetStyles();
+void renderColor(char *string, int color);
 
 /*----- Print Functions --------*/
 void line(int size, int breakLine);
