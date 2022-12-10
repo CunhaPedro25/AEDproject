@@ -1,5 +1,6 @@
 #include "functions.h"
 #include <stdio.h>
+#include <string.h>
 
 extern int maxEquipmentId;
 extern Equipamento equipamento[256];
@@ -24,7 +25,7 @@ void insertType(int id){
     readInt(&equipamento[id].type, 20);
     if (equipamento[id].type < 1 || equipamento[id].type > 2) {
       showInvalidOption();
-    }
+    } 
   } while(equipamento[id].type < 1 || equipamento[id].type > 2);
 }
 
@@ -34,9 +35,12 @@ void insertAquisitionDate(int id){
 
   //while the user's option doest not satisfy isValidDate ask continously
   clearToLineEnd();
-  printf("Insira a validade (dd/mm/yyyy) -> ");
+  printf("Insira a validade (dd/mm/yyyy ou h para a date de hoje) -> ");
   do {
     readString(tempString, 20);
+    if (strcmp(tempString, "Hoje") || strcmp(tempString, "hoje") || strcmp(tempString, "H") || strcmp(tempString, "h")) {
+      strcpy(tempString, currentDate());
+    }
     insertDate(tempString, date);
     equipamento[id].data.dia = date[0];
     equipamento[id].data.mes = date[1];
