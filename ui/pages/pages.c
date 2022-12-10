@@ -171,10 +171,10 @@ void renderNetworkBoards(int id){
   if(equipamento[id].networkCardNum > 0) {
     for (int i = 0; i < equipamento[id].networkCardNum; i++) {
       rightCursor(35);
-      printf("|  ");
-      renderIpNumbers(equipamento[0].placas[i].ip);
-      renderIpNumbers(equipamento[0].placas[i].mask);
-      renderIpNumbers(equipamento[0].placas[i].broadcast);
+      printf(VLINE"  ");
+      renderIpNumbers(equipamento[id].placas[i].ip);
+      renderIpNumbers(equipamento[id].placas[i].mask);
+      renderIpNumbers(equipamento[id].placas[i].broadcast);
       printf("|\n");
     }
   }else{
