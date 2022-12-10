@@ -66,7 +66,7 @@ int tableControls(int *size, int maxID, int lineSize){
   int spacesBetween = 0;
 
   printf("\n\n");
-  line(lineSize, 1);
+  line(lineSize, True);
 
   /* Render fucntions for table */
   for(int i = 0; i < 2; i++){
@@ -84,7 +84,7 @@ int tableControls(int *size, int maxID, int lineSize){
   /* Page Control */
   printf("\n%s", *size-5 > 0 ? LEFT_ARROW" A " : GROUP_LINES);
   lineSize -= (int)strlen("-----")*2;
-  line(lineSize,0);
+  line(lineSize,False);
   printf("%s\n", *size+5 <= maxID || *size != maxID ? " D "RIGHT_ARROW : GROUP_LINES);
 
   printf("\n"PROMPT);
@@ -118,9 +118,9 @@ void aplicacoesTable(){
     int tableSize = (int)strlen(keys);
 
 
-    line(tableSize,1);
+    line(tableSize,True);
     printf("%s\n", keys);
-    line(tableSize,1);
+    line(tableSize,True);
     for(int i = (size-5 < 0 ? 0 : size-5); i < size; i++){
       printf("| %2d ", i+1);
       printf("|  LOl  ");
@@ -146,9 +146,9 @@ void equipamentosTable(){
     char *keys = "| id |    TIPO    |  Data DD/MM/YY  |  Garantia  |      CPU      /  GHz   |    RAM   |      DISCO      /  Tamanho  |";
     int tableSize = (int)strlen(keys);
 
-    line(tableSize,1);
+    line(tableSize,True);
     printf("%s\n", keys);
-    line(tableSize,1);
+    line(tableSize,True);
     if(maxEquipmentId > 0){
       char temp[100];
       int startingSize = (size-5 < 0 ? 0 : (size == maxEquipmentId && (maxEquipmentId % 5) != 0 ? size-(maxEquipmentId % 5) : size-5));
@@ -176,7 +176,7 @@ void equipamentosTable(){
         if(equipamento[i].diskNum == 1) {
           int capacity = equipamento[i].discos[0].capacidade;
           strcpy(temp, equipamento[i].discos[0].name);
-          printf("|  %-13s  ", truncate(temp, 13));
+          printf("|  %-13s  ", truncate(temp, 12));
           printf("/   %3d %s  ", (capacity >= 1000? capacity/1000 : capacity), (capacity >= 1000? "TB" : "GB"));
         }else{
           printf("|  %2d Discos ( Selecione id ) ", equipamento[i].diskNum);
@@ -184,6 +184,7 @@ void equipamentosTable(){
 
         printf("|\n");
       }
+      line(tableSize, True);
     }else{
       rightCursor(tableSize/2 - (int)(strlen("Sem equipamentos")/2));
       printf("Sem equipamentos");

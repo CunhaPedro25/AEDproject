@@ -55,13 +55,13 @@ int pageControls(int *id, int maxID){
 
   /* Render fucntions for table */
   printf("\n\n");
-  line(lineSize, 1);
+  line(lineSize, True);
   printf("%s", functions);
 
   /* Page Control */
   printf("\n%s", *id-1 >= 0 ? LEFT_ARROW" A " : GROUP_LINES);
   lineSize -= (int)strlen("-----")*2;
-  line(lineSize,0);
+  line(lineSize,False);
   printf("%s\n", *id+1 < maxID ? " D "RIGHT_ARROW : GROUP_LINES);
 
   printf("\n"PROMPT);
@@ -93,16 +93,16 @@ void renderInstalledDisks(int id){
 
   if(equipamento[id].diskNum > 1) {
     printf("Número de Discos: %d\n", equipamento[id].diskNum);
-    line(33, 1);
+    line(33, True);
     printf("|      Name     /   Capacidade  |\n");
-    line(33, 1);
+    line(33, True);
     for (int i = 0; i < equipamento[id].diskNum; i++){
       strcpy(tempString, equipamento[id].discos[i].name);
       capacity = equipamento[id].discos[i].capacidade >= 1000 ? equipamento[id].discos[i].capacidade/1000 : equipamento[id].discos[i].capacidade;
       printf("|  %-11s  /    %4d ", truncate(tempString, 11), capacity);
       printf("%s    |\n", (equipamento[id].discos[i].capacidade >= 1000 ? "TB" : "GB"));
     }
-    line(33, 1);
+    line(33, True);
   }else{
     strcpy(tempString, equipamento[id].discos[0].name);
     capacity = equipamento[id].discos[0].capacidade >= 1000 ? equipamento[id].discos[0].capacidade/1000 : equipamento[id].discos[0].capacidade;
@@ -160,13 +160,13 @@ void renderNetworkBoards(int id){
   printf(VLINE"  Placas\n");
   rightCursor(35);
   printf(VLINE"  ");
-  line(37,1);
+  line(37,True);
   rightCursor(35);
   printf(VLINE"  |    IP     |   MASK    | BROADCAST |\n");
 
   rightCursor(35);
   printf(VLINE"  ");
-  line(37,1);
+  line(37,True);
 
   if(equipamento[id].networkCardNum > 0) {
     for (int i = 0; i < equipamento[id].networkCardNum; i++) {
@@ -185,7 +185,7 @@ void renderNetworkBoards(int id){
   }
   rightCursor(35);
   printf(VLINE"  ");
-  line(37,1);
+  line(37,True);
   restoreCursor();
 }
 
