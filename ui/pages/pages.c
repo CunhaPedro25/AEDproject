@@ -14,8 +14,7 @@ int validPagesOption(char *option, int *id, int maxID){
           *id -= 1;
           return  True;
         }
-        restoreCursor();
-        clearToScreenEnd();
+        showSpecificOption("");
         return False;
       /*Next Page*/
       case 'd':
@@ -24,8 +23,7 @@ int validPagesOption(char *option, int *id, int maxID){
           *id += 1;
           return  True;
         }
-        restoreCursor();
-        clearToScreenEnd();
+        showSpecificOption("");
         return False;
       /*Edit*/
       case 'e':
@@ -54,7 +52,7 @@ int pageControls(int *id, int maxID){
   int lineSize = (int) strlen(functions);
 
   /* Render fucntions for table */
-  printf("\n\n");
+  printf("\n");
   line(lineSize, True);
   printf("%s", functions);
 
@@ -65,9 +63,8 @@ int pageControls(int *id, int maxID){
   printf("%s\n", *id+1 < maxID ? " D "RIGHT_ARROW : GROUP_LINES);
 
   printf("\n"PROMPT);
-  saveCursor();
   do{
-    readString(option, 10);
+    readString(option, 100);
   }while(!validPagesOption(option, id, maxID));
 
   if((option[0] == 's' || option[0] == 'S')){
@@ -109,15 +106,16 @@ void renderInstalledDisks(int id){
     printf("Disco -> %-14s %d ",  truncate(equipamento[id].discos[0].name, 12), capacity);
     printf("%s\n", (equipamento[id].discos[0].capacidade >= 1000 ? "TB" : "GB"));
   }
+  saveCursor();
 }
 
 void renderInstalledApps(int id){
   char tempString[500];
 
-  if(equipamento[id].diskNum <= 1)
-    downCursor(5);
-  saveCursor();
-  printf("\nAplicações\n");
+  if(equipamento[id].diskNum > 1)
+    downCursor(equipamento[id].diskNum-equipamento[id].networkCardNum);
+
+  printf("Aplicações\n");
   int moveRight = 0;
   int count4by4 = 0;
   if(equipamento[id].appNum > 0) {
@@ -139,34 +137,34 @@ void renderInstalledApps(int id){
   }else{
     printf("Sem Aplicações instaladas");
   }
-  restoreCursor();
-  downCursor(6);
 }
 
 void renderIpNumbers(int number[4]){
   printf("|  ");
+  int width = 0;
   for(int ip = 0; ip < 4; ip++){
+    width += countDigits(number[ip]);
     printf("%d", number[ip]);
     if(ip < 3){
       printf(".");
     }
   }
-  printf("  ");
+  printf("%*s", 14-width, "");
 }
 
 void renderNetworkBoards(int id){
-  saveCursor();
-  moveCursor(7, 36);
+  moveCursor(9, 36);
   printf(VLINE"  Placas\n");
   rightCursor(35);
   printf(VLINE"  ");
-  line(37,True);
+  char *keys = "|         IP        |        MASK       |     BROADCAST     |";
+  int tableSize = (int)strlen_utf8(keys);
+  line(tableSize,True);
   rightCursor(35);
-  printf(VLINE"  |    IP     |   MASK    | BROADCAST |\n");
-
+  printf(VLINE"  %s\n", keys);
   rightCursor(35);
   printf(VLINE"  ");
-  line(37,True);
+  line(tableSize,True);
 
   if(equipamento[id].networkCardNum > 0) {
     for (int i = 0; i < equipamento[id].networkCardNum; i++) {
@@ -180,13 +178,12 @@ void renderNetworkBoards(int id){
   }else{
     rightCursor(35);
     printf(VLINE);
-    rightCursor(16);
+    rightCursor((tableSize/2)-2);
     printf("Sem Placas\n");
   }
   rightCursor(35);
   printf(VLINE"  ");
-  line(37,True);
-  restoreCursor();
+  line(tableSize,True);
 }
 
 void equipamentPage(int id){
@@ -198,7 +195,7 @@ void equipamentPage(int id){
     renderTitle("Pagina de Equipamento");
 
     if(maxEquipmentId > 0){
-      printf("Equipamento %d\n", id + 1);
+      printf("Equipamento %d\n\n", id + 1);
 
       printf("Tipo -> %-8s", equipamento[id].type == 1 ? "PC" : "Servidor");
 
@@ -215,15 +212,15 @@ void equipamentPage(int id){
       /* Render Disks */
       renderInstalledDisks(id);
 
+      /* Network table */
+      renderNetworkBoards(id);
+
       /* Render List of Installed Apps */
       renderInstalledApps(id);
 
-      /* Network table */
-      renderNetworkBoards(id);
     }else{
       printf("Sem Equipamentos");
     }
-
 
     option = pageControls(&id, maxEquipmentId);
 

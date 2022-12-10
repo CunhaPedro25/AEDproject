@@ -127,6 +127,16 @@ void renderColor(char *string, int color){
  * Print Functions *
  *-----------------*/
 
+void closedLine(int size, int isTop) {
+  printf("%s", isTop == True ? TOP_LEFT_LINE : BOTTOM_LEFT_LINE);
+  for (int i = 0; i < size-2; ++i) {
+    printf(LINE);
+  }
+  printf("%s", isTop == True ? TOP_RIGHT_LINE : BOTTOM_RIGHT_LINE);
+
+  printf("\n");
+}
+
 /**
  * @brief Print a line of "-" with a custom size
  *
@@ -140,24 +150,29 @@ void line(int size, int breakLine) {
   if(breakLine)
     printf("\n");
 }
+
 /**
  *  @brief Print a custom title in the middle of responsive lines
  *
  * @param title {char *} - custom title
  */
 void renderTitle(const char *title) {
-  int titleSize = (int)(strlen(title) + strlen("/*--  --*/"));
+  int titleSize = (int)(strlen_utf8(title) + strlen("/*--  --*/"));
 
   printf(" %s %s\n", currentDate(), currentHours());
-  line(titleSize, True);
+  closedLine(titleSize, True);
   printf(TITLE_LEFT"%s"TITLE_RIGHT"\n", title);
-  line(titleSize, True);
+  closedLine(titleSize, False);
 }
 
-void showInvalidOption(){
+void showSpecificOption(char *text){
   textColor(RED);
-  printf("[Opção Invalida]");    // Show error message
+  printf("%s", text);    // Show error message
   resetStyles();
   restoreCursor();
   clearToLineEnd();
+}
+
+void showInvalidOption(){
+  showSpecificOption("[Opção Invalida]");
 }

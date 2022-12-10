@@ -22,14 +22,14 @@ int menu(char *title, char **options, size_t size, char *type){
   }
   printf("    [s] %s", strcmp(type, "main") ? "Voltar" : "Sair");
 
-  printf("\n\nOpção: ");
+  printf("\n\n");
+  printf(PROMPT);
   do {
-    saveCursor();
     char temporary[10];
 
     readString(temporary, 10);
 
-    if((temporary[0] == 's' || temporary[0] == 'S')){
+    if(strcmp(temporary, "s") == 0 || strcmp(temporary, "S") == 0 ){
       return 0;
     }
 
@@ -41,10 +41,10 @@ int menu(char *title, char **options, size_t size, char *type){
     char *trash;
     option = strtol(temporary, &trash, 10);
 
-    if(option < 0 || option > size) {
+    if(option < 1 || option > size) {
       showInvalidOption();
     }
-  } while (option < 0 || option > size);
+  } while (option < 1 || option > size);
 
   return option;
 }

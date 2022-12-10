@@ -19,17 +19,25 @@ typedef enum {
 const char* currentDate();
 const char* currentHours();
 
-/* Global and Verification Functions */
+/* Verification Functions */
 int validNumber(char *option, int maxID);
 boolean isInt(char *text);
 boolean isFloat(char *text);
-int strcut(char *str, int begin, int len);
-const char* truncate(char *string, int limit);
-void removeNewline(char *string);
+boolean isValidDate(char *date);
+boolean isValidIp(char *ip);
+int countDigits(int number);
+
+/* Read functions */
 void readString(char *string,int maxInputSize);
 void readInt(int *n, int maxInputSize);
 void readFloat(float *n, int maxInputSize);
-boolean isValidDate(char *date);
+
+/* String Manipulation or count */
+size_t strlen_utf8(const char *string);
+int strcut(char *str, int begin, int len);
+const char* truncate(char *string, int limit);
+void removeNewline(char *string);
+
 
 /* Insert and Edit Functions */
 void insertType(int id);
@@ -45,11 +53,9 @@ void insertAppExpireDate(int id);
 void insertInsurance(int id);
 void insertIp(int id);
 void insertMask(int id);
-void insertBroadcast(int id);
 void insertNetworkCard(int id);
-int insertApp();
 void insertInstalledApp(int id);
+int insertApp();
 void insertDisk(int id);
-boolean isValidIp(char *ip);
 void insertEquipment();
 #endif //FUNCTIONS_H

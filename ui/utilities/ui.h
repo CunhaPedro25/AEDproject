@@ -38,8 +38,10 @@ void resetStyles();
 void renderColor(char *string, int color);
 
 /*----- Print Functions --------*/
+void closedLine(int size, int isTop);
 void line(int size, int breakLine);
 void renderTitle(const char *title);
+void showSpecificOption(char *text);
 void showInvalidOption();
 
 #endif //UI_H

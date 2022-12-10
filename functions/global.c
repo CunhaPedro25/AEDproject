@@ -17,6 +17,16 @@ const char* currentHours(){
   return date;
 }
 
+int countDigits(int number){
+  int count = 0;
+  do{
+    number = number/10;
+    count++;
+  }while(number != 0 );
+
+  return count;
+}
+
 int validNumber(char *option, int maxID){
   int value;
   char *trash;
@@ -59,7 +69,7 @@ boolean isFloat(char *text){
 }
 
 int strcut(char *str, int begin, int len){
-  int lentgh = (int)strlen(str);
+  int lentgh = (int)strlen_utf8(str);
 
   if (len < 0) len = lentgh - begin;
   if (begin + len > lentgh) len = lentgh - begin;
@@ -70,13 +80,22 @@ int strcut(char *str, int begin, int len){
 
 //Makes strings shorter by cutting them at a specific limit and appending them with "..."
 const char* truncate(char *string, int limit){
-  if(strlen(string) > limit){
+  if(strlen_utf8(string) > limit){
     strcut(string, limit-2, -1);
     strcat(string, "...");
   }
 
   return string;
 }
+
+size_t strlen_utf8(const char *string) {
+  size_t count = 0;
+  while (*string) {
+    count += (*string++ & 0xC0) != 0x80;
+  }
+  return count;
+}
+
 
 //Custom read func for strings that requires a valid input to be met
 void readString(char *string, int maxInputSize){

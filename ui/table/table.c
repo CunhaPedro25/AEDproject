@@ -60,12 +60,12 @@ int tableControls(int *size, int maxID, int lineSize){
   };
   int fucntionLineSize = 0;
   for(int i = 0; i < 2; i++){
-    fucntionLineSize += (int)strlen(functionsText[i]);
+    fucntionLineSize += (int)strlen_utf8(functionsText[i]);
   }
   lineSize = lineSize < fucntionLineSize ? fucntionLineSize : lineSize;
   int spacesBetween = 0;
 
-  printf("\n\n");
+  downCursor(8);
   line(lineSize, True);
 
   /* Render fucntions for table */
@@ -73,7 +73,7 @@ int tableControls(int *size, int maxID, int lineSize){
     printf("%s", functionsText[i]);
 
     if(i != 1) {
-      int extraText = (int) (strlen(functionsText[i]) + strlen(functionsText[i+1]));
+      int extraText = (int) (strlen_utf8(functionsText[i]) + strlen(functionsText[i+1]));
       spacesBetween = lineSize - extraText;
       for (int j = 0; j < spacesBetween; j++) {
         printf(" ");
@@ -115,7 +115,7 @@ void aplicacoesTable(){
 
     char *keys = "| id |  Nome  |  Designação  |  Tipo  |";
 
-    int tableSize = (int)strlen(keys);
+    int tableSize = (int)strlen_utf8(keys);
 
 
     line(tableSize,True);
@@ -143,11 +143,11 @@ void equipamentosTable(){
     clear();
     renderTitle("Tabela de Equipamentos");
 
-    char *keys = "| id |    TIPO    |  Data DD/MM/YY  |  Garantia  |      CPU      /  GHz   |    RAM   |      DISCO      /  Tamanho  |";
-    int tableSize = (int)strlen(keys);
+    char *keys = " id |    TIPO    |  Data DD/MM/YY  |  Garantia  |      CPU      /  GHz   |    RAM   |      DISCO      /  Tamanho  " ;
+    int tableSize = (int)strlen_utf8(keys) + 2;
 
     line(tableSize,True);
-    printf("%s\n", keys);
+    printf(VLINE"%s"VLINE"\n", keys);
     line(tableSize,True);
     if(maxEquipmentId > 0){
       char temp[100];
@@ -187,7 +187,7 @@ void equipamentosTable(){
       line(tableSize, True);
     }else{
       rightCursor(tableSize/2 - (int)(strlen("Sem equipamentos")/2));
-      printf("Sem equipamentos");
+      printf("Sem equipamentos\n");
     }
 
     option = tableControls(&size, maxEquipmentId, tableSize);
