@@ -115,9 +115,10 @@ boolean isValidDate(char *date) {
       if(isleapYear(y)) {
         if(d <= 29)
           return True;
-        else
-          return False;
-      }
+      }    
+      else
+        return False;
+      
     }
     //april, june, september and november are with 30 days
     if ( m == 4 || m == 6 || m == 9 || m == 11 ){

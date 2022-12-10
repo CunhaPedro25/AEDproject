@@ -6,6 +6,11 @@
 
 #define equipamentos_h
 
+typedef struct{
+  char name[50];
+  char descriçao[100];
+}Apps;
+
 typedef struct {
   int ip[4];
   int mask[4];

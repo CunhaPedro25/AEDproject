@@ -23,12 +23,14 @@ void insertAquisitionDate(int id){
   int date[3];
   char tempString[20];
 
+  do {
   printf("Insira a validade (dd/mm/yyyy) ->");
   readString(tempString, 20);
   insertDate(tempString, date);
   equipamento[id].data.dia = date[0];
   equipamento[id].data.mes = date[1];
   equipamento[id].data.ano = date[2];
+  } while(isValidDate(tempString) == False);
 }
 
 void insertCpu(int id){
@@ -84,12 +86,14 @@ void insertAppExpireDate(int id){
   int date[3];
   char tempString[20];
 
+  do {
   printf("Insira a validade (dd/mm/yyyy) ->");
   readString(tempString, 20);
   insertDate(tempString, date);
   equipamento[id].app[appId].validade.dia = date[0];
   equipamento[id].app[appId].validade.mes = date[1];
   equipamento[id].app[appId].validade.ano = date[2];
+  } while(isValidDate(tempString) == False);
 }
 
 void insertInsurance(int id){
