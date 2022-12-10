@@ -66,12 +66,13 @@ const char* truncate(char *string, int limit){
 //Custom read func for strings that requires a valid input to be met
 void readString(char *string, int maxInputSize){
   do {
+    saveCursor();
     fgets(string, maxInputSize, stdin);
     removeNewline(string);
 
-    if(strcmp(string,"") == False)
+    if(strcmp(string,"") == False || strcmp(string," ") == False)
       showInvalidOption();
-  }while (strcmp(string,"") == False);
+  }while (strcmp(string,"") == False || strcmp(string," ") == False);
 }
 
 //Custom read func for ints that requires a valid input to be met
@@ -79,8 +80,7 @@ void readInt(int *n, int maxInputSize){
   char tempString[50];
   char *trash;
   do {
-    fgets(tempString, maxInputSize, stdin);
-    removeNewline(tempString);
+    readString(tempString, maxInputSize);
     if (isInt(tempString) == False) {
       showInvalidOption();
     }
@@ -93,8 +93,7 @@ void readFloat(float *n, int maxInputSize){
   char tempString[50];
   char *trash;
   do {
-    fgets(tempString, maxInputSize, stdin);
-    removeNewline(tempString);
+    readString(tempString, maxInputSize);
     if (isFloat(tempString) == False) {
       showInvalidOption();
     }
