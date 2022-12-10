@@ -3,7 +3,7 @@
 
 Equipamento equipamento[256];
 Apps app[256];
-int maxEquipmentId = 15;
+int maxEquipmentId = 0;
 int maxAppId = 0;
 
 int main(){
