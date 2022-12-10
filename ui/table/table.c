@@ -1,9 +1,5 @@
 #include "table.h"
 
-extern int maxAppId;
-extern int maxEquipmentId;
-extern Equipamento equipamento[256];
-
 int validTableOption(char *option, int *size, int maxID){
   if(isInt(option)){
     return validNumber(option, maxID);
@@ -65,7 +61,7 @@ int tableControls(int *size, int maxID, int lineSize){
   lineSize = lineSize < fucntionLineSize ? fucntionLineSize : lineSize;
   int spacesBetween = 0;
 
-  downCursor(5-*size);
+  moveCursor(13,0);
 
   line(lineSize, True);
 
@@ -106,6 +102,11 @@ int tableControls(int *size, int maxID, int lineSize){
   return -1;  // The return value is -1 to not break the while loop from the original fucntion (0 - leave menu)
 }
 
+extern int maxAppId;
+extern int maxEquipmentId;
+extern Apps app[256];
+extern Equipamento equipamento[256];
+
 void aplicacoesTable(){
   int option = -1;
   int size = maxAppId < 5 ? maxAppId : 5;
@@ -114,24 +115,35 @@ void aplicacoesTable(){
     clear();
     renderTitle("Tabela de Aplicações");
 
-    char *keys = "| id |  Nome  |  Designação  |  Tipo  |";
+    char *keys = " id |      Nome      |        Designação      ";
 
     int tableSize = (int)strlen_utf8(keys);
 
+    line(tableSize+2,True);
+    printf(VLINE"%s"VLINE"\n", keys);
+    line(tableSize+2,True);
 
-    line(tableSize,True);
-    printf("%s\n", keys);
-    line(tableSize,True);
-    for(int i = (size-5 < 0 ? 0 : size-5); i < size; i++){
-      printf("| %2d ", i+1);
-      printf("|  LOl  ");
-      printf("|  LOl  ");
-      printf("|  LOl  |");
-      printf("\n");
+    if(maxAppId > 0){
+      char tempString[200];
+      for(int i = (size-5 < 0 ? 0 : size-5); i < size; i++){
+        printf("| %2d ", i+1);
+        strcpy(tempString,app[i].name);
+        printf("|  %-12s  ", truncate(tempString, 10));
+        strcpy(tempString,app[i].descricao);
+        printf("|  %-20s  ", truncate(tempString, 18));
+        printf("|\n");
+      }
+      line(tableSize+2,True);
+    }else{
+      rightCursor(tableSize/2 - (int)(strlen_utf8("Sem Aplicações")/2));
+      printf("Sem Aplicações\n");
     }
-    printf("%d", size);
 
     option = tableControls(&size, maxAppId, tableSize);
+
+    if(option >= 1 && option <= maxAppId){
+      appPage(option-1);
+    }
   } while (option != 0);
 }
 
@@ -187,7 +199,7 @@ void equipamentosTable(){
       }
       line(tableSize, True);
     }else{
-      rightCursor(tableSize/2 - (int)(strlen("Sem equipamentos")/2));
+      rightCursor(tableSize/2 - (int)(strlen_utf8("Sem equipamentos")/2));
       printf("Sem equipamentos\n");
     }
 
