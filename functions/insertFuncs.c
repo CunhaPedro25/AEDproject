@@ -3,6 +3,8 @@
 
 extern int maxEquipmentId;
 extern Equipamento equipamento[256];
+extern Apps app[256];
+extern int maxAppId;
 
 void insertDate(char *dateStr, int *date){
   sscanf(dateStr, "%d/%d/%d", &date[0],&date[1],&date[2]); 
@@ -131,7 +133,9 @@ void insertNetworkCard(int id){
   equipamento[id].networkCardNum++;
 }
 
-void insertApp(int id){
+void insertInstalledApp(int id){
+  int appNum = equipamento[id].appNum;
+  equipamento[id].app[appNum].appId = insertApp();
   insertAppVersion(id);
   insertAppExpireDate(id);
   equipamento[id].appNum++;
@@ -141,6 +145,15 @@ void insertDisk(int id){
   insertDiskName(id);
   insertDiskSize(id);
   equipamento[id].diskNum++;
+}
+
+int insertApp(){
+  printf("Nome da aplicaçao ->");
+  readString(app[maxAppId].name, 50);
+  printf("Breve descriçao ->");
+  readString(app[maxAppId].descriçao, 100);
+  maxAppId++;
+  return maxAppId-1;
 }
 
 void insertEquipment(){
@@ -153,6 +166,7 @@ void insertEquipment(){
   insertOS(maxEquipmentId);
   insertDisk(maxEquipmentId);
   insertNetworkCard(maxEquipmentId);
-  insertApp(maxEquipmentId);
+  
+  insertInstalledApp(maxEquipmentId);
   maxEquipmentId++;
 }
