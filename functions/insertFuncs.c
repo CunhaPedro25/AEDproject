@@ -20,10 +20,12 @@ void insertType(int id){
     printf("Insira o tipo de dispositivo 1 para computador 2 para servidor\n");
     printf("Tipo de dispositivo ->");
     readInt(&equipamento[id].type, 20);
-    if (equipamento[id].type !=1 || equipamento[id].type != 2) {
+    if (equipamento[id].type == 1 || equipamento[id].type == 2) {
+      break;
+    }else {
       showInvalidOption();
     }
-  } while(equipamento[id].type !=1 && equipamento[id].type != 2);
+  } while(equipamento[id].type !=1 || equipamento[id].type != 2);
 }
 
 void insertAquisitionDate(int id){
@@ -74,7 +76,10 @@ void insertRam(int id){
   do {
     printf("Quantidade de RAM (GB) ->");
     readInt(&equipamento[id].ram, 10);
-  }while (equipamento[id].ram <= 0 || equipamento[id].ram >= 1000);
+    if (equipamento[id].ram <= 0 && equipamento[id].ram >= 1000) {
+      showInvalidOption();
+    }
+  }while (equipamento[id].ram <= 0 && equipamento[id].ram >= 1000);
 }
 
 void insertDiskName(int id){
@@ -89,7 +94,10 @@ void insertDiskSize(int id){
   do {
     printf("Tamanho do Disco ->");
     readInt(&equipamento[id].discos[diskId].capacidade, 20);
-  }while (equipamento[id].discos[diskId].capacidade <= 0 || equipamento[id].discos[diskId].capacidade >= 22000);
+    if (equipamento[id].discos[diskId].capacidade <= 0 && equipamento[id].discos[diskId].capacidade >= 22000) {
+      showInvalidOption();
+    }
+  }while (equipamento[id].discos[diskId].capacidade <= 0 && equipamento[id].discos[diskId].capacidade >= 22000);
 }
 
 void insertAppVersion(int id){
@@ -111,6 +119,9 @@ void insertAppExpireDate(int id){
     equipamento[id].app[appId].validade.dia = date[0];
     equipamento[id].app[appId].validade.mes = date[1];
     equipamento[id].app[appId].validade.ano = date[2];
+    if (isValidDate(tempString) == False) {
+      showInvalidOption();
+    }
   } while(isValidDate(tempString) == False);
 }
 
@@ -119,6 +130,9 @@ void insertInsurance(int id){
   do {
     printf("Garantia do produto(meses) ->");
     readInt(&equipamento[id].garantia, 20);
+    if (equipamento[id].garantia < 0) {
+      showInvalidOption();
+    }
   }while (equipamento[id].garantia < 0);
 }
 
@@ -130,6 +144,9 @@ void insertIp(int id){
   do {
     printf("Ip ->");
     readString(tempString, 20);
+    if (isValidIp(tempString) == False) {
+      showInvalidOption();
+    }
   } while(isValidIp(tempString) == False);
   // assign the ip values to the struct of id
   for (int i = 0; i < 4; i++) {
@@ -146,6 +163,9 @@ void insertMask(int id){
   do {
     printf("Mascara ->");
     readString(tempString, 20);
+    if (isValidIp(tempString) == False) {
+      showInvalidOption();
+    }
   } while(isValidIp(tempString) == False);
   // assign the mask values to the struct of id
   for (int i = 0; i < 4; i++) {
@@ -196,11 +216,11 @@ void insertEquipment(){
   insertNetworkCard(maxEquipmentId);
   
   //idk wtf im doing
-  do {
-    printf("Se a app desejada nao estiver na lista escreva o nome.");
-    printf("Se numero for 0 termina inserçao");
-    printf("Escolha uma aplicaçao (numero) ->");
-    insertInstalledApp(maxEquipmentId);
-  } while(tempInt != 0);
-  maxEquipmentId++;
+  // do {
+  //   printf("Se a app desejada nao estiver na lista escreva o nome.");
+  //   printf("Se numero for 0 termina inserçao");
+  //   printf("Escolha uma aplicaçao (numero) ->");
+  //   insertInstalledApp(maxEquipmentId);
+  // } while(tempInt != 0);
+  // maxEquipmentId++;
 }
