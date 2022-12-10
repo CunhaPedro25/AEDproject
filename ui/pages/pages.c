@@ -87,17 +87,6 @@ extern int maxEquipmentId;
 extern int maxAppId;
 extern int maxNetworkCardId;
 
-void renderIpNumbers(int number[4]){
-  printf("  |  ");
-  for(int ip = 0; ip < 4; ip++){
-    printf("%d", number[ip]);
-    if(ip < 3){
-      printf(".");
-    }
-  }
-  printf("  |  ");
-}
-
 void renderInstalledDisks(int id){
   char tempString[500];
   char tempDiskSize[2] = "";
@@ -154,6 +143,17 @@ void renderInstalledApps(int id){
   downCursor(6);
 }
 
+void renderIpNumbers(int number[4]){
+  printf("|  ");
+  for(int ip = 0; ip < 4; ip++){
+    printf("%d", number[ip]);
+    if(ip < 3){
+      printf(".");
+    }
+  }
+  printf("  ");
+}
+
 void renderNetworkBoards(int id){
   saveCursor();
   moveCursor(7, 36);
@@ -171,11 +171,11 @@ void renderNetworkBoards(int id){
   if(equipamento[id].networkCardNum > 0) {
     for (int i = 0; i < equipamento[id].networkCardNum; i++) {
       rightCursor(35);
-      printf("|");
+      printf("|  ");
       renderIpNumbers(equipamento[0].placas[i].ip);
       renderIpNumbers(equipamento[0].placas[i].mask);
       renderIpNumbers(equipamento[0].placas[i].broadcast);
-      printf("\n");
+      printf("|\n");
     }
   }else{
     rightCursor(35);
@@ -207,9 +207,9 @@ void equipamentPage(int id){
       printf("|  Sistema Operativo -> %s\n", truncate(tempString, 10));
 
       strcpy(tempString, equipamento[id].cpu.name);
-      printf("CPU -> %-14s %.2f GB", truncate(tempString, 12), equipamento[id].cpu.clock);
+      printf("CPU -> %-14s %.2f GHz", truncate(tempString, 12), equipamento[id].cpu.clock);
 
-      rightCursor(6);
+      rightCursor(5);
       printf("|  RAM -> %d GB\n", equipamento[id].ram);
 
       /* Render Disks */

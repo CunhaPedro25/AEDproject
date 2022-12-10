@@ -143,7 +143,7 @@ void equipamentosTable(){
     clear();
     renderTitle("Tabela de Equipamentos");
 
-    char *keys = "| id |    TIPO    |  Data DD/MM/YY  |  Garantia  |      CPU      /  GHz   |    RAM   |      DISCO      /  GB  |";
+    char *keys = "| id |    TIPO    |  Data DD/MM/YY  |  Garantia  |      CPU      /  GHz   |    RAM   |      DISCO      /  Tamanho  |";
     int tableSize = (int)strlen(keys);
 
     line(tableSize,1);
@@ -159,9 +159,13 @@ void equipamentosTable(){
 
         printf("|    %02d/%02d/%04d   |", equipamento[i].data.dia, equipamento[i].data.mes, equipamento[i].data.ano);
 
-        equipamento[i].garantia <= 1 ? textColor(RED) : equipamento[i].garantia <= 5 ? textColor(YELLOW) : textColor(DEFAULT);
-        printf(" %3d Mes%-2s  ", equipamento[i].garantia, equipamento[i].garantia == 1 || equipamento[i].garantia == -1  ? "" : "es");
-        resetStyles();
+        if( equipamento[i].garantia < 1000){
+          equipamento[i].garantia <= 1 ? textColor(RED) : equipamento[i].garantia <= 5 ? textColor(YELLOW) : textColor(DEFAULT);
+          printf(" %3d Mes%-2s  ", equipamento[i].garantia, equipamento[i].garantia == 1 || equipamento[i].garantia == -1  ? "" : "es");
+          resetStyles();
+        }else{
+          printf("  LIFETIME  ");
+        }
 
         strcpy(temp, equipamento[i].cpu.name);
         printf("|  %-12s ", truncate(temp, 11));
@@ -170,11 +174,12 @@ void equipamentosTable(){
         printf("|  %3d GB  ", equipamento[i].ram);
 
         if(equipamento[i].diskNum == 1) {
+          int capacity = equipamento[i].discos[0].capacidade;
           strcpy(temp, equipamento[i].discos[0].name);
           printf("|  %-13s  ", truncate(temp, 13));
-          printf("/  %2d  ", equipamento[i].discos[0].capacidade);
+          printf("/   %3d %s  ", (capacity >= 1000? capacity/1000 : capacity), (capacity >= 1000? "TB" : "GB"));
         }else{
-          printf("|  %2d Discos (Selecione) ", equipamento[i].diskNum);
+          printf("|  %2d Discos (Selecione <id>) ", equipamento[i].diskNum);
         }
 
         printf("|\n");
