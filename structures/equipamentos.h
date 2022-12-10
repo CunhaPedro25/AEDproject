@@ -8,7 +8,7 @@
 
 typedef struct{
   char name[50];
-  char descriçao[100];
+  char descricao[100];
 }Apps;
 
 typedef struct {
