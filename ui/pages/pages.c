@@ -59,12 +59,12 @@ int pageControls(int *id, int maxID){
   printf("%s", functions);
 
   /* Page Control */
-  printf("\n%s", *id-1 >= 0 ? "<- A " : "-----");
+  printf("\n%s", *id-1 >= 0 ? LEFT_ARROW" A " : GROUP_LINES);
   lineSize -= (int)strlen("-----")*2;
   line(lineSize,0);
-  printf("%s\n", *id+1 < maxID ? " D ->" : "-----");
+  printf("%s\n", *id+1 < maxID ? " D "RIGHT_ARROW : GROUP_LINES);
 
-  printf("\n❯ ");
+  printf("\n"PROMPT);
   saveCursor();
   do{
     readString(option, 10);
@@ -89,7 +89,7 @@ extern int maxNetworkCardId;
 
 void renderInstalledDisks(int id){
   char tempString[500];
-  char tempDiskSize[2] = "";
+  int capacity = 0;
 
   if(equipamento[id].diskNum > 1) {
     printf("Número de Discos: %d\n", equipamento[id].diskNum);
@@ -98,16 +98,16 @@ void renderInstalledDisks(int id){
     line(33, 1);
     for (int i = 0; i < equipamento[id].diskNum; i++){
       strcpy(tempString, equipamento[id].discos[i].name);
-      strcpy(tempDiskSize, (equipamento[id].discos[i].capacidade >= 1000 ? "TB" : "GB"));
-      equipamento[id].discos[i].capacidade = equipamento[id].discos[i].capacidade >= 1000 ? equipamento[id].discos[i].capacidade/1000 : equipamento[id].discos[i].capacidade;
-      printf("|  %-11s  /    %4d %s    |\n", truncate(equipamento[id].discos[i].name, 11), equipamento[id].discos[0].capacidade, tempDiskSize);
+      capacity = equipamento[id].discos[i].capacidade >= 1000 ? equipamento[id].discos[i].capacidade/1000 : equipamento[id].discos[i].capacidade;
+      printf("|  %-11s  /    %4d ", truncate(tempString, 11), capacity);
+      printf("%s    |\n", (equipamento[id].discos[i].capacidade >= 1000 ? "TB" : "GB"));
     }
     line(33, 1);
   }else{
     strcpy(tempString, equipamento[id].discos[0].name);
-    strcpy(tempDiskSize, (equipamento[id].discos[0].capacidade >= 1000 ? "TB" : "GB"));
-    int capacity = equipamento[id].discos[0].capacidade >= 1000 ? equipamento[id].discos[0].capacidade/1000 : equipamento[id].discos[0].capacidade;
-    printf("Disco -> %-14s %d %s\n",  truncate(equipamento[id].discos[0].name, 12), capacity, tempDiskSize);
+    capacity = equipamento[id].discos[0].capacidade >= 1000 ? equipamento[id].discos[0].capacidade/1000 : equipamento[id].discos[0].capacidade;
+    printf("Disco -> %-14s %d ",  truncate(equipamento[id].discos[0].name, 12), capacity);
+    printf("%s\n", (equipamento[id].discos[0].capacidade >= 1000 ? "TB" : "GB"));
   }
 }
 
@@ -157,15 +157,15 @@ void renderIpNumbers(int number[4]){
 void renderNetworkBoards(int id){
   saveCursor();
   moveCursor(7, 36);
-  printf("|  Placas\n");
+  printf(VLINE"  Placas\n");
   rightCursor(35);
-  printf("|  ");
+  printf(VLINE"  ");
   line(37,1);
   rightCursor(35);
-  printf("|  |    IP     |   MASK    | BROADCAST |\n");
+  printf(VLINE"  |    IP     |   MASK    | BROADCAST |\n");
 
   rightCursor(35);
-  printf("|  ");
+  printf(VLINE"  ");
   line(37,1);
 
   if(equipamento[id].networkCardNum > 0) {
@@ -179,12 +179,12 @@ void renderNetworkBoards(int id){
     }
   }else{
     rightCursor(35);
-    printf("|");
+    printf(VLINE);
     rightCursor(16);
     printf("Sem Placas\n");
   }
   rightCursor(35);
-  printf("|  ");
+  printf(VLINE"  ");
   line(37,1);
   restoreCursor();
 }
@@ -204,13 +204,13 @@ void equipamentPage(int id){
 
       rightCursor(19);
       strcpy(tempString, equipamento[id].sistema);
-      printf("|  Sistema Operativo -> %s\n", truncate(tempString, 10));
+      printf(VLINE"  Sistema Operativo -> %s\n", truncate(tempString, 10));
 
       strcpy(tempString, equipamento[id].cpu.name);
       printf("CPU -> %-14s %.2f GHz", truncate(tempString, 12), equipamento[id].cpu.clock);
 
       rightCursor(5);
-      printf("|  RAM -> %d GB\n", equipamento[id].ram);
+      printf(VLINE"  RAM -> %d GB\n", equipamento[id].ram);
 
       /* Render Disks */
       renderInstalledDisks(id);

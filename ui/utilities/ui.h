@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "colors.h"
+#include "chars.h"
 #include "../../functions/functions.h"
 
 #define prefix "\e["

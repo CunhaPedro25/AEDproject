@@ -129,7 +129,7 @@ void resetStyles(){ printf(prefix "0m");}
  */
 void line(int size, int breakLine) {
   for (int i = 0; i < size; ++i) {
-    printf("-");
+    printf(LINE);
   }
   if(breakLine)
     printf("\n");
@@ -141,10 +141,10 @@ void line(int size, int breakLine) {
  */
 void renderTitle(const char *title) {
   int titleSize = (int)(strlen(title) + strlen("/*--  --*/"));
-  printf("--%s-", currentDate());
-  line(titleSize-21, 0);
-  printf("-%s--\n", currentHours());
-  printf("/*-- %s --*/\n", title);
+  printf("%d", titleSize);
+  printf(" %s %s\n", currentDate(), currentHours());
+  line(titleSize, 1);
+  printf(TITLE_LEFT"%s"TITLE_RIGHT"\n", title);
   line(titleSize, 1);
 }
 

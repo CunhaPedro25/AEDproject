@@ -82,12 +82,12 @@ int tableControls(int *size, int maxID, int lineSize){
   }
 
   /* Page Control */
-  printf("\n%s", *size-5 > 0 ? "<- A " : "-----");
+  printf("\n%s", *size-5 > 0 ? LEFT_ARROW" A " : GROUP_LINES);
   lineSize -= (int)strlen("-----")*2;
   line(lineSize,0);
-  printf("%s\n", *size+5 <= maxID || *size != maxID ? " D ->" : "-----");
+  printf("%s\n", *size+5 <= maxID || *size != maxID ? " D "RIGHT_ARROW : GROUP_LINES);
 
-  printf("\n❯ ");
+  printf("\n"PROMPT);
   saveCursor();
   do{
     readString(option, 10);
@@ -179,7 +179,7 @@ void equipamentosTable(){
           printf("|  %-13s  ", truncate(temp, 13));
           printf("/   %3d %s  ", (capacity >= 1000? capacity/1000 : capacity), (capacity >= 1000? "TB" : "GB"));
         }else{
-          printf("|  %2d Discos (Selecione <id>) ", equipamento[i].diskNum);
+          printf("|  %2d Discos ( Selecione id ) ", equipamento[i].diskNum);
         }
 
         printf("|\n");
