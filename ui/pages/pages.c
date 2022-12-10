@@ -111,7 +111,6 @@ void equipamentPage(int id){
     printf("|  RAM -> %d GB\n", equipamento[id].ram);
 
     /* Render Disks */
-    equipamento[id].diskNum = 3;
     if(equipamento[id].diskNum > 1) {
       printf("Número de Discos: %d\n", equipamento[id].diskNum);
       line(33, 1);
@@ -134,7 +133,6 @@ void equipamentPage(int id){
     /* Render List of Installed Apps */
     saveCursor();
     printf("\nAplicações\n");
-    equipamento[id].appNum = 7;
     int moveRight = 0;
     int count4by4 = 0;
     for(int i = 0; i < equipamento[id].appNum; i++){
@@ -156,7 +154,6 @@ void equipamentPage(int id){
     downCursor(6);
 
     /* Network table */
-    equipamento[id].networkCardNum = 2;
     saveCursor();
     moveCursor(7, 36);
     printf("|  Placas\n");
