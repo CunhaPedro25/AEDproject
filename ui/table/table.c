@@ -157,7 +157,7 @@ void equipamentosTable(){
         printf("|  %s%-5s  ", equipamento[i].type == 1 ? "   " : "", equipamento[i].type == 1 ? "PC" : "SERVIDOR");
 
 
-        printf("|   %02d/%02d/%-6d  |", equipamento[i].data.dia, equipamento[i].data.mes, equipamento[i].data.ano);
+        printf("|    %02d/%02d/%04d   |", equipamento[i].data.dia, equipamento[i].data.mes, equipamento[i].data.ano);
 
         equipamento[i].garantia <= 1 ? textColor(RED) : equipamento[i].garantia <= 5 ? textColor(YELLOW) : textColor(DEFAULT);
         printf(" %3d Mes%-2s  ", equipamento[i].garantia, equipamento[i].garantia == 1 || equipamento[i].garantia == -1  ? "" : "es");
