@@ -8,8 +8,13 @@ extern Apps app[256];
 extern int maxAppId;
 
 //Devides an already valid date into 3 ints
-void insertDate(char *dateStr, int *date){
-  sscanf(dateStr, "%d/%d/%d", &date[0],&date[1],&date[2]); 
+boolean insertDate(char *dateStr, int *date){
+  if(isValidDate(dateStr)) {
+    sscanf(dateStr, "%d/%d/%d", &date[0], &date[1], &date[2]);
+    return True;
+  }
+
+  return False;
 }
  
 void insertType(int id){
@@ -239,14 +244,15 @@ void insertAppExpireDate(int id){
   renderColor("Insira a validade (dd/mm/yyyy) -> ", GREEN);
   do {
     readString(tempString, 20);
-    insertDate(tempString, date);
-    equipamento[id].app[appId].validade.dia = date[0];
-    equipamento[id].app[appId].validade.mes = date[1];
-    equipamento[id].app[appId].validade.ano = date[2];
-    if (isValidDate(tempString) == False) {
+
+    if (insertDate(tempString, date) == False) {
       showInvalidOption();
     }
   } while(isValidDate(tempString) == False);
+
+  equipamento[id].app[appId].validade.dia = date[0];
+  equipamento[id].app[appId].validade.mes = date[1];
+  equipamento[id].app[appId].validade.ano = date[2];
 }
 
 void insertInstalledApp(int id){
