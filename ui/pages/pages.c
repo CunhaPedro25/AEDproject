@@ -67,22 +67,97 @@ int pageControls(int *id, int maxID){
     readString(option, 100);
   }while(!validPagesOption(option, id, maxID));
 
-  if((option[0] == 's' || option[0] == 'S')){
+  if(strcmp(option, "s") == 0 || strcmp(option, "S") == 0){
     return 0;
   }
+
+  if((strcmp(option, "r") == 0 || strcmp(option, "R") == 0) && maxID > 0){
+    char confirm[2];
+    printf("Quer mesmo eliminar (y/n)? ");
+    readString(confirm, 2);
+    if (strcmp(confirm, "y") == 0 || strcmp(confirm, "Y") == 0)
+      return -1;    // Code to detect that its in deleteing menu
+  }
+
 
   /* Check if it's a number and return its value if true (0 - MaxID) */
   if(isInt(option)) {
     return validNumber(option, maxID);
   }
 
-  return -1;  // The return value is -1 to not break the while loop from the original fucntion (0 - leave menu)
+  return -10;  // The return value is -10 to not break the while loop from the original fucntion (0 - leave menu)
 }
 
+extern Apps app[256];
 extern Equipamento equipamento[256];
 extern int maxEquipmentId;
 extern int maxAppId;
-extern int maxNetworkCardId;
+
+void appPage(int id){
+  int option;
+  char tempString[500];
+
+  do{
+    clear();
+    renderTitle("Pagina de Aplicações");
+
+    maxAppId = 1;
+    if(maxAppId > 0){
+      printf("Aplicação %d\n\n", id + 1);
+
+      printf("Nome: %s\n", app[id].name);
+      printf("Descrição: %s\n", app[id].descricao);
+
+
+      printf("\nInstalado em:\n");
+      if(maxEquipmentId > 0) {
+        int moveRight = 0;
+        int count = 0;
+        int countInstallation = 0;
+
+        for (int equipmentID = 0; equipmentID < maxEquipmentId; equipmentID++) {
+          for(int appID = 0; appID < equipamento[equipmentID].appNum; appID++){
+            if(equipamento[equipmentID].app[appID].appId == id){
+              countInstallation++;
+              rightCursor(moveRight - 1);
+              printf("Equipamento %2d - %s", equipmentID + 1, equipamento[equipmentID].app[appID].versao);
+              printf(" %02d/%02d/%04d\n", equipamento[equipmentID].app[appID].validade.dia, equipamento[equipmentID].app[appID].validade.mes, equipamento[equipmentID].app[appID].validade.ano);
+
+              count++;
+              if (count == 6) {
+                count= 0;
+                moveRight += 30;
+                saveCursor();
+                if (equipmentID != maxEquipmentId - 1)
+                  upCursor(6);
+              }
+            }
+          }
+        }
+
+        if(countInstallation == 0){
+          printf("Sem instalações");
+        }else{
+          restoreCursor();
+        }
+      }else{
+        printf("Sem Equipamentos");
+      }
+    }else{
+      printf("Sem Aplicações");
+    }
+
+    option = pageControls(&id, maxAppId);
+
+    if(option == -1) {
+      deleteEquipment(id);
+      option = 0;
+    }
+
+    if(option >= 1 && option <= maxAppId)
+      id = option-1;
+  } while (option != 0);
+}
 
 void renderInstalledDisks(int id){
   char tempString[500];
@@ -121,7 +196,7 @@ void renderInstalledApps(int id){
   if(equipamento[id].appNum > 0) {
     for (int i = 0; i < equipamento[id].appNum; i++) {
       rightCursor(moveRight - 1);
-      strcpy(tempString, "12345678901");
+      strcpy(tempString, app[equipamento[id].app[i].appId].name);
       printf("%2d - %-10s %s", i + 1, truncate(tempString, 10), equipamento[id].app[i].versao);
       printf(" %02d/%02d/%04d\n", equipamento[id].app[i].validade.dia, equipamento[id].app[i].validade.mes,
              equipamento[id].app[i].validade.ano);
@@ -223,6 +298,11 @@ void equipamentPage(int id){
     }
 
     option = pageControls(&id, maxEquipmentId);
+
+    if(option == -1) {
+      deleteEquipment(id);
+      option = 0;
+    }
 
     if(option >= 1 && option <= maxEquipmentId)
       id = option-1;

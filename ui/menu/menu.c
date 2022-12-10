@@ -91,12 +91,11 @@ void aplicacoesMenu(){
   int value;
 
   do {
-    char *options[4] =
+    char *options[3] =
         {
             "Inserir",
             "Lista",
-            "Editar",
-            "Eliminar"
+            "Paginas"
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
@@ -104,13 +103,13 @@ void aplicacoesMenu(){
 
     switch (value) {
       case 1:
-        clear();
+        insertApp();
+        break;
       case 2:
         aplicacoesTable();
         break;
       case 3:
-      case 4:
-        clear();
+        appPage(0);
         break;
 
       default:
