@@ -22,7 +22,7 @@ void deleteDisk(int id){
   int diskID = getID(equipment[id].diskNum);
 
   if(diskID != 0){
-    for (int i = diskID; i < equipment[id].diskNum; i++) {
+    for (int i = diskID-1; i < equipment[id].diskNum; i++) {
       equipment[id].disk[i] = equipment[id].disk[i + 1];
     }
 
@@ -37,7 +37,7 @@ void deleteInstalledApp(int id){
   int appID = getID(equipment[id].appNum);
 
   if(appID != 0){
-    for (int i = appID; i < equipment[id].appNum; i++) {
+    for (int i = appID-1; i < equipment[id].appNum; i++) {
       equipment[id].app[i] = equipment[id].app[i + 1];
     }
 
