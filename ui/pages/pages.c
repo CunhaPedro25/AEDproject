@@ -146,7 +146,7 @@ void appPage(int id){
     option = pageControls(&id, maxAppId);
 
     if(option == -1) {
-      deleteEquipment(id);
+      deleteApps(option-1);
       option = 0;
     }
 
