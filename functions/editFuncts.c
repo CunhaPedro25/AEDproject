@@ -120,7 +120,7 @@ void editInstalledApps(int id){
 }
 
 void editNetwork(int id){
-  renderTitle("NetworkCards de Rede");
+  renderTitle("Placas de Rede");
   printf("Escolha a Placa ([s] - sair)\n");
   for (int i = 0; i < equipment[id].networkCardNum; i++) {
     printf("%d - ", i+1);

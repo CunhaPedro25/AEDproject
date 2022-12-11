@@ -98,7 +98,7 @@ void appPage(int id){
 
   do{
     clear();
-    renderTitle("Pagina de Aplicações");
+    renderTitle("Página de Aplicações");
 
     if(maxAppId > 0){
       printf("Aplicação %d\n\n", id + 1);
@@ -177,7 +177,7 @@ void renderInstalledDisks(int id){
 
   if(equipment[id].diskNum > 1) {
     int totalCapacity = getTotalDiskSpace(id) >= 1000 ? getTotalDiskSpace(id)/1000 : getTotalDiskSpace(id);
-    printf("%d Disks; Total: %d %s\n", equipment[id].diskNum, totalCapacity, (getTotalDiskSpace(id) >= 1000 ? "TB" : "GB"));
+    printf("%d Discos; Total: %d %s\n", equipment[id].diskNum, totalCapacity, (getTotalDiskSpace(id) >= 1000 ? "TB" : "GB"));
     line(33, True);
     printf("|      Name     /   Capacidade  |\n");
     line(33, True);
@@ -196,7 +196,7 @@ void renderInstalledDisks(int id){
     printf("    Capacidade: %d ", capacity);
     printf("%s\n", (equipment[id].disk[0].capacidade >= 1000 ? "TB" : "GB"));
   }else{
-    printf("Sem Disks\n");
+    printf("Sem Discos\n");
   }
   saveCursor();
 }
@@ -217,7 +217,7 @@ void renderIpNumbers(int number[4]){
 void renderNetworkBoards(int id){
   int moveRight = 39;
   moveCursor(9, moveRight);
-  printf(VLINE"  NetworkCards\n");
+  printf(VLINE"  Placas\n");
   rightCursor(moveRight-1);
   printf(VLINE"  ");
   char *keys = "|         IP        |        MASK       |     BROADCAST     |";
@@ -242,7 +242,7 @@ void renderNetworkBoards(int id){
     rightCursor(moveRight-1);
     printf(VLINE);
     rightCursor((tableSize/2)-2);
-    printf("Sem NetworkCards\n");
+    printf("Sem Placas\n");
   }
   rightCursor(moveRight-1);
   printf(VLINE"  ");
@@ -255,7 +255,7 @@ void equipamentPage(int id){
 
   do{
     clear();
-    renderTitle("Pagina de Equipment");
+    renderTitle("Página de Equipamento");
 
     if(maxEquipmentId > 0){
       printf("Equipment %d - %02d/%02d/%04d\n\n", id + 1, equipment[id].data.day, equipment[id].data.month, equipment[id].data.year);

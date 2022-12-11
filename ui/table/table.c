@@ -193,7 +193,7 @@ void equipamentosTable(){
           printf("|  %-13s  ", truncate(temp, 12));
           printf("/   %3d %s  ", (capacity >= 1000? capacity/1000 : capacity), (capacity >= 1000? "TB" : "GB"));
         }else{
-          printf("|  %2d Disks ( Selecione id ) ", equipment[i].diskNum);
+          printf("|  %2d Discos ( Selecione id ) ", equipment[i].diskNum);
         }
 
         printf("|\n");
