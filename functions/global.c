@@ -72,7 +72,7 @@ int validNumber(char *option, int maxID){
 
 //Checks for int type in string by finding char that are not digits
 boolean isInt(char *text){
-  for(int i = 0; i < strlen(text); i++){
+  for(int i = 0; i < strlen_utf8(text); i++){
     if(!isdigit(text[i])){
       return False;
     }
@@ -83,7 +83,7 @@ boolean isInt(char *text){
 //Checks for float type in string by finding at most 1 '.' or ',' and char that are not digits
 boolean isFloat(char *text){
   int strikes = 0;
-  for(int i = 0; i < strlen(text); i++){
+  for(int i = 0; i < strlen_utf8(text); i++){
     if(!isdigit(text[i])){
       if(text[i] == '.' || text[i] == ','){
         strikes++;
@@ -93,6 +93,17 @@ boolean isFloat(char *text){
       }
     }
   }
+  return True;
+}
+
+boolean isEmpty(char *text){
+  if(strcmp(text, "") == 0) return True;
+  for (int i = 0; i < strlen_utf8(text); ++i) {
+    if(text[i] != ' '){
+      return False;
+    }
+  }
+
   return True;
 }
 
@@ -152,9 +163,9 @@ void readString(char *string, int maxInputSize){
     fgets(string, maxInputSize, stdin);
     removeNewline(string);
 
-    if(strcmp(string,"") == False || strcmp(string," ") == False)
+    if(isEmpty(string))
       showInvalidOption();
-  }while (strcmp(string,"") == False || strcmp(string," ") == False);
+  }while (isEmpty(string));
 }
 
 //Custom read func for ints that requires a valid input to be met
