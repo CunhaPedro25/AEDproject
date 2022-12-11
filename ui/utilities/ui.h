@@ -7,7 +7,6 @@
 
 #include "colors.h"
 #include "chars.h"
-#include "../../functions/functions.h"
 
 #define prefix "\e["
 
@@ -36,12 +35,5 @@ void textColor(int color);
 void backgroundColor(int color);
 void resetStyles();
 void renderColor(char *string, int color);
-
-/*----- Print Functions --------*/
-void closedLine(int size, int isTop);
-void line(int size, int breakLine);
-void renderTitle(const char *title);
-void showSpecificOption(char *text);
-void showInvalidOption();
 
 #endif //UI_H
