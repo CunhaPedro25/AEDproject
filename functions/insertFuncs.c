@@ -403,32 +403,41 @@ void insertNewApp(){
 }
 
 void insertEquipment(){
-  int tempInt = -1;
 
   clear();
   renderTitle("Inserir Equipamento");
+  if(maxEquipmentId <= 254){
+    int tempInt = -1;
 
-  insertType(maxEquipmentId);
-  insertAquisitionDate(maxEquipmentId);
-  insertDepartament(maxEquipmentId);
-  insertInsurance(maxEquipmentId);
-  insertCpu(maxEquipmentId);
-  insertRam(maxEquipmentId);
-  insertOS(maxEquipmentId);
+    insertType(maxEquipmentId);
+    insertAquisitionDate(maxEquipmentId);
+    insertDepartament(maxEquipmentId);
+    insertInsurance(maxEquipmentId);
+    insertCpu(maxEquipmentId);
+    insertRam(maxEquipmentId);
+    insertOS(maxEquipmentId);
 
-  if(askConfirmation("Adicionar Disco")) {
-    insertDisk(maxEquipmentId);
-  }
+    if(askConfirmation("Adicionar Disco")) {
+      insertDisk(maxEquipmentId);
+    }
 
-  if(askConfirmation("Adicionar uma placa de rede")) {
-    insertNetworkCard(maxEquipmentId);
-  }
+    if(askConfirmation("Adicionar uma placa de rede")) {
+      insertNetworkCard(maxEquipmentId);
+    }
 
-  if(maxAppId > 0){
-    showApps(maxEquipmentId);
+    if(maxAppId > 0){
+      showApps(maxEquipmentId);
+    }else{
+      askNewApp(maxEquipmentId);
+    }
+
+    maxEquipmentId++;
   }else{
-    askNewApp(maxEquipmentId);
+    printf("Maximo de equipamentos\n");
+    char temporary[10];
+    do {
+      readString(temporary, 10);
+    } while (strcmp(temporary, "s") == 0 || strcmp(temporary, "S") == 0);
   }
 
-  maxEquipmentId++;
 }
