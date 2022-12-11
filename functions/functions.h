@@ -15,6 +15,15 @@ typedef enum {
   False, True
 }boolean;
 
+typedef enum{
+  RAM,
+  OS,
+  APP,
+  LICENSE,
+  WARRANTY,
+  NETWORK
+} filter;
+
 /* Time Functions */
 const char* currentDate();
 const char* currentHours();
@@ -64,6 +73,9 @@ void editDisk(int id);
 void editInstalledApps(int id);
 void editNetwork(int id);
 
+/* Get total disk space */
+int getTotalDiskSpace(int id);
+
 /* Get id From a specific Range */
 int getID(int range);
 
@@ -108,7 +120,7 @@ void renderIP(int ip[4]);
 void closedLine(int size, int isTop);
 void line(int size, int breakLine);
 void renderTitle(const char *title);
-void showSpecificOption(char *text);
+void showSpecificInvalidOption(char *text);
 void showInvalidOption();
 
 #endif //FUNCTIONS_H

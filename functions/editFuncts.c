@@ -56,6 +56,15 @@ void editCpuClock(int id){
   insertCpuClock(id);
 }
 
+int getTotalDiskSpace(int id){
+  int totalCapacity = 0;
+  for (int i = 0; i < equipment[id].diskNum; i++){
+    totalCapacity += equipment[id].disk[i].capacidade;
+  }
+
+  return totalCapacity;
+}
+
 int getID(int range){
   int result;
   printf("\n"PROMPT);
@@ -80,7 +89,7 @@ int getID(int range){
     }
 
     if(result < 1 || result > range){
-      showSpecificOption("[Fora da Range]");
+      showSpecificInvalidOption("[Fora da Range]");
     }
   } while(result < 0 || result > range);
 

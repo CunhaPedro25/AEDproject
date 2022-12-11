@@ -1,6 +1,7 @@
 #include "menu.h"
 
 extern Equipment equipment[256];
+extern int maxEquipmentId;
 extern int maxAppId;
 /**
  *
@@ -279,6 +280,44 @@ void editEquipment(int id){
   clear();
 }
 
+void filterEquipmentMenu(){
+  int value;
+
+  do {
+    char *options[6] =
+        {
+            "RAM",
+            "OS",
+            "Aplicações",
+            "Licensa Expirada",
+            "Garantia Expirada",
+            "Rede"
+        };
+    size_t size = sizeof(options)/sizeof(options[0]);
+
+    if(maxEquipmentId > 0) {
+      value = menu("Pesquisa", options, size, "sub");
+
+
+      if(value != 0) {
+        filterTable(value - 1);
+      }
+    }else{
+      char temporary[10];
+      clear();
+      renderTitle("Pesquisa");
+      printf("Sem Equipamentos\n\n");
+      printf(PROMPT);
+      readString(temporary, 10);
+      if(strcmp(temporary, "s") == 0 || strcmp(temporary, "S") == 0 ) {
+        value = 0;
+      }else{
+        showInvalidOption();
+      }
+    }
+  } while (value != 0);
+}
+
 /**
  *  @brief Menu for aplications with respective options and functions
  *
@@ -324,11 +363,12 @@ void equipamentosMenu(){
   int value;
 
   do {
-    char *options[3] =
+    char *options[4] =
         {
             "Inserir",
             "Lista",
-            "Paginas"
+            "Paginas",
+            "Pesquisar"
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
@@ -343,6 +383,9 @@ void equipamentosMenu(){
         break;
       case 3:
         equipamentPage(0);
+        break;
+      case 4:
+        filterEquipmentMenu();
         break;
 
       default:

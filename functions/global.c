@@ -298,7 +298,7 @@ void renderTitle(const char *title) {
   closedLine(titleSize, False);
 }
 
-void showSpecificOption(char *text){
+void showSpecificInvalidOption(char *text){
   textColor(RED);
   printf("%s", text);    // Show error message
   resetStyles();
@@ -307,6 +307,6 @@ void showSpecificOption(char *text){
 }
 
 void showInvalidOption(){
-  showSpecificOption("[Opção Invalida]");
+  showSpecificInvalidOption("[Opção Invalida]");
 }
 

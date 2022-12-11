@@ -14,7 +14,7 @@ int validPagesOption(char *option, int *id, int maxID){
           *id -= 1;
           return  True;
         }
-        showSpecificOption("");
+        showSpecificInvalidOption("");
         return False;
       /*Next Page*/
       case 'd':
@@ -23,7 +23,7 @@ int validPagesOption(char *option, int *id, int maxID){
           *id += 1;
           return  True;
         }
-        showSpecificOption("");
+        showSpecificInvalidOption("");
         return False;
       /*Edit*/
       case 'e':
@@ -165,15 +165,6 @@ void appPage(int id){
     if(option >= 1 && option <= maxAppId)
       id = option-1;
   } while (option != 0);
-}
-
-int getTotalDiskSpace(int id){
-  int totalCapacity = 0;
-  for (int i = 0; i < equipment[id].diskNum; i++){
-    totalCapacity += equipment[id].disk[i].capacidade;
-  }
-
-  return totalCapacity;
 }
 
 void renderInstalledDisks(int id){

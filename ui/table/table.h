@@ -4,6 +4,7 @@
 #include "../main.h"
 #include "../pages/pages.h"
 
+void filterTable(int filter);
 void equipamentosTable();
 void aplicacoesTable();
 

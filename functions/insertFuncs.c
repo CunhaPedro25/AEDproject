@@ -122,7 +122,7 @@ void insertDiskName(int id, int diskID){
 void insertDiskSize(int id, int diskID){
   //while the user's option is not valid (between 0 GB and 22 TB)ask continously
   clearToLineEnd();
-  renderColor("\tCapacidade: ", GREEN);
+  renderColor("\tCapacidade (GB): ", GREEN);
   do {
     readInt(&equipment[id].disk[diskID].capacidade, 20);
     if (equipment[id].disk[diskID].capacidade <= 0 || equipment[id].disk[diskID].capacidade >= 22000) {
@@ -341,7 +341,7 @@ void showApps(int id){
         readInt(&option, 100);
         for(int appId = 0; appId < equipment[id].appNum; appId++){
           if(equipment[id].app[appId].appId == option - 1) {
-            showSpecificOption("[Aplicação já adicionada]");
+            showSpecificInvalidOption("[Aplicação já adicionada]");
             continue;
           }
         }
