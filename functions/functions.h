@@ -31,6 +31,7 @@ int countDigits(int number);
 void readString(char *string,int maxInputSize);
 void readInt(int *n, int maxInputSize);
 void readFloat(float *n, int maxInputSize);
+boolean askConfirmation(char *string);
 
 /* String Manipulation or count */
 size_t strlen_utf8(const char *string);
@@ -58,6 +59,7 @@ void insertMask(int id);
 void insertNetworkCard(int id);
 void insertInstalledApp(int id);
 int insertApp();
+void insertNewApp();
 void insertDisk(int id);
 void insertEquipment();
 #endif //FUNCTIONS_H

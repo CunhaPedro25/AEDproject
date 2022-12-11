@@ -135,6 +135,19 @@ void readFloat(float *n, int maxInputSize){
   *n = strtof(tempString, &trash);
 }
 
+boolean askConfirmation(char *question){
+  char string[100];
+  printf("%s (y/n)? ",question);
+  do {
+    readString(string, 100);
+    if(strcmp(string, "y") != 0 && strcmp(string, "Y") != 0 && strcmp(string, "n") != 0 && strcmp(string, "N") != 0){
+      showInvalidOption();
+    }
+  } while (strcmp(string, "y") != 0 && strcmp(string, "Y") != 0 && strcmp(string, "n") != 0 && strcmp(string, "N") != 0);
+
+  return strcmp(string, "y") == 0 || strcmp(string, "Y") == 0;
+}
+
 void removeNewline(char *string){
   string[strcspn(string, "\n")] = 0;
 }
@@ -161,12 +174,11 @@ boolean isValidDate(char *date) {
     //check for february
     if( m == 2 ){
       if(isleapYear(y)) {
-        if(d <= 29)
-          return True;
-      }    
-      else
-        return False;
-      
+        if(d <= 29) return True;
+      }else {
+        if(d <= 28) return True;
+      }
+      return False;
     }
     //april, june, september and november are with 30 days
     if ( m == 4 || m == 6 || m == 9 || m == 11 ){
@@ -184,7 +196,7 @@ boolean isValidDate(char *date) {
 boolean isValidIp(char *ip){
   int num1, num2, num3, num4; 
   if ((sscanf(ip, "%d.%d.%d.%d",&num1,&num2,&num3,&num4)) == 4) {
-    return (num1 <= 255 && num1 > 0)&&(num2 <= 255 && num2 >=0)&&(num3 <= 255 && num3 >=0)&&(num4 <= 255 && num4 >=0); 
+    return (num1 > 0 && num1 <= 255) && (num2 >=0 && num2 <= 255) && (num3 >=0 && num3 <= 255) && (num4 >= 0 && num4 <= 255);
   }
   return False;
 }
