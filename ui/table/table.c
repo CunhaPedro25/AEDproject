@@ -125,7 +125,8 @@ void aplicacoesTable(){
 
     if(maxAppId > 0){
       char tempString[200];
-      for(int i = (size-5 < 0 ? 0 : size-5); i < size; i++){
+      int startingSize = (size-5 < 0 ? 0 : (size == maxAppId && (maxAppId % 5) != 0 ? size-(maxAppId % 5) : size-5));
+      for(int i = startingSize; i < size; i++){
         printf("| %2d ", i+1);
         strcpy(tempString,app[i].name);
         printf("|  %-12s  ", truncate(tempString, 10));
