@@ -9,7 +9,7 @@
 #include <time.h>
 
 #include "../ui/utilities/ui.h"
-#include "../structures/equipamentos.h"
+#include "../structures/structers.h"
 
 typedef enum {
   False, True

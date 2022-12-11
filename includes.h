@@ -3,7 +3,7 @@
 #include <locale.h>
 
 /* Ficheiros Externos */
-#include "structures/equipamentos.h"
+#include "structures/structers.h"
 #include "ui/utilities/ui.h"
 #include "ui/menu/menu.h"
 #include "ui/table/table.h"
