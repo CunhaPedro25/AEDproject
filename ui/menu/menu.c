@@ -103,7 +103,7 @@ void aplicacoesMenu(){
 
     switch (value) {
       case 1:
-        insertApp();
+        insertNewApp();
         break;
       case 2:
         aplicacoesTable();
