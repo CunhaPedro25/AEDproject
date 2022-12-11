@@ -15,35 +15,35 @@ typedef struct {
   int ip[4];
   int mask[4];
   int broadcast[4];
-} Placas;
+} NetworkCards;
 
 typedef struct{
   char name[50];
   int capacidade; // Capacidade do disco
-} Discos;
+} Disks;
 
 typedef struct{
-  char versao[20];
   int appId;
-  struct Validade {
-    int dia;
-    int mes;
-    int ano;
-  } validade;
-} installedApp;
+  char version[20];
+  struct License {
+    int day;
+    int months;
+    int year;
+  } license;
+} InstalledApps;
 
 typedef struct Equipamentos {
 
   int type;
 
-  struct Aquisicao {
-    int dia; // equipamento[0].data.dia
-    int mes;
-    int ano;
+  struct Insurance {
+    int day; // equipment[0].data.day
+    int month;
+    int year;
   } data;
 
   char departamento[50];
-  int garantia; // Em meses
+  int warranty; // Em meses
 
   struct CPUs {
     char name[50];
@@ -51,15 +51,15 @@ typedef struct Equipamentos {
   } cpu;
 
   int  ram;
-  char sistema[50];
+  char operatingSystem[50];
 
   int diskNum;
   int appNum;
   int networkCardNum;
-  Discos discos[256];
-  Placas placas[256];
-  installedApp app[256];
+  Disks disk[256];
+  NetworkCards networkCard[256];
+  InstalledApps app[256];
 
-} Equipamento;
+} Equipment;
 
 #endif // !equipamentos_h

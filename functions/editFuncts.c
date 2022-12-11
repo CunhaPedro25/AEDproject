@@ -1,7 +1,7 @@
 #include "functions.h"
 
 extern int maxEquipmentId;
-extern Equipamento equipamento[256];
+extern Equipment equipment[256];
 extern Apps app[256];
 extern int maxAppId;
 
@@ -90,11 +90,11 @@ int getID(int range){
 void editDisk(int id){
   renderTitle("Editar Disco");
   printf("Escolha o disco ([s] - sair)\n");
-  for (int i = 0; i < equipamento[id].diskNum; i++) {
-    int capacity = equipamento[id].discos[i].capacidade >= 1000 ? equipamento[id].discos[i].capacidade/1000 : equipamento[id].discos[i].capacidade;
-    printf("%d - %-10s %d %s\n", i+1, equipamento[id].discos[i].name, capacity, equipamento[id].discos[i].capacidade >= 1000 ? "TB" : "GB");
+  for (int i = 0; i < equipment[id].diskNum; i++) {
+    int capacity = equipment[id].disk[i].capacidade >= 1000 ? equipment[id].disk[i].capacidade / 1000 : equipment[id].disk[i].capacidade;
+    printf("%d - %-10s %d %s\n", i+1, equipment[id].disk[i].name, capacity, equipment[id].disk[i].capacidade >= 1000 ? "TB" : "GB");
   }
-  int diskID = getID(equipamento[id].diskNum);
+  int diskID = getID(equipment[id].diskNum);
 
   if(diskID != 0){
     moveCursor(5,0);
@@ -109,7 +109,7 @@ void editInstalledApps(int id){
   renderTitle("Aplicações Instaladas");
   printf("Escolha uma Aplicação ([s] - sair)\n");
   renderInstalledApps(id);
-  int appID = getID(equipamento[id].appNum);
+  int appID = getID(equipment[id].appNum);
 
   if(appID != 0){
     moveCursor(5,0);
@@ -120,17 +120,17 @@ void editInstalledApps(int id){
 }
 
 void editNetwork(int id){
-  renderTitle("Placas de Rede");
+  renderTitle("NetworkCards de Rede");
   printf("Escolha a Placa ([s] - sair)\n");
-  for (int i = 0; i < equipamento[id].networkCardNum; i++) {
+  for (int i = 0; i < equipment[id].networkCardNum; i++) {
     printf("%d - ", i+1);
-    renderIP(equipamento[id].placas[i].ip);
+    renderIP(equipment[id].networkCard[i].ip);
     printf(" ");
-    renderIP(equipamento[id].placas[i].mask);
+    renderIP(equipment[id].networkCard[i].mask);
     printf("\n");
   }
 
-  int networkID = getID(equipamento[id].networkCardNum);
+  int networkID = getID(equipment[id].networkCardNum);
 
   if(networkID != 0){
     moveCursor(5,0);

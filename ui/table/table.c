@@ -105,7 +105,7 @@ int tableControls(int *size, int maxID, int lineSize){
 extern int maxAppId;
 extern int maxEquipmentId;
 extern Apps app[256];
-extern Equipamento equipamento[256];
+extern Equipment equipment[256];
 
 void aplicacoesTable(){
   int option = -1;
@@ -168,32 +168,32 @@ void equipamentosTable(){
       int startingSize = (size-5 < 0 ? 0 : (size == maxEquipmentId && (maxEquipmentId % 5) != 0 ? size-(maxEquipmentId % 5) : size-5));
       for(int i = startingSize; i < size; i++){
         printf("| %2d ", i+1);
-        printf("|  %s%-5s  ", equipamento[i].type == 1 ? "   " : "", equipamento[i].type == 1 ? "PC" : "SERVIDOR");
+        printf("|  %s%-5s  ", equipment[i].type == 1 ? "   " : "", equipment[i].type == 1 ? "PC" : "SERVIDOR");
 
 
-        printf("|    %02d/%02d/%04d   |", equipamento[i].data.dia, equipamento[i].data.mes, equipamento[i].data.ano);
+        printf("|    %02d/%02d/%04d   |", equipment[i].data.day, equipment[i].data.month, equipment[i].data.year);
 
-        if( equipamento[i].garantia < 1000){
-          equipamento[i].garantia <= 1 ? textColor(RED) : equipamento[i].garantia <= 5 ? textColor(YELLOW) : textColor(DEFAULT);
-          printf(" %3d Mes%-2s  ", equipamento[i].garantia, equipamento[i].garantia == 1 || equipamento[i].garantia == -1  ? "" : "es");
+        if(equipment[i].warranty < 1000){
+          equipment[i].warranty <= 1 ? textColor(RED) : equipment[i].warranty <= 5 ? textColor(YELLOW) : textColor(DEFAULT);
+          printf(" %3d Mes%-2s  ", equipment[i].warranty, equipment[i].warranty == 1 || equipment[i].warranty == -1 ? "" : "es");
           resetStyles();
         }else{
           printf("  LIFETIME  ");
         }
 
-        strcpy(temp, equipamento[i].cpu.name);
+        strcpy(temp, equipment[i].cpu.name);
         printf("|  %-12s ", truncate(temp, 11));
-        printf("/  %.2f  ", equipamento[i].cpu.clock);
+        printf("/  %.2f  ", equipment[i].cpu.clock);
 
-        printf("|  %3d GB  ", equipamento[i].ram);
+        printf("|  %3d GB  ", equipment[i].ram);
 
-        if(equipamento[i].diskNum == 1) {
-          int capacity = equipamento[i].discos[0].capacidade;
-          strcpy(temp, equipamento[i].discos[0].name);
+        if(equipment[i].diskNum == 1) {
+          int capacity = equipment[i].disk[0].capacidade;
+          strcpy(temp, equipment[i].disk[0].name);
           printf("|  %-13s  ", truncate(temp, 12));
           printf("/   %3d %s  ", (capacity >= 1000? capacity/1000 : capacity), (capacity >= 1000? "TB" : "GB"));
         }else{
-          printf("|  %2d Discos ( Selecione id ) ", equipamento[i].diskNum);
+          printf("|  %2d Disks ( Selecione id ) ", equipment[i].diskNum);
         }
 
         printf("|\n");

@@ -1,6 +1,6 @@
 #include "menu.h"
 
-extern Equipamento equipamento[256];
+extern Equipment equipment[256];
 extern int maxAppId;
 /**
  *
@@ -88,12 +88,12 @@ void editDisksMenu(int id){
     char *options[3] =
         {
             "Inserir Disco",
-            "Editar Discos",
+            "Editar Disks",
             "Eliminar Disco"
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Editar Discos", options, size, "sub");
+    value = menu("Editar Disks", options, size, "sub");
 
     clear();
     switch (value) {
@@ -167,7 +167,7 @@ void editNetworkMenu(int id){
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Editar Discos", options, size, "sub");
+    value = menu("Editar Disks", options, size, "sub");
 
     clear();
     switch (value) {
@@ -204,13 +204,13 @@ void editEquipment(int id){
             "Sistema Operativo",
             "CPU Name",
             "CPU Clock",
-            "Discos",
+            "Disks",
             "Aplicações Instaladas",
-            "Placas de Rede",
+            "NetworkCards de Rede",
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Editar Equipamento", options, size, "sub");
+    value = menu("Editar Equipment", options, size, "sub");
 
     clear();
     switch (value) {
@@ -239,17 +239,17 @@ void editEquipment(int id){
         editCpuClock(id);
         break;
       case 9:
-        if(equipamento[id].diskNum > 0) {
+        if(equipment[id].diskNum > 0) {
           editDisksMenu(id);
         }else{
-          renderTitle("Inserir Discos");
+          renderTitle("Inserir Disks");
           if(askConfirmation("Adicionar Disco")) {
             insertDisk(id);
           }
         }
         break;
       case 10:
-        if(equipamento[id].appNum > 0) {
+        if(equipment[id].appNum > 0) {
           editInstalledAppsMenu(id);
         }else{
           renderTitle("Inserir Aplicações");
@@ -261,7 +261,7 @@ void editEquipment(int id){
         }
         break;
       case 11:
-        if(equipamento[id].networkCardNum > 0) {
+        if(equipment[id].networkCardNum > 0) {
           editNetworkMenu(id);
         }else{
           renderTitle("Inserir Place de Rede");

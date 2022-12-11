@@ -1,13 +1,13 @@
 #include "functions.h"
 
 extern Apps app[256];
-extern Equipamento equipamento[256];
+extern Equipment equipment[256];
 extern int maxAppId;
 extern int maxEquipmentId;
 
 void deleteEquipment(int id){
   for (int i = id; i < maxEquipmentId; i++) {
-    equipamento[i] = equipamento[i+1];
+    equipment[i] = equipment[i + 1];
   }
   maxEquipmentId--;
 }
@@ -15,18 +15,18 @@ void deleteEquipment(int id){
 void deleteDisk(int id){
   renderTitle("Eliminar Disco");
   printf("Escolha o disco ([s] - sair)\n");
-  for (int i = 0; i < equipamento[id].diskNum; i++) {
-    int capacity = equipamento[id].discos[i].capacidade >= 1000 ? equipamento[id].discos[i].capacidade/1000 : equipamento[id].discos[i].capacidade;
-    printf("%d - %-10s %d %s\n", i+1, equipamento[id].discos[i].name, capacity, equipamento[id].discos[i].capacidade >= 1000 ? "TB" : "GB");
+  for (int i = 0; i < equipment[id].diskNum; i++) {
+    int capacity = equipment[id].disk[i].capacidade >= 1000 ? equipment[id].disk[i].capacidade / 1000 : equipment[id].disk[i].capacidade;
+    printf("%d - %-10s %d %s\n", i+1, equipment[id].disk[i].name, capacity, equipment[id].disk[i].capacidade >= 1000 ? "TB" : "GB");
   }
-  int diskID = getID(equipamento[id].diskNum);
+  int diskID = getID(equipment[id].diskNum);
 
   if(diskID != 0){
-    for (int i = diskID; i < equipamento[id].diskNum; i++) {
-      equipamento[id].discos[i] = equipamento[id].discos[i+1];
+    for (int i = diskID; i < equipment[id].diskNum; i++) {
+      equipment[id].disk[i] = equipment[id].disk[i + 1];
     }
 
-    equipamento[id].diskNum--;
+    equipment[id].diskNum--;
   }
 }
 
@@ -34,14 +34,14 @@ void deleteInstalledApp(int id){
   renderTitle("Eliminar Aplicação");
   printf("Escolha uma Aplicação ([s] - sair)\n");
   renderInstalledApps(id);
-  int appID = getID(equipamento[id].appNum);
+  int appID = getID(equipment[id].appNum);
 
   if(appID != 0){
-    for (int i = appID; i < equipamento[id].appNum; i++) {
-      equipamento[id].app[i] = equipamento[id].app[i+1];
+    for (int i = appID; i < equipment[id].appNum; i++) {
+      equipment[id].app[i] = equipment[id].app[i + 1];
     }
 
-    equipamento[id].appNum--;
+    equipment[id].appNum--;
   }
 }
 
@@ -57,21 +57,21 @@ void renderIP(int ip[4]){
 void deleteNetwork(int id){
   renderTitle("Eliminar Placa de Rede");
   printf("Escolha a Placa ([s] - sair)\n");
-  for (int i = 0; i < equipamento[id].networkCardNum; i++) {
+  for (int i = 0; i < equipment[id].networkCardNum; i++) {
     printf("%d - ", i+1);
-    renderIP(equipamento[id].placas[i].ip);
+    renderIP(equipment[id].networkCard[i].ip);
     printf(" ");
-    renderIP(equipamento[id].placas[i].mask);
+    renderIP(equipment[id].networkCard[i].mask);
     printf("\n");
   }
-  int networkID = getID(equipamento[id].networkCardNum);
+  int networkID = getID(equipment[id].networkCardNum);
 
   if(networkID != 0){
-    for (int i = networkID; i < equipamento[id].networkCardNum; i++) {
-      equipamento[id].placas[i] = equipamento[id].placas[i+1];
+    for (int i = networkID; i < equipment[id].networkCardNum; i++) {
+      equipment[id].networkCard[i] = equipment[id].networkCard[i + 1];
     }
 
-    equipamento[id].networkCardNum--;
+    equipment[id].networkCardNum--;
   }
 }
 
@@ -84,14 +84,14 @@ void deleteApps(int id){
 
   for (int i = 0; i < maxEquipmentId; i++) {
     int startDeleting = False;
-    for (int appID = 0; appID < equipamento[i].appNum; appID++){
-      if(equipamento[i].app[appID].appId == id && startDeleting == False) startDeleting = True;
+    for (int appID = 0; appID < equipment[i].appNum; appID++){
+      if(equipment[i].app[appID].appId == id && startDeleting == False) startDeleting = True;
 
       if(startDeleting == True) {
-        equipamento[i].app[appID] = equipamento[i].app[appID + 1];
-        equipamento[i].app[appID].appId--;
+        equipment[i].app[appID] = equipment[i].app[appID + 1];
+        equipment[i].app[appID].appId--;
       }
     }
-    if(startDeleting == True){ equipamento[i].appNum--;}
+    if(startDeleting == True){ equipment[i].appNum--;}
   }
 }

@@ -89,7 +89,7 @@ int pageControls(int *id, int maxID){
 }
 
 extern Apps app[256];
-extern Equipamento equipamento[256];
+extern Equipment equipment[256];
 extern int maxEquipmentId;
 extern int maxAppId;
 
@@ -114,12 +114,12 @@ void appPage(int id){
         int countInstallation = 0;
 
         for (int equipmentID = 0; equipmentID < maxEquipmentId; equipmentID++) {
-          for(int appID = 0; appID < equipamento[equipmentID].appNum; appID++){
-            if(equipamento[equipmentID].app[appID].appId == id){
+          for(int appID = 0; appID < equipment[equipmentID].appNum; appID++){
+            if(equipment[equipmentID].app[appID].appId == id){
               countInstallation++;
               rightCursor(moveRight - 1);
-              printf("Equipamento %-2d - %s", equipmentID + 1, equipamento[equipmentID].app[appID].versao);
-              printf(" %02d/%02d/%04d\n", equipamento[equipmentID].app[appID].validade.dia, equipamento[equipmentID].app[appID].validade.mes, equipamento[equipmentID].app[appID].validade.ano);
+              printf("Equipment %-2d - %s", equipmentID + 1, equipment[equipmentID].app[appID].version);
+              printf(" %02d/%02d/%04d\n", equipment[equipmentID].app[appID].license.day, equipment[equipmentID].app[appID].license.months, equipment[equipmentID].app[appID].license.year);
 
               count++;
               saveCursor();
@@ -164,8 +164,8 @@ void appPage(int id){
 
 int getTotalDiskSpace(int id){
   int totalCapacity = 0;
-  for (int i = 0; i < equipamento[id].diskNum; i++){
-    totalCapacity += equipamento[id].discos[i].capacidade;
+  for (int i = 0; i < equipment[id].diskNum; i++){
+    totalCapacity += equipment[id].disk[i].capacidade;
   }
 
   return totalCapacity;
@@ -175,28 +175,28 @@ void renderInstalledDisks(int id){
   char tempString[500];
   int capacity = 0;
 
-  if(equipamento[id].diskNum > 1) {
+  if(equipment[id].diskNum > 1) {
     int totalCapacity = getTotalDiskSpace(id) >= 1000 ? getTotalDiskSpace(id)/1000 : getTotalDiskSpace(id);
-    printf("%d Discos; Total: %d %s\n", equipamento[id].diskNum, totalCapacity, (getTotalDiskSpace(id) >= 1000 ? "TB" : "GB"));
+    printf("%d Disks; Total: %d %s\n", equipment[id].diskNum, totalCapacity, (getTotalDiskSpace(id) >= 1000 ? "TB" : "GB"));
     line(33, True);
     printf("|      Name     /   Capacidade  |\n");
     line(33, True);
-    for (int i = 0; i < equipamento[id].diskNum; i++){
-      strcpy(tempString, equipamento[id].discos[i].name);
-      capacity = equipamento[id].discos[i].capacidade >= 1000 ? equipamento[id].discos[i].capacidade/1000 : equipamento[id].discos[i].capacidade;
+    for (int i = 0; i < equipment[id].diskNum; i++){
+      strcpy(tempString, equipment[id].disk[i].name);
+      capacity = equipment[id].disk[i].capacidade >= 1000 ? equipment[id].disk[i].capacidade / 1000 : equipment[id].disk[i].capacidade;
       printf("|  %-11s  /    %4d ", truncate(tempString, 11), capacity);
-      printf("%s    |\n", (equipamento[id].discos[i].capacidade >= 1000 ? "TB" : "GB"));
+      printf("%s    |\n", (equipment[id].disk[i].capacidade >= 1000 ? "TB" : "GB"));
     }
     line(33, True);
-  }else if(equipamento[id].diskNum == 1){
-    strcpy(tempString, equipamento[id].discos[0].name);
-    capacity = equipamento[id].discos[0].capacidade >= 1000 ? equipamento[id].discos[0].capacidade/1000 : equipamento[id].discos[0].capacidade;
+  }else if(equipment[id].diskNum == 1){
+    strcpy(tempString, equipment[id].disk[0].name);
+    capacity = equipment[id].disk[0].capacidade >= 1000 ? equipment[id].disk[0].capacidade / 1000 : equipment[id].disk[0].capacidade;
     printf("Disco:\n");
-    printf("    Nome: %-14s\n", truncate(equipamento[id].discos[0].name, 12));
+    printf("    Nome: %-14s\n", truncate(equipment[id].disk[0].name, 12));
     printf("    Capacidade: %d ", capacity);
-    printf("%s\n", (equipamento[id].discos[0].capacidade >= 1000 ? "TB" : "GB"));
+    printf("%s\n", (equipment[id].disk[0].capacidade >= 1000 ? "TB" : "GB"));
   }else{
-    printf("Sem Discos\n");
+    printf("Sem Disks\n");
   }
   saveCursor();
 }
@@ -217,7 +217,7 @@ void renderIpNumbers(int number[4]){
 void renderNetworkBoards(int id){
   int moveRight = 39;
   moveCursor(9, moveRight);
-  printf(VLINE"  Placas\n");
+  printf(VLINE"  NetworkCards\n");
   rightCursor(moveRight-1);
   printf(VLINE"  ");
   char *keys = "|         IP        |        MASK       |     BROADCAST     |";
@@ -229,20 +229,20 @@ void renderNetworkBoards(int id){
   printf(VLINE"  ");
   line(tableSize,True);
 
-  if(equipamento[id].networkCardNum > 0) {
-    for (int i = 0; i < equipamento[id].networkCardNum; i++) {
+  if(equipment[id].networkCardNum > 0) {
+    for (int i = 0; i < equipment[id].networkCardNum; i++) {
       rightCursor(moveRight-1);
       printf(VLINE"  ");
-      renderIpNumbers(equipamento[id].placas[i].ip);
-      renderIpNumbers(equipamento[id].placas[i].mask);
-      renderIpNumbers(equipamento[id].placas[i].broadcast);
+      renderIpNumbers(equipment[id].networkCard[i].ip);
+      renderIpNumbers(equipment[id].networkCard[i].mask);
+      renderIpNumbers(equipment[id].networkCard[i].broadcast);
       printf("|\n");
     }
   }else{
     rightCursor(moveRight-1);
     printf(VLINE);
     rightCursor((tableSize/2)-2);
-    printf("Sem Placas\n");
+    printf("Sem NetworkCards\n");
   }
   rightCursor(moveRight-1);
   printf(VLINE"  ");
@@ -255,21 +255,21 @@ void equipamentPage(int id){
 
   do{
     clear();
-    renderTitle("Pagina de Equipamento");
+    renderTitle("Pagina de Equipment");
 
     if(maxEquipmentId > 0){
-      printf("Equipamento %d - %02d/%02d/%04d\n\n", id + 1, equipamento[id].data.dia, equipamento[id].data.mes, equipamento[id].data.ano);
+      printf("Equipment %d - %02d/%02d/%04d\n\n", id + 1, equipment[id].data.day, equipment[id].data.month, equipment[id].data.year);
 
-      printf("Tipo: %-8s", equipamento[id].type == 1 ? "PC" : "Servidor");
+      printf("Tipo: %-8s", equipment[id].type == 1 ? "PC" : "Servidor");
 
       rightCursor(24);
-      strcpy(tempString, equipamento[id].sistema);
+      strcpy(tempString, equipment[id].operatingSystem);
       printf(VLINE"  Sistema Operativo: %s\n", truncate(tempString, 10));
 
-      strcpy(tempString, equipamento[id].cpu.name);
-      printf("CPU: %-10s %.2f GHz (%5.0f MIPS) ", truncate(tempString, 8), equipamento[id].cpu.clock,  (equipamento[id].cpu.clock * 1250));
+      strcpy(tempString, equipment[id].cpu.name);
+      printf("CPU: %-10s %.2f GHz (%5.0f MIPS) ", truncate(tempString, 8), equipment[id].cpu.clock, (equipment[id].cpu.clock * 1250));
 
-      printf(VLINE"  RAM -> %d GB\n", equipamento[id].ram);
+      printf(VLINE"  RAM -> %d GB\n", equipment[id].ram);
 
       /* Render Disks */
       renderInstalledDisks(id);
@@ -278,8 +278,8 @@ void equipamentPage(int id){
       renderNetworkBoards(id);
 
       /* Render List of Installed Apps */
-      if(equipamento[id].diskNum > 1)
-        downCursor((equipamento[id].diskNum-equipamento[id].networkCardNum)-1);
+      if(equipment[id].diskNum > 1)
+        downCursor((equipment[id].diskNum - equipment[id].networkCardNum) - 1);
       renderInstalledApps(id);
 
     }else{

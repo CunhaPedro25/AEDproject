@@ -1,7 +1,7 @@
 #include "includes.h"
 
 
-Equipamento equipamento[256];
+Equipment equipment[256];
 Apps app[256];
 int maxEquipmentId = 0;
 int maxAppId = 0;
