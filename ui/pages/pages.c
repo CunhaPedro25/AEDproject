@@ -76,6 +76,9 @@ int pageControls(int *id, int maxID){
       return -1;    // Code to detect that its in deleteing menu
   }
 
+  if((strcmp(option, "e") == 0 || strcmp(option, "e") == 0) && maxID > 0){
+    return -2;    // Code to detect that its in edit menu
+  }
 
   /* Check if it's a number and return its value if true (0 - MaxID) */
   if(isInt(option)) {
@@ -146,8 +149,12 @@ void appPage(int id){
     option = pageControls(&id, maxAppId);
 
     if(option == -1) {
-      deleteApps(option-1);
+      deleteApps(id);
       option = 0;
+    }
+
+    if(option == -2) {
+      editApps(id);
     }
 
     if(option >= 1 && option <= maxAppId)
@@ -170,7 +177,7 @@ void renderInstalledDisks(int id){
 
   if(equipamento[id].diskNum > 1) {
     int totalCapacity = getTotalDiskSpace(id) >= 1000 ? getTotalDiskSpace(id)/1000 : getTotalDiskSpace(id);
-    printf("Número de Discos: %-2d; Total: %d %s\n", equipamento[id].diskNum, totalCapacity, (getTotalDiskSpace(id) >= 1000 ? "TB" : "GB"));
+    printf("%d Discos; Total: %d %s\n", equipamento[id].diskNum, totalCapacity, (getTotalDiskSpace(id) >= 1000 ? "TB" : "GB"));
     line(33, True);
     printf("|      Name     /   Capacidade  |\n");
     line(33, True);
@@ -181,45 +188,17 @@ void renderInstalledDisks(int id){
       printf("%s    |\n", (equipamento[id].discos[i].capacidade >= 1000 ? "TB" : "GB"));
     }
     line(33, True);
-  }else{
+  }else if(equipamento[id].diskNum == 1){
     strcpy(tempString, equipamento[id].discos[0].name);
     capacity = equipamento[id].discos[0].capacidade >= 1000 ? equipamento[id].discos[0].capacidade/1000 : equipamento[id].discos[0].capacidade;
     printf("Disco:\n");
     printf("    Nome: %-14s\n", truncate(equipamento[id].discos[0].name, 12));
     printf("    Capacidade: %d ", capacity);
     printf("%s\n", (equipamento[id].discos[0].capacidade >= 1000 ? "TB" : "GB"));
+  }else{
+    printf("Sem Discos\n");
   }
   saveCursor();
-}
-
-void renderInstalledApps(int id){
-  char tempString[500];
-
-  if(equipamento[id].diskNum > 1)
-    downCursor((equipamento[id].diskNum-equipamento[id].networkCardNum)-1);
-
-  printf("Aplicações %d\n", equipamento[id].appNum);
-  int moveRight = 0;
-  int count4by4 = 0;
-  if(equipamento[id].appNum > 0) {
-    for (int i = 0; i < equipamento[id].appNum; i++) {
-      rightCursor(moveRight - 1);
-      strcpy(tempString, app[equipamento[id].app[i].appId].name);
-      printf("%2d - %-10s %s", i + 1, truncate(tempString, 10), equipamento[id].app[i].versao);
-      printf(" %02d/%02d/%04d\n", equipamento[id].app[i].validade.dia, equipamento[id].app[i].validade.mes,
-             equipamento[id].app[i].validade.ano);
-
-      count4by4++;
-      if (count4by4 == 4) {
-        count4by4 = 0;
-        moveRight += 34;
-        if (i != equipamento[id].appNum - 1)
-          upCursor(4);
-      }
-    }
-  }else{
-    printf("Sem Aplicações instaladas\n");
-  }
 }
 
 void renderIpNumbers(int number[4]){
@@ -236,22 +215,23 @@ void renderIpNumbers(int number[4]){
 }
 
 void renderNetworkBoards(int id){
-  moveCursor(9, 36);
+  int moveRight = 39;
+  moveCursor(9, moveRight);
   printf(VLINE"  Placas\n");
-  rightCursor(35);
+  rightCursor(moveRight-1);
   printf(VLINE"  ");
   char *keys = "|         IP        |        MASK       |     BROADCAST     |";
   int tableSize = (int)strlen_utf8(keys);
   line(tableSize,True);
-  rightCursor(35);
+  rightCursor(moveRight-1);
   printf(VLINE"  %s\n", keys);
-  rightCursor(35);
+  rightCursor(moveRight-1);
   printf(VLINE"  ");
   line(tableSize,True);
 
   if(equipamento[id].networkCardNum > 0) {
     for (int i = 0; i < equipamento[id].networkCardNum; i++) {
-      rightCursor(35);
+      rightCursor(moveRight-1);
       printf(VLINE"  ");
       renderIpNumbers(equipamento[id].placas[i].ip);
       renderIpNumbers(equipamento[id].placas[i].mask);
@@ -259,12 +239,12 @@ void renderNetworkBoards(int id){
       printf("|\n");
     }
   }else{
-    rightCursor(35);
+    rightCursor(moveRight-1);
     printf(VLINE);
     rightCursor((tableSize/2)-2);
     printf("Sem Placas\n");
   }
-  rightCursor(35);
+  rightCursor(moveRight-1);
   printf(VLINE"  ");
   line(tableSize,True);
 }
@@ -278,18 +258,17 @@ void equipamentPage(int id){
     renderTitle("Pagina de Equipamento");
 
     if(maxEquipmentId > 0){
-      printf("Equipamento %d\n\n", id + 1);
+      printf("Equipamento %d - %02d/%02d/%04d\n\n", id + 1, equipamento[id].data.dia, equipamento[id].data.mes, equipamento[id].data.ano);
 
       printf("Tipo: %-8s", equipamento[id].type == 1 ? "PC" : "Servidor");
 
-      rightCursor(21);
+      rightCursor(24);
       strcpy(tempString, equipamento[id].sistema);
       printf(VLINE"  Sistema Operativo: %s\n", truncate(tempString, 10));
 
       strcpy(tempString, equipamento[id].cpu.name);
-      printf("CPU: %-14s %.2f GHz", truncate(tempString, 12), equipamento[id].cpu.clock);
+      printf("CPU: %-10s %.2f GHz (%5.0f MIPS) ", truncate(tempString, 8), equipamento[id].cpu.clock,  (equipamento[id].cpu.clock * 1250));
 
-      rightCursor(7);
       printf(VLINE"  RAM -> %d GB\n", equipamento[id].ram);
 
       /* Render Disks */
@@ -299,6 +278,8 @@ void equipamentPage(int id){
       renderNetworkBoards(id);
 
       /* Render List of Installed Apps */
+      if(equipamento[id].diskNum > 1)
+        downCursor((equipamento[id].diskNum-equipamento[id].networkCardNum)-1);
       renderInstalledApps(id);
 
     }else{
@@ -310,6 +291,10 @@ void equipamentPage(int id){
     if(option == -1) {
       deleteEquipment(id);
       option = 0;
+    }
+
+    if(option == -2) {
+      editEquipment(id);
     }
 
     if(option >= 1 && option <= maxEquipmentId)

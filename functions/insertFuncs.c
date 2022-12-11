@@ -6,7 +6,6 @@ extern int maxEquipmentId;
 extern Equipamento equipamento[256];
 extern Apps app[256];
 extern int maxAppId;
-extern int maxAppId;
 
 //Devides an already valid date into 3 ints
 boolean insertDate(char *dateStr, int *date){
@@ -60,23 +59,31 @@ void insertAquisitionDate(int id){
   equipamento[id].data.ano = date[2];
 }
 
-void insertCpu(int id){
-
+void insertCpuName(int id){
   clearToLineEnd();
-  renderColor("CPU:\n", GREEN);
-  clearToLineEnd();
-  renderColor("\tNome: ", GREEN);
+  renderColor("Nome: ", GREEN);
   readString(equipamento[id].cpu.name, 50);
+}
 
-  //while the user's option is not valid (between 0 and 10,exlusive)ask continously
+void insertCpuClock(int id){
   clearToLineEnd();
-  renderColor("\tClocks: ", GREEN);
+  renderColor("Clocks: ", GREEN);
+  //while the user's option is not valid (between 0 and 10,exlusive)ask continously
   do {
     readFloat(&equipamento[id].cpu.clock, 20);
     if (equipamento[id].cpu.clock <= 0 || equipamento[id].cpu.clock >= 10) {
       showInvalidOption();
     }
   }while (equipamento[id].cpu.clock <= 0 || equipamento[id].cpu.clock >= 10);
+}
+
+void insertCpu(int id){
+  clearToLineEnd();
+  renderColor("CPU:\n", GREEN);
+  printf("    ");
+  insertCpuName(id);
+  printf("    ");
+  insertCpuClock(id);
 }
 
 void insertDepartament(int id){
@@ -116,36 +123,41 @@ void insertOS(int id){
 }
 
 /* Disk Insert */
-void insertDiskName(int id){
-  int diskId = equipamento[id].diskNum;
+void insertDiskName(int id, int diskID){
   clearToLineEnd();
   renderColor("\tNome: ", GREEN);
-  readString(equipamento[id].discos[diskId].name, 50);
+  readString(equipamento[id].discos[diskID].name, 50);
 }
 
-void insertDiskSize(int id){
-  int diskId = equipamento[id].diskNum;
+void insertDiskSize(int id, int diskID){
   //while the user's option is not valid (between 0 GB and 22 TB)ask continously
   clearToLineEnd();
   renderColor("\tCapacidade: ", GREEN);
   do {
-    readInt(&equipamento[id].discos[diskId].capacidade, 20);
-    if (equipamento[id].discos[diskId].capacidade <= 0 || equipamento[id].discos[diskId].capacidade >= 22000) {
+    readInt(&equipamento[id].discos[diskID].capacidade, 20);
+    if (equipamento[id].discos[diskID].capacidade <= 0 || equipamento[id].discos[diskID].capacidade >= 22000) {
       showInvalidOption();
     }
-  }while (equipamento[id].discos[diskId].capacidade <= 0 || equipamento[id].discos[diskId].capacidade >= 22000);
+  }while (equipamento[id].discos[diskID].capacidade <= 0 || equipamento[id].discos[diskID].capacidade >= 22000);
 }
 
 void insertDisk(int id){
-  clearToLineEnd();
-  renderColor("Disco:\n", GREEN);
-  insertDiskName(id);
-  insertDiskSize(id);
-  equipamento[id].diskNum++;
+  int ask = 1;
+  do{
+    moveCursor(5,0);
+    clearToScreenEnd();
+    renderColor("Disco:\n", GREEN);
+    int diskID = equipamento[id].diskNum;
+    insertDiskName(id, diskID);
+    insertDiskSize(id, diskID);
+    equipamento[id].diskNum++;
+
+    if(!askConfirmation("Adicionar outro")) ask = 0;
+  }while(ask != 0);
 }
 
 /* Network Board Insert */
-int uniqueIp(int ip[4]){
+int uniqueIp(const int ip[4]){
   int strikes = 0;
 
   for (int equipment = 0;  equipment <= maxEquipmentId; equipment++) {
@@ -164,8 +176,7 @@ int uniqueIp(int ip[4]){
   return True;
 }
 
-void insertIp(int id){
-  int networkCardId = equipamento[id].networkCardNum;
+void insertIp(int id, int networkCardId){
   char tempString[20];
   int ip[4];
   //while the user's input doest not satisfy isValidIp ask continously
@@ -188,8 +199,7 @@ void insertIp(int id){
   }
 }
 
-void insertMask(int id){
-  int networkCardId = equipamento[id].networkCardNum;
+void insertMask(int id, int networkCardId){
   char tempString[20];
   int mask[4];
   //while the user's input doest not satisfy isValidIp ask continously
@@ -208,8 +218,7 @@ void insertMask(int id){
   }
 }
 
-void calculateBroadcast(int id){
-  int networkCardId = equipamento[id].networkCardNum;
+void calculateBroadcast(int id, int networkCardId){
   int ip[4], mask[4];
   for (int i = 0; i < 4; i++) {
     ip[i] = equipamento[id].placas[networkCardId].ip[i];
@@ -231,31 +240,26 @@ void calculateBroadcast(int id){
 
 void insertNetworkCard(int id){
   int ask = 1;
-  char option[2];
-  if(askConfirmation("Adicionar uma placa de rede")) {
-    do {
-      moveCursor(5, 0);
-      clearToScreenEnd();
-      renderColor("Place de rede:\n", GREEN);
-      insertIp(id);
-      insertMask(id);
-      calculateBroadcast(id);
-      equipamento[id].networkCardNum++;
-      if (!askConfirmation("Adicionar outra")) ask = 0;
-    } while (ask != 0);
-  }
+  do {
+    moveCursor(5, 0);
+    clearToScreenEnd();
+    renderColor("Place de rede:\n", GREEN);
+    insertIp(id, equipamento[id].networkCardNum);
+    insertMask(id, equipamento[id].networkCardNum);
+    calculateBroadcast(id, equipamento[id].networkCardNum);
+    equipamento[id].networkCardNum++;
+    if (!askConfirmation("Adicionar outra")) ask = 0;
+  } while (ask != 0);
 }
 
 /* APP insert */
-void insertAppVersion(int id){
-  int appId = equipamento[id].appNum;
+void insertAppVersion(int id, int appId){
   clearToLineEnd();
   renderColor("Versao da App: ", GREEN);
   readString(equipamento[id].app[appId].versao, 20);
 }
 
-void insertAppExpireDate(int id){
-  int appId = equipamento[id].appNum;
+void insertAppExpireDate(int id, int appId){
   int date[3];
   char tempString[20];
 
@@ -275,46 +279,47 @@ void insertAppExpireDate(int id){
 }
 
 void insertInstalledApp(int id){
-  insertAppVersion(id);
-  insertAppExpireDate(id);
+  insertAppVersion(id, equipamento[id].appNum);
+  insertAppExpireDate(id, equipamento[id].appNum);
   equipamento[id].appNum++;
 }
 
-int insertApp(){
+void insertAppName(int id){
   clearToLineEnd();
   renderColor("Nome da aplicaçao: ", GREEN);
-  readString(app[maxAppId].name, 50);
+  readString(app[id].name, 50);
+}
+
+void insertAppDescripton(int id){
   clearToLineEnd();
   renderColor("Breve descriçao: ", GREEN);
-  readString(app[maxAppId].descricao, 100);
+  readString(app[id].descricao, 100);
+}
+
+int insertApp(){
+  insertAppName(maxAppId);
+  insertAppDescripton(maxAppId);
   int appID = maxAppId;
   maxAppId++;
   return appID;
 }
 
-void insertNewApp(){
-  clear();
-  renderTitle("Inserir Aplicações");
-
-  insertApp();
-}
-
-void askNewApp(){
+void askNewApp(int id){
   int ask = 1;
   if(askConfirmation("Sem aplicações predifinidas. Deseja Adicionar uma")){
     do{
       moveCursor(5,0);
       clearToScreenEnd();
-      int appID = equipamento[maxEquipmentId].appNum;
-      equipamento[maxEquipmentId].app[appID].appId = insertApp();
-      insertInstalledApp(maxEquipmentId);
+      int appID = equipamento[id].appNum;
+      equipamento[id].app[appID].appId = insertApp();
+      insertInstalledApp(id);
 
       if(!askConfirmation("Adicionar mais uma")) ask = 0;
     }while(ask != 0);
   }
 }
 
-void showApps(){
+void showApps(int id){
   int ask = 1;
   if(askConfirmation("Quer adicionar uma aplicação")){
     do{
@@ -344,21 +349,63 @@ void showApps(){
         restoreCursor();
         printf("\n> ");
         readInt(&option, 100);
+        for(int appId = 0; appId < equipamento[id].appNum; appId++){
+          if(equipamento[id].app[appId].appId == option-1) {
+            showSpecificOption("[Aplicação já adicionada]");
+            continue;
+          }
+        }
       }while(option < 0 || option > maxAppId);
 
       moveCursor(5,0);
       clearToScreenEnd();
-      int appID = equipamento[maxEquipmentId].appNum;
+      int appID = equipamento[id].appNum;
       if(option == 0){
-        equipamento[maxEquipmentId].app[appID].appId = insertApp();
+        equipamento[id].app[appID].appId = insertApp();
       }else{
-        equipamento[maxEquipmentId].app[appID].appId = option-1;
+        equipamento[id].app[appID].appId = option-1;
       }
-      insertInstalledApp(maxEquipmentId);
+      insertInstalledApp(id);
 
       if(!askConfirmation("Adicionar mais uma")) ask = 0;
     }while(ask != 0);
   }
+}
+
+/* Extras */
+void renderInstalledApps(int id){
+  char tempString[500];
+
+  printf("Aplicações %d\n", equipamento[id].appNum);
+  int moveRight = 0;
+  int count4by4 = 0;
+  if(equipamento[id].appNum > 0) {
+    for (int i = 0; i < equipamento[id].appNum; i++) {
+      rightCursor(moveRight - 1);
+      strcpy(tempString, app[equipamento[id].app[i].appId].name);
+      printf("%2d - %-10s %s", i + 1, truncate(tempString, 10), equipamento[id].app[i].versao);
+      printf(" %02d/%02d/%04d\n", equipamento[id].app[i].validade.dia, equipamento[id].app[i].validade.mes,
+             equipamento[id].app[i].validade.ano);
+
+      count4by4++;
+      if (count4by4 == 4) {
+        count4by4 = 0;
+        moveRight += 34;
+        if (i != equipamento[id].appNum - 1)
+          upCursor(4);
+      }
+    }
+  }else{
+    printf("Sem Aplicações instaladas\n");
+  }
+}
+
+/* Main Insert */
+void insertNewApp(){
+  clear();
+  renderTitle("Inserir Aplicações");
+
+  insertApp();
 }
 
 void insertEquipment(){
@@ -374,13 +421,19 @@ void insertEquipment(){
   insertCpu(maxEquipmentId);
   insertRam(maxEquipmentId);
   insertOS(maxEquipmentId);
-  insertDisk(maxEquipmentId);
-  insertNetworkCard(maxEquipmentId);
+
+  if(askConfirmation("Adicionar Disco")) {
+    insertDisk(maxEquipmentId);
+  }
+
+  if(askConfirmation("Adicionar uma placa de rede")) {
+    insertNetworkCard(maxEquipmentId);
+  }
 
   if(maxAppId > 0){
-    showApps();
+    showApps(maxEquipmentId);
   }else{
-    askNewApp();
+    askNewApp(maxEquipmentId);
   }
 
   maxEquipmentId++;

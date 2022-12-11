@@ -27,6 +27,34 @@ int countDigits(int number){
   return count;
 }
 
+int strcut(char *str, int begin, int len){
+  int lentgh = (int)strlen_utf8(str);
+
+  if (len < 0) len = lentgh - begin;
+  if (begin + len > lentgh) len = lentgh - begin;
+  memmove(str + begin, str + begin + len, lentgh - len + 1);
+
+  return len;
+}
+
+//Makes strings shorter by cutting them at a specific limit and appending them with "..."
+const char* truncate(char *string, int limit){
+  if(strlen_utf8(string) > limit){
+    strcut(string, limit-2, -1);
+    strcat(string, "...");
+  }
+
+  return string;
+}
+
+size_t strlen_utf8(const char *string) {
+  size_t count = 0;
+  while (*string) {
+    count += (*string++ & 0xC0) != 0x80;
+  }
+  return count;
+}
+
 int validNumber(char *option, int maxID){
   int value;
   char *trash;
@@ -68,34 +96,54 @@ boolean isFloat(char *text){
   return True;
 }
 
-int strcut(char *str, int begin, int len){
-  int lentgh = (int)strlen_utf8(str);
-
-  if (len < 0) len = lentgh - begin;
-  if (begin + len > lentgh) len = lentgh - begin;
-  memmove(str + begin, str + begin + len, lentgh - len + 1);
-
-  return len;
+//Finds if a year is leap or not 
+boolean isleapYear(int y) {
+   if((y % 4 == 0) && (y % 100 != 0) && (y % 400 == 0))
+      return True;
+   else
+      return False;
 }
 
-//Makes strings shorter by cutting them at a specific limit and appending them with "..."
-const char* truncate(char *string, int limit){
-  if(strlen_utf8(string) > limit){
-    strcut(string, limit-2, -1);
-    strcat(string, "...");
+//Validates a date from a string in the formart (dd/mm/yyyy)
+boolean isValidDate(char *date) {
+  int d, m, y;
+  if ((sscanf(date, "%d/%d/%d",&d,&m,&y)) == 3) {
+    //quick exit routes
+    if(y < 1970)
+      return False;
+    if(m < 1 || m > 12)
+      return 0;
+    if(d < 1 || d > 31)
+      return False;
+    //check for february
+    if( m == 2 ){
+      if(isleapYear(y)) {
+        if(d <= 29) return True;
+      }else {
+        if(d <= 28) return True;
+      }
+      return False;
+    }
+    //april, june, september and november are with 30 days
+    if ( m == 4 || m == 6 || m == 9 || m == 11 ){
+      if(d <= 30)
+        return True;
+      else
+        return False;
+    }
+    return True;
   }
-
-  return string;
+  return False;
 }
 
-size_t strlen_utf8(const char *string) {
-  size_t count = 0;
-  while (*string) {
-    count += (*string++ & 0xC0) != 0x80;
+//Checks for valid ip from a string formated as such (Ex:10.4.155.192)
+boolean isValidIp(char *ip){
+  int num1, num2, num3, num4; 
+  if ((sscanf(ip, "%d.%d.%d.%d",&num1,&num2,&num3,&num4)) == 4) {
+    return (num1 > 0 && num1 <= 255) && (num2 >=0 && num2 <= 255) && (num3 >=0 && num3 <= 255) && (num4 >= 0 && num4 <= 255);
   }
-  return count;
+  return False;
 }
-
 
 //Custom read func for strings that requires a valid input to be met
 void readString(char *string, int maxInputSize){
@@ -150,54 +198,5 @@ boolean askConfirmation(char *question){
 
 void removeNewline(char *string){
   string[strcspn(string, "\n")] = 0;
-}
-
-//Finds if a year is leap or not 
-boolean isleapYear(int y) {
-   if((y % 4 == 0) && (y % 100 != 0) && (y % 400 == 0))
-      return True;
-   else
-      return False;
-}
-
-//Validates a date from a string in the formart (dd/mm/yyyy)
-boolean isValidDate(char *date) {
-  int d, m, y;
-  if ((sscanf(date, "%d/%d/%d",&d,&m,&y)) == 3) {
-    //quick exit routes
-    if(y < 1970)
-      return False;
-    if(m < 1 || m > 12)
-      return 0;
-    if(d < 1 || d > 31)
-      return False;
-    //check for february
-    if( m == 2 ){
-      if(isleapYear(y)) {
-        if(d <= 29) return True;
-      }else {
-        if(d <= 28) return True;
-      }
-      return False;
-    }
-    //april, june, september and november are with 30 days
-    if ( m == 4 || m == 6 || m == 9 || m == 11 ){
-      if(d <= 30)
-        return True;
-      else
-        return False;
-    }
-    return True;
-  }
-  return False;
-}
-
-//Checks for valid ip from a string formated as such (Ex:10.4.155.192)
-boolean isValidIp(char *ip){
-  int num1, num2, num3, num4; 
-  if ((sscanf(ip, "%d.%d.%d.%d",&num1,&num2,&num3,&num4)) == 4) {
-    return (num1 > 0 && num1 <= 255) && (num2 >=0 && num2 <= 255) && (num3 >=0 && num3 <= 255) && (num4 >= 0 && num4 <= 255);
-  }
-  return False;
 }
 

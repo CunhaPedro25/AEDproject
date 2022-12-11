@@ -41,26 +41,62 @@ void removeNewline(char *string);
 
 /* Delete Functions */
 void deleteEquipment(int id);
+void deleteDisk(int id);
+void deleteInstalledApp(int id);
+void deleteNetwork(int id);
 void deleteApps(int id);
+
+/* Only Edit Functions */
+void editAppName(int id);
+void editAppDescription(int id);
+void editType(int id);
+void editAquisitionDate(int id);
+void editDepartament(int id);
+void editInsurance(int id);
+void editRam(int id);
+void editOS(int id);
+void editCpuName(int id);
+void editCpuClock(int id);
+void editDisk(int id);
+void editInstalledApps(int id);
+void editNetwork(int id);
+
+/* Get id From a specific Range */
+int getID(int range);
 
 /* Insert and Edit Functions */
 void insertType(int id);
 void insertAquisitionDate(int id);
+void insertCpuName(int id);
+void insertCpuClock(int id);
 void insertCpu(int id);
 void insertOS(int id);
 void insertDepartament(int id);
 void insertRam(int id);
-void insertDiskName(int id);
-void insertDiskSize(int id);
-void insertAppVersion(int id);
-void insertAppExpireDate(int id);
 void insertInsurance(int id);
-void insertIp(int id);
-void insertMask(int id);
-void insertNetworkCard(int id);
-void insertInstalledApp(int id);
-int insertApp();
-void insertNewApp();
+/*--Disk--*/
+void insertDiskName(int id, int diskID);
+void insertDiskSize(int id, int diskID);
 void insertDisk(int id);
+/*--IP--*/
+void insertIp(int id, int networkCardId);
+void insertMask(int id, int networkCardId);
+void calculateBroadcast(int id, int networkCardId);
+void insertNetworkCard(int id);
+/*--APPS--*/
+void insertAppVersion(int id, int appId);
+void insertAppExpireDate(int id, int appId);
+void insertInstalledApp(int id);
+void insertAppName(int id);
+void insertAppDescripton(int id);
+int insertApp();
+void askNewApp(int id);
+void showApps(int id);
+/*--Main--*/
+void insertNewApp();
 void insertEquipment();
+
+/* Extra */
+void renderInstalledApps(int id);
+void renderIP(int ip[4]);
 #endif //FUNCTIONS_H
