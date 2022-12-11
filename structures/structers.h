@@ -2,9 +2,9 @@
  *  @brief Estrutura de dados para equipamentos
  *
  */
-#ifndef equipamentos_h
+#ifndef STRUCTERS_H
 
-#define equipamentos_h
+#define STRUCTERS_H
 
 typedef struct{
   char name[50];
@@ -62,4 +62,4 @@ typedef struct Equipamentos {
 
 } Equipment;
 
-#endif // !equipamentos_h
+#endif // STRUCTERS_H
