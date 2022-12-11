@@ -41,6 +41,7 @@ void removeNewline(char *string);
 
 /* Delete Functions */
 void deleteEquipment(int id);
+void deleteApps(int id);
 
 /* Insert and Edit Functions */
 void insertType(int id);
