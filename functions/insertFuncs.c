@@ -6,16 +6,6 @@ extern int maxEquipmentId;
 extern Equipment equipment[256];
 extern Apps app[256];
 extern int maxAppId;
-
-//Devides an already valid date into 3 ints
-boolean insertDate(char *dateStr, int *date){
-  if(isValidDate(dateStr)) {
-    sscanf(dateStr, "%d/%d/%d", &date[0], &date[1], &date[2]);
-    return True;
-  }
-
-  return False;
-}
  
 void insertType(int id){
   char temp[20];
@@ -243,7 +233,7 @@ void insertNetworkCard(int id){
   do {
     moveCursor(5, 0);
     clearToScreenEnd();
-    renderColor("Place de rede:\n", GREEN);
+    renderColor("Placa de rede:\n", GREEN);
     insertIp(id, equipment[id].networkCardNum);
     insertMask(id, equipment[id].networkCardNum);
     calculateBroadcast(id, equipment[id].networkCardNum);
@@ -384,8 +374,12 @@ void renderInstalledApps(int id){
       rightCursor(moveRight - 1);
       strcpy(tempString, app[equipment[id].app[i].appId].name);
       printf("%2d - %-10s %s", i + 1, truncate(tempString, 10), equipment[id].app[i].version);
-      printf(" %02d/%02d/%04d\n", equipment[id].app[i].license.day, equipment[id].app[i].license.months,
-             equipment[id].app[i].license.year);
+      if(checkIfExpired(equipment[id].app[i].license.day, equipment[id].app[i].license.months, equipment[id].app[i].license.year)){
+        renderColor(" EXPIRADO \n", RED);
+      }else {
+        printf(" %02d/%02d/%04d\n", equipment[id].app[i].license.day, equipment[id].app[i].license.months,
+               equipment[id].app[i].license.year);
+      }
 
       count4by4++;
       if (count4by4 == 4) {
@@ -412,7 +406,7 @@ void insertEquipment(){
   int tempInt = -1;
 
   clear();
-  renderTitle("Inserir Equipment");
+  renderTitle("Inserir Equipamento");
 
   insertType(maxEquipmentId);
   insertAquisitionDate(maxEquipmentId);

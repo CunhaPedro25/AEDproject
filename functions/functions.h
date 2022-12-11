@@ -18,12 +18,14 @@ typedef enum {
 /* Time Functions */
 const char* currentDate();
 const char* currentHours();
+boolean checkIfExpired(int day, int month, int year);
+int checkIfWarrantyExpired(int day, int month, int year, int warranty);
 
 /* Verification Functions */
 int validNumber(char *option, int maxID);
 boolean isInt(char *text);
 boolean isFloat(char *text);
-boolean isValidDate(char *date);
+boolean isValidDate(const char *date);
 boolean isValidIp(char *ip);
 int countDigits(int number);
 boolean isEmpty(char *text);
@@ -66,6 +68,7 @@ void editNetwork(int id);
 int getID(int range);
 
 /* Insert and Edit Functions */
+boolean insertDate(const char *dateStr, int *date);
 void insertType(int id);
 void insertAquisitionDate(int id);
 void insertCpuName(int id);
@@ -100,4 +103,12 @@ void insertEquipment();
 /* Extra */
 void renderInstalledApps(int id);
 void renderIP(int ip[4]);
+
+/*----- Print Functions --------*/
+void closedLine(int size, int isTop);
+void line(int size, int breakLine);
+void renderTitle(const char *title);
+void showSpecificOption(char *text);
+void showInvalidOption();
+
 #endif //FUNCTIONS_H

@@ -88,12 +88,12 @@ void editDisksMenu(int id){
     char *options[3] =
         {
             "Inserir Disco",
-            "Editar Disks",
+            "Editar Discos",
             "Eliminar Disco"
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Editar Disks", options, size, "sub");
+    value = menu("Editar Discos", options, size, "sub");
 
     clear();
     switch (value) {
@@ -204,13 +204,13 @@ void editEquipment(int id){
             "Sistema Operativo",
             "CPU Name",
             "CPU Clock",
-            "Disks",
+            "Discos",
             "Aplicações Instaladas",
-            "NetworkCards de Rede",
+            "Placas de Rede",
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Editar Equipment", options, size, "sub");
+    value = menu("Editar Equipamento", options, size, "sub");
 
     clear();
     switch (value) {
@@ -242,7 +242,7 @@ void editEquipment(int id){
         if(equipment[id].diskNum > 0) {
           editDisksMenu(id);
         }else{
-          renderTitle("Inserir Disks");
+          renderTitle("Inserir Discos");
           if(askConfirmation("Adicionar Disco")) {
             insertDisk(id);
           }
@@ -264,8 +264,8 @@ void editEquipment(int id){
         if(equipment[id].networkCardNum > 0) {
           editNetworkMenu(id);
         }else{
-          renderTitle("Inserir Place de Rede");
-          if(askConfirmation("Adicionar Place de Rede")) {
+          renderTitle("Inserir Placa de Rede");
+          if(askConfirmation("Adicionar Placa de Rede")) {
             insertNetworkCard(id);
           }
         }

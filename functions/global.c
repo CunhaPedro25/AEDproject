@@ -1,11 +1,20 @@
 #include "functions.h"
 
+//Devides an already valid date into 3 ints
+boolean insertDate(const char *dateStr, int *date){
+  if(isValidDate(dateStr)) {
+    sscanf(dateStr, "%d/%d/%d", &date[0], &date[1], &date[2]);
+    return True;
+  }
+
+  return False;
+}
 
 const char* currentDate(){
   time_t t = time(NULL);
   struct tm *tm = localtime(&t);
   static char date[80];
-  strftime(date,80,"%02d/%02m/%Y", tm);
+  strftime(date,80,"%d/%m/%Y", tm);
   return date;
 }
 
@@ -105,7 +114,7 @@ boolean isleapYear(int y) {
 }
 
 //Validates a date from a string in the formart (dd/mm/yyyy)
-boolean isValidDate(char *date) {
+boolean isValidDate(const char *date) {
   int d, m, y;
   if ((sscanf(date, "%d/%d/%d",&d,&m,&y)) == 3) {
     //quick exit routes
@@ -143,6 +152,41 @@ boolean isValidIp(char *ip){
     return (num1 > 0 && num1 <= 255) && (num2 >=0 && num2 <= 255) && (num3 >=0 && num3 <= 255) && (num4 >= 0 && num4 <= 255);
   }
   return False;
+}
+
+boolean checkIfExpired(int day, int month, int year){
+  int date[3];
+  time_t t = time(NULL);
+  struct tm today = *localtime(&t);
+  date[0] = today.tm_mday;
+  date[1] = today.tm_mon + 1;
+  date[2] = today.tm_year + 1900;
+
+  if(date[2] > year) return True;
+
+  if(date[2] == year) {
+    if(date[1] > month) return True;
+
+    if(date[1] == month)
+      if(date[0] >= day) return True;
+  }
+
+  return False;
+}
+
+int checkIfWarrantyExpired(int day, int month, int year, int warranty){
+  for(int i = 0; i < warranty; i++){
+    month++;
+    if(month > 12){
+      month = 0;
+      year++;
+    }
+    if(checkIfExpired(day,month,year)){
+      return warranty-(i+1);
+    }
+  }
+
+  return warranty;
 }
 
 boolean isEmpty(char *text){
@@ -209,5 +253,60 @@ boolean askConfirmation(char *question){
 
 void removeNewline(char *string){
   string[strcspn(string, "\n")] = 0;
+}
+
+
+/*-----------------*
+ * Print Functions *
+ *-----------------*/
+
+void closedLine(int size, int isTop) {
+  printf("%s", isTop == True ? TOP_LEFT_LINE : BOTTOM_LEFT_LINE);
+  for (int i = 0; i < size-2; ++i) {
+    printf(LINE);
+  }
+  printf("%s", isTop == True ? TOP_RIGHT_LINE : BOTTOM_RIGHT_LINE);
+
+  printf("\n");
+}
+
+/**
+ * @brief Print a line of "-" with a custom size
+ *
+ * @param size {int} - number of "-" to print (size of line)
+ * @param breakLine {bool} - Confirm to add breakLine in the end
+ */
+void line(int size, int breakLine) {
+  for (int i = 0; i < size; ++i) {
+    printf(LINE);
+  }
+  if(breakLine)
+    printf("\n");
+}
+
+/**
+ *  @brief Print a custom title in the middle of responsive lines
+ *
+ * @param title {char *} - custom title
+ */
+void renderTitle(const char *title) {
+  int titleSize = (int)(strlen_utf8(title) + strlen("/*--  --*/"));
+
+  printf(" %s %s\n", currentDate(), currentHours());
+  closedLine(titleSize, True);
+  printf(TITLE_LEFT"%s"TITLE_RIGHT"\n", title);
+  closedLine(titleSize, False);
+}
+
+void showSpecificOption(char *text){
+  textColor(RED);
+  printf("%s", text);    // Show error message
+  resetStyles();
+  restoreCursor();
+  clearToLineEnd();
+}
+
+void showInvalidOption(){
+  showSpecificOption("[Opção Invalida]");
 }
 

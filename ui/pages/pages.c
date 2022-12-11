@@ -119,7 +119,12 @@ void appPage(int id){
               countInstallation++;
               rightCursor(moveRight - 1);
               printf("Equipment %-2d - %s", equipmentID + 1, equipment[equipmentID].app[appID].version);
-              printf(" %02d/%02d/%04d\n", equipment[equipmentID].app[appID].license.day, equipment[equipmentID].app[appID].license.months, equipment[equipmentID].app[appID].license.year);
+
+              if(checkIfExpired(equipment[equipmentID].app[appID].license.day, equipment[equipmentID].app[appID].license.months, equipment[equipmentID].app[appID].license.year)){
+                renderColor(" EXPIRADO \n", RED);
+              }else {
+                printf(" %02d/%02d/%04d\n", equipment[equipmentID].app[appID].license.day, equipment[equipmentID].app[appID].license.months, equipment[equipmentID].app[appID].license.year);
+              }
 
               count++;
               saveCursor();
@@ -258,7 +263,15 @@ void equipamentPage(int id){
     renderTitle("Página de Equipamento");
 
     if(maxEquipmentId > 0){
-      printf("Equipment %d - %02d/%02d/%04d\n\n", id + 1, equipment[id].data.day, equipment[id].data.month, equipment[id].data.year);
+      printf("Equipment %d - %02d/%02d/%04d - ", id + 1, equipment[id].data.day, equipment[id].data.month, equipment[id].data.year);
+      if(equipment[id].warranty < 1000) {
+        int warranty = checkIfWarrantyExpired(equipment[id].data.day, equipment[id].data.month, equipment[id].data.year, equipment[id].warranty);
+        warranty <= 1 ? textColor(RED) : warranty <= 5 ? textColor(YELLOW) : textColor(DEFAULT);
+        printf("%3d Mes%s Garantia\n\n", equipment[id].warranty, equipment[id].warranty== 1 || equipment[id].warranty == -1 ? "" : "es");
+        resetStyles();
+      }else{
+        printf("LIFETIME");
+      }
 
       printf("Tipo: %-8s", equipment[id].type == 1 ? "PC" : "Servidor");
 

@@ -174,8 +174,9 @@ void equipamentosTable(){
         printf("|    %02d/%02d/%04d   |", equipment[i].data.day, equipment[i].data.month, equipment[i].data.year);
 
         if(equipment[i].warranty < 1000){
-          equipment[i].warranty <= 1 ? textColor(RED) : equipment[i].warranty <= 5 ? textColor(YELLOW) : textColor(DEFAULT);
-          printf(" %3d Mes%-2s  ", equipment[i].warranty, equipment[i].warranty == 1 || equipment[i].warranty == -1 ? "" : "es");
+          int warranty = checkIfWarrantyExpired(equipment[i].data.day, equipment[i].data.month, equipment[i].data.year, equipment[i].warranty);
+          warranty <= 1 ? textColor(RED) : warranty <= 5 ? textColor(YELLOW) : textColor(DEFAULT);
+          printf(" %3d Mes%-2s  ", warranty, warranty== 1 || warranty == -1 ? "" : "es");
           resetStyles();
         }else{
           printf("  LIFETIME  ");
