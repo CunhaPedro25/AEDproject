@@ -26,6 +26,7 @@ boolean isFloat(char *text);
 boolean isValidDate(char *date);
 boolean isValidIp(char *ip);
 int countDigits(int number);
+boolean isEmpty(char *text);
 
 /* Read functions */
 void readString(char *string,int maxInputSize);

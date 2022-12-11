@@ -96,17 +96,6 @@ boolean isFloat(char *text){
   return True;
 }
 
-boolean isEmpty(char *text){
-  if(strcmp(text, "") == 0) return True;
-  for (int i = 0; i < strlen_utf8(text); ++i) {
-    if(text[i] != ' '){
-      return False;
-    }
-  }
-
-  return True;
-}
-
 //Finds if a year is leap or not 
 boolean isleapYear(int y) {
    if((y % 4 == 0) && (y % 100 != 0) && (y % 400 == 0))
@@ -154,6 +143,17 @@ boolean isValidIp(char *ip){
     return (num1 > 0 && num1 <= 255) && (num2 >=0 && num2 <= 255) && (num3 >=0 && num3 <= 255) && (num4 >= 0 && num4 <= 255);
   }
   return False;
+}
+
+boolean isEmpty(char *text){
+  if(strcmp(text, "") == 0) return True;
+  for (int i = 0; i < strlen_utf8(text); ++i) {
+    if(text[i] != ' '){
+      return False;
+    }
+  }
+
+  return True;
 }
 
 //Custom read func for strings that requires a valid input to be met
