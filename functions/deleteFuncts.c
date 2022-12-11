@@ -28,10 +28,6 @@ void deleteApps(int id){
         equipamento[i].app[appID].appId--;
       }
     }
-    printf("%d", equipamento[i].appNum );
-    if(startDeleting == True){ equipamento[i].appNum -= 1;}
-    printf("%d", equipamento[i].appNum );
+    if(startDeleting == True){ equipamento[i].appNum--;}
   }
-
-  system("pause");
 }
