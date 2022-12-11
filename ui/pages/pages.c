@@ -52,7 +52,6 @@ int pageControls(int *id, int maxID){
   int lineSize = (int) strlen(functions);
 
   /* Render fucntions for table */
-  printf("\n");
   line(lineSize, True);
   printf("%s", functions);
 
@@ -73,9 +72,7 @@ int pageControls(int *id, int maxID){
 
   if((strcmp(option, "r") == 0 || strcmp(option, "R") == 0) && maxID > 0){
     char confirm[2];
-    printf("Quer mesmo eliminar (y/n)? ");
-    readString(confirm, 2);
-    if (strcmp(confirm, "y") == 0 || strcmp(confirm, "Y") == 0)
+    if (askConfirmation("Quer mesmo eliminar"))
       return -1;    // Code to detect that its in deleteing menu
   }
 
@@ -95,13 +92,11 @@ extern int maxAppId;
 
 void appPage(int id){
   int option;
-  char tempString[500];
 
   do{
     clear();
     renderTitle("Pagina de Aplicações");
 
-    maxAppId = 1;
     if(maxAppId > 0){
       printf("Aplicação %d\n\n", id + 1);
 
@@ -120,31 +115,32 @@ void appPage(int id){
             if(equipamento[equipmentID].app[appID].appId == id){
               countInstallation++;
               rightCursor(moveRight - 1);
-              printf("Equipamento %2d - %s", equipmentID + 1, equipamento[equipmentID].app[appID].versao);
+              printf("Equipamento %-2d - %s", equipmentID + 1, equipamento[equipmentID].app[appID].versao);
               printf(" %02d/%02d/%04d\n", equipamento[equipmentID].app[appID].validade.dia, equipamento[equipmentID].app[appID].validade.mes, equipamento[equipmentID].app[appID].validade.ano);
 
               count++;
+              saveCursor();
               if (count == 6) {
                 count= 0;
-                moveRight += 30;
-                saveCursor();
-                if (equipmentID != maxEquipmentId - 1)
+                moveRight += 31;
+                if (equipmentID != maxEquipmentId - 1) {
                   upCursor(6);
+                }
               }
             }
           }
         }
 
         if(countInstallation == 0){
-          printf("Sem instalações");
+          printf("Sem instalações\n");
         }else{
           restoreCursor();
         }
       }else{
-        printf("Sem Equipamentos");
+        printf("Sem Equipamentos\n");
       }
     }else{
-      printf("Sem Aplicações");
+      printf("Sem Aplicações\n");
     }
 
     option = pageControls(&id, maxAppId);
@@ -178,7 +174,9 @@ void renderInstalledDisks(int id){
   }else{
     strcpy(tempString, equipamento[id].discos[0].name);
     capacity = equipamento[id].discos[0].capacidade >= 1000 ? equipamento[id].discos[0].capacidade/1000 : equipamento[id].discos[0].capacidade;
-    printf("Disco -> %-14s %d ",  truncate(equipamento[id].discos[0].name, 12), capacity);
+    printf("Disco:\n");
+    printf("    Nome: %-14s\n", truncate(equipamento[id].discos[0].name, 12));
+    printf("    Capacidade: %d ", capacity);
     printf("%s\n", (equipamento[id].discos[0].capacidade >= 1000 ? "TB" : "GB"));
   }
   saveCursor();
@@ -188,9 +186,9 @@ void renderInstalledApps(int id){
   char tempString[500];
 
   if(equipamento[id].diskNum > 1)
-    downCursor(equipamento[id].diskNum-equipamento[id].networkCardNum);
+    downCursor((equipamento[id].diskNum-equipamento[id].networkCardNum)-1);
 
-  printf("Aplicações\n");
+  printf("Aplicações %d\n", equipamento[id].appNum);
   int moveRight = 0;
   int count4by4 = 0;
   if(equipamento[id].appNum > 0) {
@@ -210,7 +208,7 @@ void renderInstalledApps(int id){
       }
     }
   }else{
-    printf("Sem Aplicações instaladas");
+    printf("Sem Aplicações instaladas\n");
   }
 }
 
@@ -272,16 +270,16 @@ void equipamentPage(int id){
     if(maxEquipmentId > 0){
       printf("Equipamento %d\n\n", id + 1);
 
-      printf("Tipo -> %-8s", equipamento[id].type == 1 ? "PC" : "Servidor");
+      printf("Tipo: %-8s", equipamento[id].type == 1 ? "PC" : "Servidor");
 
-      rightCursor(19);
+      rightCursor(21);
       strcpy(tempString, equipamento[id].sistema);
-      printf(VLINE"  Sistema Operativo -> %s\n", truncate(tempString, 10));
+      printf(VLINE"  Sistema Operativo: %s\n", truncate(tempString, 10));
 
       strcpy(tempString, equipamento[id].cpu.name);
-      printf("CPU -> %-14s %.2f GHz", truncate(tempString, 12), equipamento[id].cpu.clock);
+      printf("CPU: %-14s %.2f GHz", truncate(tempString, 12), equipamento[id].cpu.clock);
 
-      rightCursor(5);
+      rightCursor(7);
       printf(VLINE"  RAM -> %d GB\n", equipamento[id].ram);
 
       /* Render Disks */
@@ -294,7 +292,7 @@ void equipamentPage(int id){
       renderInstalledApps(id);
 
     }else{
-      printf("Sem Equipamentos");
+      printf("Sem Equipamentos\n");
     }
 
     option = pageControls(&id, maxEquipmentId);
