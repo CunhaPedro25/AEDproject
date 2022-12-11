@@ -155,12 +155,22 @@ void appPage(int id){
   } while (option != 0);
 }
 
+int getTotalDiskSpace(int id){
+  int totalCapacity = 0;
+  for (int i = 0; i < equipamento[id].diskNum; i++){
+    totalCapacity += equipamento[id].discos[i].capacidade;
+  }
+
+  return totalCapacity;
+}
+
 void renderInstalledDisks(int id){
   char tempString[500];
   int capacity = 0;
 
   if(equipamento[id].diskNum > 1) {
-    printf("Número de Discos: %d\n", equipamento[id].diskNum);
+    int totalCapacity = getTotalDiskSpace(id) >= 1000 ? getTotalDiskSpace(id)/1000 : getTotalDiskSpace(id);
+    printf("Número de Discos: %-2d; Total: %d %s\n", equipamento[id].diskNum, totalCapacity, (getTotalDiskSpace(id) >= 1000 ? "TB" : "GB"));
     line(33, True);
     printf("|      Name     /   Capacidade  |\n");
     line(33, True);
