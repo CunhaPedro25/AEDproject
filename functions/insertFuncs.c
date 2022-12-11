@@ -160,10 +160,10 @@ void insertDisk(int id){
 int uniqueIp(const int ip[4]){
   int strikes = 0;
 
-  for (int equipment = 0;  equipment <= maxEquipmentId; equipment++) {
-    for (int card = 0; card <= equipment[equipment].networkCardNum; card++) {
+  for (int id = 0;  id <= maxEquipmentId; id++) {
+    for (int card = 0; card <= equipment[id].networkCardNum; card++) {
       for (int i = 0; i < 4; i++) {
-        if (ip[i] == equipment[equipment].networkCard[card].ip[i]) {
+        if (ip[i] == equipment[id].networkCard[card].ip[i]) {
           strikes++;
           if (strikes == 4) {
             return False;
