@@ -117,39 +117,8 @@ void backgroundColor(int color){
 }
 void resetStyles(){ printf(prefix "0m");}
 
-/*-----------------*
- * Print Functions *
- *-----------------*/
-
-/**
- * @brief Print a line of "-" with a custom size
- *
- * @param size {int} - number of "-" to print (size of line)
- * @param breakLine {bool} - Confirm to add breakLine in the end
- */
-void line(int size, int breakLine) {
-  for (int i = 0; i < size; ++i) {
-    printf("-");
-  }
-  if(breakLine)
-    printf("\n");
-}
-/**
- *  @brief Print a custom title in the middle of responsive lines
- *
- * @param title {char *} - custom title
- */
-void renderTitle(char *title) {
-  int titleSize = (int)(strlen(title) + strlen("/*--  --*/"));
-  line(titleSize, 1);
-  printf("/*-- %s --*/\n", title);
-  line(titleSize, 1);
-}
-
-void showInvalidOption(){
-  textColor(RED);
-  printf("[Opção Invalida]");    // Show error message
+void renderColor(char *string, int color){
+  textColor(color);
+  printf("%s", string);
   resetStyles();
-  restoreCursor();
-  clearToLineEnd();
 }

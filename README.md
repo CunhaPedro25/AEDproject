@@ -55,9 +55,9 @@ informático. Para tal necessita de um “software” que corresponda aos seguin
 Minimo:
 - [x] Estrutura de dados dos equipamentos
 - [x] Criar menus
-- [ ] Funções para inserir equipamentos, aplicações, e placas de rede
-- [ ] Listar equipamentos e aplicações
+- [x] Funções para inserir equipamentos, aplicações, e placas de rede
+- [x] Listar equipamentos e aplicações
 
 Maior Dificuldade:
-- [ ] Pesquisar Equipamentos
-- [ ] Determinar se dois equipamentos estão na mesma rede
+- [x] Pesquisar Equipamentos
+- [x] Determinar se dois equipamentos estão na mesma rede

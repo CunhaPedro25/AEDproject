@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "utilities/colors.h"
+
+#include "colors.h"
+#include "chars.h"
 
 #define prefix "\e["
 
@@ -32,10 +34,6 @@ void cleanLine();
 void textColor(int color);
 void backgroundColor(int color);
 void resetStyles();
-
-/*----- Print Functions --------*/
-void line(int size, int breakLine);
-void renderTitle(char *title);
-void showInvalidOption();
+void renderColor(char *string, int color);
 
 #endif //UI_H

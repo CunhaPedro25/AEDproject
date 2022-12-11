@@ -1,5 +1,8 @@
 #include "menu.h"
 
+extern Equipment equipment[256];
+extern int maxEquipmentId;
+extern int maxAppId;
 /**
  *
  *  @brief Creates Menu with custom options and title
@@ -11,7 +14,7 @@
  *
  *  @returns {int} - Option selected
  */
-int menu(char *title, char **options, size_t size){
+int menu(char *title, char **options, size_t size, char *type){
   int option = -1;
 
   clear();
@@ -20,21 +23,20 @@ int menu(char *title, char **options, size_t size){
   for (int i = 0; i < size; ++i) {
     printf("    [%d] %s\n", i+1, options[i]);
   }
-  printf("    [s] Sair");
+  printf("    [s] %s", strcmp(type, "main") ? "Voltar" : "Sair");
 
-  printf("\n\nOpção: ");
+  printf("\n\n");
+  printf(PROMPT);
   do {
-    saveCursor();
     char temporary[10];
 
-    fgets(temporary, 10, stdin);
-    fflush(stdin);
+    readString(temporary, 10);
 
-    if((temporary[0] == 's' || temporary[0] == 'S') && temporary[1] == '\n'){
+    if(strcmp(temporary, "s") == 0 || strcmp(temporary, "S") == 0 ){
       return 0;
     }
 
-    if(!isnumber(temporary)){
+    if(!isInt(temporary)){
       showInvalidOption();
       continue;
     }
@@ -42,43 +44,276 @@ int menu(char *title, char **options, size_t size){
     char *trash;
     option = strtol(temporary, &trash, 10);
 
-    if(option < 0 || option > size) {
+    if(option < 1 || option > size) {
       showInvalidOption();
     }
-  } while (option < 0 || option > size);
+  } while (option < 1 || option > size);
 
   return option;
 }
 
-/**
- *  @brief Menu for network boards with respective options and functions
- *
- *  @options List, Edit, Delete
- */
-void placasMenu(){
+void editApps(int id){
+  int value;
+
+  do {
+    char *options[2] =
+        {
+            "Nome",
+            "Descrição"
+        };
+    size_t size = sizeof(options)/sizeof(options[0]);
+
+    value = menu("Editar Aplicações", options, size, "sub");
+
+    clear();
+    switch (value) {
+      case 1:
+        editAppName(id);
+        break;
+      case 2:
+        editAppDescription(id);
+        break;
+
+      default:
+        value = 0;
+    }
+  }while(value != 0);
+
+  clear();
+}
+
+void editDisksMenu(int id){
   int value;
 
   do {
     char *options[3] =
         {
-            "Lista",
-            "Editar",
-            "Eliminar"
+            "Inserir Disco",
+            "Editar Discos",
+            "Eliminar Disco"
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Placas", options, size);
+    value = menu("Editar Discos", options, size, "sub");
 
+    clear();
     switch (value) {
       case 1:
+        renderTitle("Inserir Disco");
+        insertDisk(id);
+        break;
       case 2:
+        editDisk(id);
+        break;
       case 3:
-      case 4:
-        clear();
+        deleteDisk(id);
         break;
 
       default:
         value = 0;
+    }
+  }while(value != 0);
+
+  clear();
+}
+
+void editInstalledAppsMenu(int id){
+  int value;
+
+  do {
+    char *options[3] =
+        {
+            "Inserir Aplicações",
+            "Editar Aplicações",
+            "Eliminar Aplicação"
+        };
+    size_t size = sizeof(options)/sizeof(options[0]);
+
+    value = menu("Editar Aplicações", options, size, "sub");
+
+    clear();
+    switch (value) {
+      case 1:
+        renderTitle("Inserir Aplicações");
+        if(maxAppId > 0){
+          showApps(id);
+        }else{
+          askNewApp(id);
+        }
+        break;
+      case 2:
+        editInstalledApps(id);
+        break;
+      case 3:
+        deleteInstalledApp(id);
+        break;
+
+      default:
+        value = 0;
+    }
+  }while(value != 0);
+
+  clear();
+}
+
+void editNetworkMenu(int id){
+  int value;
+
+  do {
+    char *options[3] =
+        {
+            "Inserir Placa",
+            "Editar Placa",
+            "Eliminar Placa"
+        };
+    size_t size = sizeof(options)/sizeof(options[0]);
+
+    value = menu("Editar Disks", options, size, "sub");
+
+    clear();
+    switch (value) {
+      case 1:
+        renderTitle("Inserir Placa");
+        insertNetworkCard(id);
+        break;
+      case 2:
+        editNetwork(id);
+        break;
+      case 3:
+        deleteNetwork(id);
+        break;
+
+      default:
+        value = 0;
+    }
+  }while(value != 0);
+
+  clear();
+}
+
+void editEquipment(int id){
+  int value;
+
+  do {
+    char *options[11] =
+        {
+            "Tipo",
+            "Aquisição",
+            "Departamento",
+            "Garantia",
+            "RAM",
+            "Sistema Operativo",
+            "CPU Name",
+            "CPU Clock",
+            "Discos",
+            "Aplicações Instaladas",
+            "Placas de Rede",
+        };
+    size_t size = sizeof(options)/sizeof(options[0]);
+
+    value = menu("Editar Equipamento", options, size, "sub");
+
+    clear();
+    switch (value) {
+      case 1:
+        editType(id);
+        break;
+      case 2:
+        editAquisitionDate(id);
+        break;
+      case 3:
+        editDepartament(id);
+        break;
+      case 4:
+        editInsurance(id);
+        break;
+      case 5:
+        editRam(id);
+        break;
+      case 6:
+        editOS(id);
+        break;
+      case 7:
+        editCpuName(id);
+        break;
+      case 8:
+        editCpuClock(id);
+        break;
+      case 9:
+        if(equipment[id].diskNum > 0) {
+          editDisksMenu(id);
+        }else{
+          renderTitle("Inserir Discos");
+          if(askConfirmation("Adicionar Disco")) {
+            insertDisk(id);
+          }
+        }
+        break;
+      case 10:
+        if(equipment[id].appNum > 0) {
+          editInstalledAppsMenu(id);
+        }else{
+          renderTitle("Inserir Aplicações");
+          if(maxAppId > 0){
+            showApps(id);
+          }else{
+            askNewApp(id);
+          }
+        }
+        break;
+      case 11:
+        if(equipment[id].networkCardNum > 0) {
+          editNetworkMenu(id);
+        }else{
+          renderTitle("Inserir Placa de Rede");
+          if(askConfirmation("Adicionar Placa de Rede")) {
+            insertNetworkCard(id);
+          }
+        }
+        break;
+
+      default:
+        value = 0;
+    }
+  }while(value != 0);
+
+  clear();
+}
+
+void filterEquipmentMenu(){
+  int value;
+
+  do {
+    char *options[6] =
+        {
+            "RAM",
+            "OS",
+            "Aplicações",
+            "Licensa Expirada",
+            "Garantia Expirada",
+            "Rede"
+        };
+    size_t size = sizeof(options)/sizeof(options[0]);
+
+    if(maxEquipmentId > 0) {
+      value = menu("Pesquisa", options, size, "sub");
+
+
+      if(value != 0) {
+        filterTable(value - 1);
+      }
+    }else{
+      char temporary[10];
+      clear();
+      renderTitle("Pesquisa");
+      printf("Sem Equipamentos\n\n");
+      printf(PROMPT);
+      readString(temporary, 10);
+      if(strcmp(temporary, "s") == 0 || strcmp(temporary, "S") == 0 ) {
+        value = 0;
+      }else{
+        showInvalidOption();
+      }
     }
   } while (value != 0);
 }
@@ -92,26 +327,25 @@ void aplicacoesMenu(){
   int value;
 
   do {
-    char *options[4] =
+    char *options[3] =
         {
             "Inserir",
             "Lista",
-            "Editar",
-            "Eliminar"
+            "Paginas"
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Aplicações", options, size);
+    value = menu("Aplicações", options, size, "sub");
 
     switch (value) {
       case 1:
-        clear();
+        insertNewApp();
+        break;
       case 2:
         aplicacoesTable();
         break;
       case 3:
-      case 4:
-        clear();
+        appPage(0);
         break;
 
       default:
@@ -129,21 +363,29 @@ void equipamentosMenu(){
   int value;
 
   do {
-    char *options[2] =
+    char *options[4] =
         {
             "Inserir",
-            "Lista"
+            "Lista",
+            "Paginas",
+            "Pesquisar"
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Equipamentos", options, size);
+    value = menu("Equipamentos", options, size, "sub");
 
     switch (value) {
       case 1:
-        clear();
+        insertEquipment();
         break;
       case 2:
         equipamentosTable();
+        break;
+      case 3:
+        equipamentPage(0);
+        break;
+      case 4:
+        filterEquipmentMenu();
         break;
 
       default:
@@ -156,15 +398,14 @@ void mainMenu(){
   int value;
 
   do {
-    char *options[3] =
+    char *options[2] =
         {
             "Equipamentos",
-            "Aplicações",
-            "Placas de rede"
+            "Aplicações"
         };
     size_t size = sizeof(options)/sizeof(options[0]);
 
-    value = menu("Gestão de Equipamentos", options, size);
+    value = menu("Gestão de Equipamentos", options, size, "main");
 
     switch (value) {
       case 1:
@@ -172,9 +413,6 @@ void mainMenu(){
         break;
       case 2:
         aplicacoesMenu();
-        break;
-      case 3:
-        placasMenu();
         break;
 
       default:
