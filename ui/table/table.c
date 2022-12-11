@@ -159,7 +159,7 @@ void filterTable(int filter) {
     readString(search, 50);
   }
   if(filter == APP){
-    printf("Sistema Operativo: ");
+    printf("Aplicações: ");
     readString(search, 50);
   }
   if(filter == NETWORK){
