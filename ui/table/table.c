@@ -114,8 +114,8 @@ boolean filterRam(int result, int ram){
   return False;
 }
 
-boolean filterText(char *search, char *os){
-  if(strcmp(search, os) == 0){
+boolean filterText(char *search, char *text){
+  if(strcmp(search, text) == 0){
     return True;
   }
   return False;
@@ -192,7 +192,7 @@ void filterTable(int filter) {
       }
     }
     if (filter == DEPARTMENT) {
-      if (filterText(search, equipment[id].departamento)) {
+      if (filterText(search, equipment[id].department)) {
         filterStruct[maxFilter] = equipment[id];
         originalID[maxFilter] = id;
         maxFilter++;

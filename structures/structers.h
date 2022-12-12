@@ -42,7 +42,7 @@ typedef struct Equipamentos {
     int year;
   } data;
 
-  char departamento[50];
+  char department[50];
   int warranty; // Em meses
 
   struct CPUs {

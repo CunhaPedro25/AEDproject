@@ -79,7 +79,7 @@ void insertCpu(int id){
 void insertDepartament(int id){
   clearToLineEnd();
   renderColor("Departamento: ", GREEN);
-  readString(equipment[id].departamento, 50);
+  readString(equipment[id].department, 50);
 }
 
 void insertInsurance(int id){
