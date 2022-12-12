@@ -310,9 +310,10 @@ void askNewApp(int id){
 }
 
 void showApps(int id){
-  int ask = 1;
   if(askConfirmation("Quer adicionar uma aplicação")){
+    int ask;
     do{
+      ask = True;
       int option = 0;
       moveCursor(5,0);
       clearToScreenEnd();
@@ -335,30 +336,54 @@ void showApps(int id){
         }
       }
 
+      int invalid = False;
+      char string[100];
+      restoreCursor();
+      printf("\n> ");
       do {
-        restoreCursor();
-        printf("\n> ");
-        readInt(&option, 100);
-        for(int appId = 0; appId < equipment[id].appNum; appId++){
-          if(equipment[id].app[appId].appId == option - 1) {
-            showSpecificInvalidOption("[Aplicação já adicionada]");
-            continue;
+        readString(string, 100);
+        if(strcmp(string, "s") == 0 || strcmp(string, "S") == 0){
+          invalid = False;
+        }else{
+          if(!isInt(string)){
+            invalid = True;
+            showInvalidOption();
+          }else{
+            char *trash;
+            option = strtol(string, &trash, 10);
+            if(option != 0){
+              for(int appId = 0; appId <= equipment[id].appNum; appId++){
+                if(equipment[id].app[appId].appId == option - 1 && equipment[id].appNum != 0) {
+                  invalid = True;
+                  showSpecificInvalidOption("[Aplicação já adicionada]");
+                }
+              }
+            }
+            if(option < 0 || option > maxAppId){
+              invalid = True;
+              showInvalidOption();
+            }
           }
         }
-      }while(option < 0 || option > maxAppId);
-
-      moveCursor(5,0);
-      clearToScreenEnd();
-      int appID = equipment[id].appNum;
-      if(option == 0){
-        equipment[id].app[appID].appId = insertApp();
-      }else{
-        equipment[id].app[appID].appId = option - 1;
+      }while(invalid);
+      if(strcmp(string, "s") == 0 || strcmp(string, "S") == 0){
+        ask = False;
       }
-      insertInstalledApp(id);
 
-      if(!askConfirmation("Adicionar mais uma")) ask = 0;
-    }while(ask != 0);
+      if(ask){
+        moveCursor(5,0);
+        clearToScreenEnd();
+        int appID = equipment[id].appNum;
+        if(option == 0){
+          equipment[id].app[appID].appId = insertApp();
+        }else{
+          equipment[id].app[appID].appId = option - 1;
+        }
+        insertInstalledApp(id);
+
+        if(!askConfirmation("Adicionar mais uma")) ask = False;
+      }
+    }while(ask);
   }
 }
 
