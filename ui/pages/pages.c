@@ -254,7 +254,10 @@ void equipamentPage(int id){
     renderTitle("Página de Equipamento");
 
     if(maxEquipmentId > 0){
-      printf("Equipment %d - %02d/%02d/%04d - ", id + 1, equipment[id].data.day, equipment[id].data.month, equipment[id].data.year);
+      char departement[50];
+      strcpy(departement, equipment[id].department);
+
+      printf("Equipment %d - %s - %02d/%02d/%04d - ", id + 1, truncate(departement,15), equipment[id].data.day, equipment[id].data.month, equipment[id].data.year);
       if(equipment[id].warranty < 1000) {
         int warranty = checkIfWarrantyExpired(equipment[id].data.day, equipment[id].data.month, equipment[id].data.year, equipment[id].warranty);
         warranty <= 1 ? textColor(RED) : warranty <= 5 ? textColor(YELLOW) : textColor(DEFAULT);
