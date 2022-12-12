@@ -365,7 +365,7 @@ void equipamentosTable(){
 
         char departement[50];
         strcpy(departement, equipment[i].department);
-        printf("|  %*s  ", strlen_utf8(departement) < strlen(departement) ? -13 : -12, truncate(departement,13));
+        printf("|  %*s  ", strlen_utf8(departement) < strlen(departement) ? -13 : -12, truncate(departement,11));
 
         printf("|    %02d/%02d/%04d   |", equipment[i].data.day, equipment[i].data.month, equipment[i].data.year);
 
