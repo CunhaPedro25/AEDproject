@@ -326,7 +326,6 @@ void showApps(int id){
         strcpy(tempString, app[i].name);
         printf("%2d - %-10s\n", i + 1, truncate(tempString, 10));
         count4by4++;
-        saveCursor();
         if (count4by4 == 4) {
           count4by4 = 0;
           moveRight += 18;
@@ -338,7 +337,7 @@ void showApps(int id){
 
       int invalid = False;
       char string[100];
-      restoreCursor();
+      moveCursor(10,0);
       printf("\n> ");
       do {
         readString(string, 100);

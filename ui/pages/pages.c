@@ -106,15 +106,18 @@ void appPage(int id){
       printf("Nome: %s\n", app[id].name);
       printf("Descrição: %s\n", app[id].descricao);
 
-
       printf("\nInstalado em:\n");
+      saveCursor();
+      maxEquipmentId = 7;
       if(maxEquipmentId > 0) {
         int moveRight = 0;
         int count = 0;
         int countInstallation = 0;
 
         for (int equipmentID = 0; equipmentID < maxEquipmentId; equipmentID++) {
+          equipment[equipmentID].appNum = 1;
           for(int appID = 0; appID < equipment[equipmentID].appNum; appID++){
+            equipment[equipmentID].app[appID].appId = id;
             if(equipment[equipmentID].app[appID].appId == id){
               countInstallation++;
               rightCursor(moveRight - 1);
@@ -127,7 +130,6 @@ void appPage(int id){
               }
 
               count++;
-              saveCursor();
               if (count == 6) {
                 count= 0;
                 moveRight += 31;
@@ -143,6 +145,7 @@ void appPage(int id){
           printf("Sem instalações\n");
         }else{
           restoreCursor();
+          downCursor(countInstallation > 6 ? 6 : countInstallation);
         }
       }else{
         printf("Sem Equipamentos\n");
@@ -150,6 +153,7 @@ void appPage(int id){
     }else{
       printf("Sem Aplicações\n");
     }
+
 
     option = pageControls(&id, maxAppId);
 
@@ -253,6 +257,7 @@ void equipamentPage(int id){
     clear();
     renderTitle("Página de Equipamento");
 
+    maxEquipmentId = 1;
     if(maxEquipmentId > 0){
       char departement[50];
       strcpy(departement, equipment[id].department);
@@ -284,6 +289,7 @@ void equipamentPage(int id){
       /* Network table */
       renderNetworkBoards(id);
 
+      saveCursor();
       /* Render List of Installed Apps */
       if(equipment[id].diskNum > 1)
         downCursor((equipment[id].diskNum - equipment[id].networkCardNum) - 1);
@@ -293,6 +299,8 @@ void equipamentPage(int id){
       printf("Sem Equipamentos\n");
     }
 
+    restoreCursor();
+    downCursor(equipment[id].appNum > 4 ? 5 : equipment[id].appNum == 0? equipment[id].appNum+2 : equipment[id].appNum+1);
     option = pageControls(&id, maxEquipmentId);
 
     if(option == -1) {
