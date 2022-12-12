@@ -317,7 +317,7 @@ void showApps(int id){
       int option = 0;
       moveCursor(5,0);
       clearToScreenEnd();
-      printf("Selecione Aplicação (0 para nova)\n");
+      printf("Selecione Aplicação (Nova App [0]; Sair [s])\n");
       int moveRight = 0;
       int count4by4 = 0;
       char tempString[50];
