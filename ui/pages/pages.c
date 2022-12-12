@@ -108,16 +108,13 @@ void appPage(int id){
 
       printf("\nInstalado em:\n");
       saveCursor();
-      maxEquipmentId = 7;
       if(maxEquipmentId > 0) {
         int moveRight = 0;
         int count = 0;
         int countInstallation = 0;
 
         for (int equipmentID = 0; equipmentID < maxEquipmentId; equipmentID++) {
-          equipment[equipmentID].appNum = 1;
           for(int appID = 0; appID < equipment[equipmentID].appNum; appID++){
-            equipment[equipmentID].app[appID].appId = id;
             if(equipment[equipmentID].app[appID].appId == id){
               countInstallation++;
               rightCursor(moveRight - 1);
@@ -257,7 +254,6 @@ void equipamentPage(int id){
     clear();
     renderTitle("Página de Equipamento");
 
-    maxEquipmentId = 1;
     if(maxEquipmentId > 0){
       char departement[50];
       strcpy(departement, equipment[id].department);
