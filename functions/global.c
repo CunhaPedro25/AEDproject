@@ -300,6 +300,7 @@ void renderTitle(const char *title) {
 
 void showSpecificInvalidOption(char *text){
   textColor(RED);
+  clearToLineEnd();
   printf("%s", text);    // Show error message
   resetStyles();
   restoreCursor();
