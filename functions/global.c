@@ -175,18 +175,23 @@ boolean checkIfExpired(int day, int month, int year){
 }
 
 int checkIfWarrantyExpired(int day, int month, int year, int warranty){
+  int result = warranty;
   for(int i = 0; i < warranty; i++){
     month++;
     if(month > 12){
       month = 0;
       year++;
     }
-    if(checkIfExpired(day,month,year)){
-      return warranty-(i+1);
+    if(checkIfExpired(day,month,year)) {
+      result--;
     }
   }
 
-  return warranty;
+  if(checkIfExpired(day,month,year)){
+    return 0;
+  }
+
+  return result;
 }
 
 boolean isEmpty(char *text){
