@@ -284,10 +284,11 @@ void filterEquipmentMenu(){
   int value;
 
   do {
-    char *options[6] =
+    char *options[7] =
         {
             "RAM",
-            "OS",
+            "Sistema Operativo",
+            "Departamento",
             "Aplicações",
             "Licensa Expirada",
             "Garantia Expirada",

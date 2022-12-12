@@ -151,15 +151,19 @@ void filterTable(int filter) {
   char search[50];
   int number;
   if (filter == RAM) {
-    printf("Quantidade: ");
+    printf("Quantidade de RAM máxima: ");
     readInt(&number, 10);
   }
   if (filter == OS ) {
     printf("Sistema Operativo: ");
     readString(search, 50);
   }
+  if (filter == DEPARTMENT ) {
+    printf("Departamento: ");
+    readString(search, 50);
+  }
   if(filter == APP){
-    printf("Aplicações: ");
+    printf("Nome da Aplicação: ");
     readString(search, 50);
   }
   if(filter == NETWORK){
@@ -182,6 +186,13 @@ void filterTable(int filter) {
     }
     if (filter == OS) {
       if (filterText(search, equipment[id].operatingSystem)) {
+        filterStruct[maxFilter] = equipment[id];
+        originalID[maxFilter] = id;
+        maxFilter++;
+      }
+    }
+    if (filter == DEPARTMENT) {
+      if (filterText(search, equipment[id].departamento)) {
         filterStruct[maxFilter] = equipment[id];
         originalID[maxFilter] = id;
         maxFilter++;

@@ -18,6 +18,7 @@ typedef enum {
 typedef enum{
   RAM,
   OS,
+  DEPARTMENT,
   APP,
   LICENSE,
   WARRANTY,
