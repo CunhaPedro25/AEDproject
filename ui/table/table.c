@@ -350,7 +350,7 @@ void equipamentosTable(){
     clear();
     renderTitle("Tabela de Equipamentos");
 
-    char *keys = " id |    TIPO    |  Data DD/MM/YY  |  Garantia  |      CPU      /  GHz   |    RAM   |      DISCO      /  Tamanho  " ;
+    char *keys = " id |    Tipo    |  Departamento  |  Data DD/MM/YY  |  Garantia  |      CPU      /  GHz   |    RAM   |      DISCO      /  Tamanho  " ;
     int tableSize = (int)strlen_utf8(keys) + 2;
 
     line(tableSize,True);
@@ -363,6 +363,9 @@ void equipamentosTable(){
         printf("| %2d ", i+1);
         printf("|  %s%-5s  ", equipment[i].type == 1 ? "   " : "", equipment[i].type == 1 ? "PC" : "SERVIDOR");
 
+        char departement[50];
+        strcpy(departement, equipment[i].department);
+        printf("|  %-12s  ", truncate(departement,11));
 
         printf("|    %02d/%02d/%04d   |", equipment[i].data.day, equipment[i].data.month, equipment[i].data.year);
 
@@ -372,7 +375,7 @@ void equipamentosTable(){
           printf(" %3d Mes%-2s  ", warranty, warranty== 1 || warranty == -1 ? "" : "es");
           resetStyles();
         }else{
-          printf("  LIFETIME  ");
+          renderColor("  LIFETIME  ", GREEN);
         }
 
         strcpy(temp, equipment[i].cpu.name);
