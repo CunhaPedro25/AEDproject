@@ -13,7 +13,7 @@ if platform == "linux" or platform == "linux2":
     main = "./main.c"
 elif platform == "win32":
     execute = ".\\app"
-    main = ".\main.c"
+    main = ".\\main.c"
 
 
 for path, subdirs, files in os.walk(root):
